@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	{% block head %}
+	<title>{% block title %} Inicio {% endblock %}</title>
+	{% block static %}
+	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+ 
+
+	<link rel="stylesheet"  href="{% static 'css/bootstrap.min.css' %}">
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	<link rel = "stylesheet" href = "{% static 'css/archivo.css' %}">
+	<link rel="stylesheet" href="{% static 'css/estilos_sec_not.css' %}">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="icon" type="image/x-icon" href="{% static 'img/favicon.png'%}">
+	<link rel = "stylesheet" type = "text/css" href = "{% static 'css/jquery-ui.css' %}"/>
+	<link rel = "stylesheet" type = "text/css" href = "{% static 'css/jquery.dataTables.min.css' %}"/>
+	<script type = "text/javascript" src = "{% static 'js/jquery.js' %}" charset="UTF-8"></script>
+	<script type = "text/javascript" src = "{% static 'js/bootstrap.min.js' %}" charset="UTF-8"></script>
+	<script type = "text/javascript" src = "{% static 'js/jquery-ui.js' %}"></script>
+	<script type = "text/javascript" src = "{% static 'js/jquery.dataTables.min.js' %}"></script>
+	{% endblock %}
+	{%endblock%}
+</head>	
+<body>
+<header>
+		<div class = "navbar navbar-light">
+			<img src = "{% static 'img/logo.png' %}" class ="imglogo">
+			<h1>Sistema Clinico Santa Lucia</h1>
+			<a class="btn" href = "{% url 'logout' %}?next={{request.path}}">Cerrar Sesi&oacute;n</a>
+			<hr>
+		</div>
+	<div class="bot">
+				<ul>
+					<li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:index'%}'">
+							<img src = "{% static 'img/inicio.png' %}" class = "foto-inicio">
+							Inicio
+					</li>
+					<li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:consulta_expediente'%}'">
+							<img src = "{% static 'img/notas.png' %}" class = "foto-inicio">
+							Expediente
+					</li>
+					<li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:generar_pdf'%}'">
+							<img src = "{% static 'img/notas.png' %}" class = "foto-inicio">
+							PDF
+					</li>
+				</ul>
+			</div>
+</header>
+
+<section>
+<div class="container">
+	{% block content %}
+	<table align="center" >
+				   <tr>
+						<td><img class="base" src="{% static 'img/zac1.png' %}"></td>
+						<td><img class="base" src="{% static 'img/porta.png' %}"></td>
+						<td><img class="base" src="{% static 'img/zac2.png' %}"></td>
+                   </tr>
+				   <tr><td colspan="3"><h4><i>Cada mañana nacemos de nuevo.</br> Lo que hacemos hoy es lo que más importa.</i></h4></td></tr>
+				</table>
+	{%endblock%}
+	</div>
+</section>
+
+
+	
+	{% block js %}
+
+	{% endblock %}
+</body>
+</html>
