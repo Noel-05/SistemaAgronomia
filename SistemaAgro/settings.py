@@ -122,4 +122,4 @@ from django.urls import reverse_lazy
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
-LOGIN_REDIRECT_URL = reverse_lazy('clinica:index')
+LOGIN_REDIRECT_URL = reverse_lazy('proyeccionsocial:index')

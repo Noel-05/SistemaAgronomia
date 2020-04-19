@@ -27,8 +27,8 @@
 <body>
 <header>
 		<div class = "navbar navbar-light">
-			<img src = "{% static 'img/logo.png' %}" class ="imglogo">
-			<h1>Sistema Clinico Santa Lucia</h1>
+			<img src = "{% static 'img/logoUPSAgro.png' %}" class ="imglogo">
+			<h1>Sistema Control Social Agronomia</h1>
 			<a class="btn" href = "{% url 'logout' %}?next={{request.path}}">Cerrar Sesi&oacute;n</a>
 			<hr>
 		</div>
@@ -38,13 +38,13 @@
 							<img src = "{% static 'img/inicio.png' %}" class = "foto-inicio">
 							Inicio
 					</li>
-					<li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:consulta_expediente'%}'">
+					<li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:consulta_alumno'%}'">
 							<img src = "{% static 'img/notas.png' %}" class = "foto-inicio">
-							Expediente
+							Alumno
 					</li>
-					<li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:generar_pdf'%}'">
+					<li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:consulta_ciclo'%}'">
 							<img src = "{% static 'img/notas.png' %}" class = "foto-inicio">
-							PDF
+							Ciclo
 					</li>
 				</ul>
 			</div>
@@ -53,14 +53,7 @@
 <section>
 <div class="container">
 	{% block content %}
-	<table align="center" >
-				   <tr>
-						<td><img class="base" src="{% static 'img/zac1.png' %}"></td>
-						<td><img class="base" src="{% static 'img/porta.png' %}"></td>
-						<td><img class="base" src="{% static 'img/zac2.png' %}"></td>
-                   </tr>
-				   <tr><td colspan="3"><h4><i>Cada mañana nacemos de nuevo.</br> Lo que hacemos hoy es lo que más importa.</i></h4></td></tr>
-				</table>
+		</br></br></br></br></br></br><img src = "{% static 'img/logoUPSAgro.png' %}">
 	{%endblock%}
 	</div>
 </section>

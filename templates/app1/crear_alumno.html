@@ -1,0 +1,150 @@
+
+<div>
+    <div class="modal-content">
+        {% if object %}
+            <form role = "form" action="{% url 'proyeccionsocial:editar_alumno' object.pk %}" method="POST">
+            {% else %}
+                <form role = "form" action="{% url 'proyeccionsocial:crear_alumno' %}" method="POST">
+                {% endif %}
+                    <div class="modal-body">
+                        {% csrf_token %}
+                            <div class="panel-body">
+                                {{form.errors}}
+                                <div class="row-xx">
+                                    {% if object %}
+                                    <div class="col-xx" style="display:none;">
+                                        {{form.codigo_alumno.label_tag}}
+                                        {{form.codigo_alumno}}
+                                    {% else %}
+                                    <div class="col-xx">
+                                        {{form.codigo_alumno.label_tag}}
+                                        {{form.codigo_alumno}}
+                                    {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.carnet_alumno.label_tag}}
+                                        {{form.carnet_alumno}}
+                                    </div>
+                                </div>
+                               <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.nombre_alumno.label_tag}}
+                                        {{form.nombre_alumno}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.sexo_alumno.label_tag}}
+                                        {{form.sexo_alumno}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.telefono_alumno.label_tag}}
+                                        {{form.telefono_alumno}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.correo_alumno.label_tag}}
+                                        {{form.correo_alumno}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.direccion_alumno.label_tag}}
+                                        {{form.direccion_alumno}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.carrera_alumno.label_tag}}
+                                        {{form.carrera_alumno}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.porc_carr_apro.label_tag}}
+                                        {{form.porc_carr_apro}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.unidades_valorativas.label_tag}}
+                                        {{form.unidades_valorativas}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.ciclo.label_tag}}
+                                        {{form.ciclo}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.experiencias_alumno.label_tag}}
+                                        {{form.experiencias_alumno}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.horas_semana.label_tag}}
+                                        {{form.horas_semana}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.dias_semana.label_tag}}
+                                        {{form.dias_semana}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.propuesta_entidad.label_tag}}
+                                        {{form.propuesta_entidad}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.propuesta_modalidad.label_tag}}
+                                        {{form.propuesta_modalidad}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.fecha_inicio.label_tag}}
+                                        {{form.fecha_inicio}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.estado_expediente.label_tag}}
+                                        {{form.estado_expediente}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.motivo.label_tag}}
+                                        {{form.motivo}}
+                                    </div>
+                                </div>
+                                <div class="row-xx">
+                                    <div class="col-xx">
+                                        {{form.observaciones.label_tag}}
+                                        {{form.observaciones}}
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-lg-12 text-right">
+                            <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Guardar">
+                            <a href = "{% url 'proyeccionsocial:consulta_alumno' %}"  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" style="color:white;">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </form>
+    </div>
+</div>

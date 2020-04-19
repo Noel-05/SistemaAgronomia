@@ -51,7 +51,7 @@ form input:invalid{
     border: 1px solid red;
 }
 textarea{
-    height: 50px;
+    height: 20px;
     width: 350px;
 
 }

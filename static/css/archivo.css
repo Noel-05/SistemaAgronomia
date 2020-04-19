@@ -23,10 +23,10 @@ header div[class="navbar navbar-light"] a{
     margin-left: 650px;
 }
 div[class="navbar navbar-light"]{
-    background-color: #000060;
+    background-color: red;
 }
 .bot{
-    background-color: 	#000080;
+    background-color: 	red;
     text-align: center;
 }
 .btn{
@@ -47,7 +47,7 @@ div[class="navbar navbar-light"]{
     color: white;
 }
 .list-group-item:hover{
-     background-color: #000060;
+     background-color: purple;
     user-select: none;
 }
 h2
@@ -94,19 +94,18 @@ thead{
         margin-right: auto;
         margin-left: auto;
         display: block;
-        width: 100%;
     }
     .col-xx{
         display: inline-block;
         margin-left: auto;
         margin-right: auto;
-
+        width: auto;
     }
     .panel-body .row-xx .col-xx label{
-        width: 80px;
+        width: auto;
     }
     .panel-body .row-xx .col-xx input{
-        width: 180px;
+        width: auto;
     }
 
 

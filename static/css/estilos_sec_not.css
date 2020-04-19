@@ -38,7 +38,7 @@
 
 .btn-buscar{
 	text-align: center;
-	background: royalblue;
+	background: red;
 	color: white;
 	margin: auto;
 	padding: 10px 40px;
@@ -59,7 +59,7 @@
 
 .btn-busqueda-asig{
 	border-radius: 5px;
-	color: #0f0f0f;
+	color: red;
 }
 
 .row{
@@ -95,7 +95,7 @@
 }
 
 .width-th-xx{
-	width: 25%;
+	width: 10%;
 	padding: 5px;
 }
 
@@ -113,6 +113,7 @@
 
 .table-border-act1{
 	border-left: none;
+	border-right: none;
 }
 
 .etiqueta-tr:hover{

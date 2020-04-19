@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+{%block title%}
+Alumno
+{%endblock%}
+{% block content %}
+
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Alumno</h2>
+        <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_alumno' %}', 'Agregar Alumno')" value="Agregar">
+    </div>
+  </header>
+
+<div class="container">
+    <div>
+        <table>
+            <thead>
+        	   <tr>
+                    <th>Carnet</th>
+            		<th>Nombre</th>
+                    <th>Sexo</th>
+            	    <th>Telefono</th>
+            	    <th>Correo</th>
+            	    <th>Direccion</th>
+                    <th>Carrera</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                    <th>Imprimir</th>
+        		</tr>
+            </thead>
+
+            {% if alumno_list %}
+            {% for alm in alumno_list %}
+
+        		<tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ alm.carnet_alumno }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ alm.nombre_alumno}}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ alm.sexo_alumno }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ alm.telefono_alumno }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ alm.correo_alumno }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ alm.direccion_alumno }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ alm.carrera_alumno }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_alumno' alm.pk %}', 'Modificar registro de {{ alm.carnet_alumno }}')" class = "btn">Editar</a></td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_alumno' alm.pk %}', 'Eliminar registro con {{ alm.carnet_alumno }}')" class = "btn">Eliminar</a></td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{%url 'proyeccionsocial:generar_pdf' alm.pk %}" class = "btn">Imprimir</a></td>
+        		</tr>
+            {% endfor %}
+            {% endif %}
+
+    	</table>
+    </div>
+</div>
+
+  <div id = "popup">
+  
+  </div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        var modal;
+        function abrir_modal(url, titulo)
+        {
+            modal = $('#popup').dialog({
+                title :titulo,
+                modal :true,
+                width :500,
+                resizable :false
+            }).dialog('open').load(url)
+        }
+    </script>
+
+{% endblock %}

@@ -34,39 +34,68 @@ def index(request):
         'base/base.html',
     )
 
-# Vista para Expediente
-def consultaexpediente(request):
-    expediente_list = Expediente.objects.order_by('codigo_expediente')
-    context = {'expediente_list': expediente_list, }
-    return render(request, 'app1/Expediente.html', context)
+#--------------------------------------------------------------------
 
+def consultaCiclo(request):
+    ciclo_list=Ciclo.objects.order_by('codigo_ciclo')
+    context = {
+        'ciclo_list': ciclo_list,
+    }
+    return render(
+        request,
+        'app1/Ciclo.html', context
+    )
 
-class agregarExpediente(CreateView):
-    template_name = 'app1/AgregarExpediente.html'
-    form_class = ExpedienteForm
-    success_url = reverse_lazy('proyeccionsocial:consulta_expediente')
+class crearCiclo(CreateView):
+    template_name = 'app1/crear_ciclo.html'
+    form_class = CicloForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_ciclo')
 
+class editarCiclo(UpdateView):
+    model = Ciclo
+    template_name = 'app1/crear_ciclo.html'
+    form_class = CicloForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_ciclo')
 
-class editarExpediente(UpdateView):
-    model = Expediente
-    form_class = ExpedienteForm
-    template_name = 'app1/AgregarExpediente.html'
-    success_url = reverse_lazy('proyeccionsocial:consulta_expediente')
+class eliminarCiclo(DeleteView):
+    model = Ciclo
+    template_name = 'app1/eliminar_ciclo.html'
+    success_url = reverse_lazy('proyeccionsocial:consulta_ciclo')
 
+#--------------------------------------------------------------------
 
-class eliminarExpediente(DeleteView):
-    model = Expediente
-    template_name = 'app1/EliminarExpediente.html'
-    success_url = reverse_lazy('proyeccionsocial:consulta_expediente')
+def consultaAlumno(request):
+    alumno_list=Alumno.objects.order_by('codigo_alumno')
+    context = {
+        'alumno_list': alumno_list,
+    }
+    return render(
+        request,
+        'app1/Alumno.html', context
+    )
 
+class crearAlumno(CreateView):
+    template_name = 'app1/crear_alumno.html'
+    form_class = AlumnoForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_alumno')
+
+class editarAlumno(UpdateView):
+    model = Alumno
+    template_name = 'app1/crear_alumno.html'
+    form_class = AlumnoForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_alumno')
+
+class eliminarAlumno(DeleteView):
+    model = Alumno
+    template_name = 'app1/eliminar_alumno.html'
+    success_url = reverse_lazy('proyeccionsocial:consulta_alumno')
 
  #-----------------------------------------------------------------
 
-
 class generarpdf(ListView):
-    model = Expediente
-    template_name = 'app1/Expediente.html'
-    context_object_name = 'expediente'
+    model = Alumno
+    template_name = 'app1/Alumno.html'
+    context_object_name = 'alumno'
     success_url = reverse_lazy('proyeccionsocial:generar_pdf')  
      
     def cabecera(self,pdf):
@@ -93,30 +122,33 @@ class generarpdf(ListView):
         pdf.setFont("Helvetica-Bold", 8)
         pdf.drawString(245, 760, u"UNIDAD DE PROYECCION SOCIAL")       
 
-    def cuerpo(self, pdf):
-        #Declaracion y asignacion de variables que se recuperaran de la BD
-        numero = 1
-        nombre = "Noel Alexander Renderos Martinez"
-        sexo = "M"
-        telefono = "7452-2749"
-        correo = "rm17039@ues.edu.sv"
-        direccion = "8va. Calle Poniente Barrio San Sebastian Analco Casa No. 38 A, Zacatecoluca, La Paz."
-        carrera = "Ingenieria de Sistemas Informaicos"
-        carnet = "RM17039"
-        porc_carrera = 60
-        und_valor = 100
-        ciclo_lect = "Impar"
-        experiencia = "Desarrollo y conocimiento en html, java, javascript, python, php, css etc. "
-        horas_sem = 24
-        dias_sem = 6
-        entidad = "Facultad de Ingeneria y Arquitectura, UES"
-        modalidad = "Presencial"
-        fecha_inicio = "12/10/20"
-        aceptado = "SI"
-        motivo = "Faltan Datos"
-        observaciones = "Buscar otra institucion y presentarla lo mas antes posible a la secretaria de proyeccion social"
+    def get_queryset(self, pdf, **kwargs):
+        codigo_alumno = self.kwargs.get('codigo_alumno')
+        queryset = Alumno.objects.filter(codigo_alumno = codigo_alumno)
 
-        
+        numero = 1
+
+        for i in Alumno.objects.filter(codigo_alumno = codigo_alumno):
+            carnet = i.carnet_alumno
+            nombre = i.nombre_alumno
+            sexo = i.sexo_alumno
+            telefono = i.telefono_alumno
+            correo = i.correo_alumno
+            direccion = i.direccion_alumno
+            carrera = i.carrera_alumno
+            porc_carrera = i.porc_carr_apro
+            und_valor = i.unidades_valorativas
+            experiencia = i.experiencias_alumno
+            horas_sem = i.horas_semana
+            dias_sem = i.dias_semana
+            entidad = i.propuesta_entidad
+            modalidad = i.propuesta_modalidad
+            fecha_inicio = i.fecha_inicio
+            aceptado = i.estado_expediente
+            motivo = i.motivo
+            observaciones = i.observaciones
+            ciclo_lect = i.ciclo.ciclo_lectivo
+
         texto = 'No. Correlativo: %s' % numero
         pdf.setFont("Helvetica-Bold", 10)
         pdf.drawString(450, 720, texto)
@@ -165,7 +197,7 @@ class generarpdf(ListView):
         pdf.drawString(450, 595, texto)
 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(60, 575, u"Estado Academico")
+        pdf.drawString(60, 575, u"Estado Academico:")
 
         texto = 'Porcentaje de la carrera aprobado: %s' % porc_carrera
         pdf.setFont("Helvetica", 10)
@@ -255,6 +287,13 @@ class generarpdf(ListView):
         texto = '%s' % observaciones
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 210, texto)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(generarpdf, self).get_context_data(**kwargs)
+        codigo_alumno = self.kwargs.get('codigo_alumno')
+        context['codigo_alumno'] = codigo_alumno
+        return context
          
     def get(self, request, *args, **kwargs):
         #Indicamos el tipo de contenido a devolver, en este caso un pdf
@@ -272,7 +311,7 @@ class generarpdf(ListView):
 
         #Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.
         self.cabecera(pdf)
-        self.cuerpo(pdf)
+        self.get_queryset(pdf)
 
         #Con show page hacemos un corte de página para pasar a la siguiente
         pdf.showPage()
