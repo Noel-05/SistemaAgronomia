@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {%block title%}
-Ciclo
+Registro Ciclo
 {%endblock%}
 {% block content %}
 
@@ -8,6 +8,7 @@ Ciclo
     <div class="container">
       <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Registro de Ciclo</h2>
       <input  class="btn-buscar btn-busqueda" type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_ciclo' %}', 'Registrar Ciclo')" value="Agregar">
+      </br></br></br>
     </div>
   </header>
 
@@ -28,7 +29,7 @@ Ciclo
 
             <tr class="etiqueta-tr">
                 <td class="th-borde width-th-xx" style = "text-align:center;">{{ ci.codigo_ciclo }}</td>
-                <td class="th-borde width-th-xx" style = "text-align:center;">{{ ci.ciclo_lectivo }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ ci.tipo_ciclo }}</td>
                 <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_ciclo' ci.pk %}', 'Modificar cita con {{ ci.codigo_ciclo }}')" class = "btn">Editar</a></td>
                 <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_ciclo' ci.pk %}', 'Eliminar cita con {{ ci.codigo_ciclo }}')" class = "btn">Eliminar</a></td>
             </tr>
@@ -38,9 +39,10 @@ Ciclo
 
             </table>
     </div>
+    
   </div>
 
-  <div id = "popup">
+    <div id = "popup">
   
   </div>
 

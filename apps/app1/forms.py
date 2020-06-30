@@ -11,16 +11,16 @@ class CicloForm(forms.ModelForm):
     class Meta:
         model = Ciclo
         widgets = {
-            'codigo_ciclo': forms.TextInput(attrs={'placeholder': 'Código Ciclo', 'autofocus': '', 'required': ''}),
-            'ciclo_lectivo': forms.TextInput(attrs={'placeholder': 'Ciclo Lectivo', 'autofocus': '', 'required': ''}),
+            'codigo_ciclo': forms.TextInput(attrs={'placeholder': 'Código Ciclo', 'autofocus': '', 'required': '', 'maxlength':'5'}),
+            'tipo_ciclo': forms.TextInput(attrs={'placeholder': 'Ciclo Lectivo', 'autofocus': '', 'required': ''}),
         }
         fields = {
             'codigo_ciclo': forms.IntegerField,
-            'ciclo_lectivo': forms.CharField,
+            'tipo_ciclo': forms.CharField,
         }
         labels = {
             'codigo_ciclo': 'Codigo Ciclo',
-            'ciclo_lectivo': 'Ciclo Lectivo',
+            'tipo_ciclo': 'Ciclo Lectivo',
         }
 
     def __init__(self, *args, **kwargs):
@@ -30,72 +30,85 @@ class CicloForm(forms.ModelForm):
                 'class': 'form-control'
                 })
 
-class AlumnoForm(forms.ModelForm):
-    ciclo = forms.ModelChoiceField(queryset=Ciclo.objects.all())
+
+
+class  EstudianteForm(forms.ModelForm):
     class Meta:
-        model = Alumno
+        model = Estudiante
         widgets = {
-            'codigo_alumno': forms.TextInput(attrs={'placeholder': 'Código Alumno', 'autofocus': '', 'required': ''}),
-            'carnet_alumno': forms.TextInput(attrs={'placeholder': 'Carnet Alumno', 'autofocus': '', 'required': ''}),
-            'nombre_alumno': forms.TextInput(attrs={'placeholder': 'Nombre Alumno', 'autofocus': '', 'required': ''}),
-            'sexo_alumno': forms.Select(choices=sexo),
-            'telefono_alumno': forms.TextInput(attrs={'placeholder': 'Telefono Alumno', 'autofocus': '', 'required': ''}),
-            'correo_alumno': forms.TextInput(attrs={'placeholder': 'Correo Alumno', 'autofocus': '', 'required': ''}),
-            'direccion_alumno': forms.TextInput(attrs={'placeholder': 'Direccion Alumno', 'autofocus': '', 'required': ''}),
-            'carrera_alumno': forms.TextInput(attrs={'placeholder': 'Carrera Alumno', 'autofocus': '', 'required': ''}),
-            'porc_carr_apro': forms.TextInput(attrs={'placeholder': 'Porcentaje Carrera', 'autofocus': '', 'required': ''}), 
-            'unidades_valorativas': forms.TextInput(attrs={'placeholder': 'Unidades Valorativas', 'autofocus': '', 'required': ''}),
-            'experiencias_alumno': forms.TextInput(attrs={'placeholder': 'Experiencia Alumno', 'autofocus': '', 'required': ''}),
-            'horas_semana': forms.TextInput(attrs={'placeholder': 'Horas Por Semana', 'autofocus': '', 'required': ''}),
-            'dias_semana': forms.TextInput(attrs={'placeholder': 'Dias Por Semana', 'autofocus': '', 'required': ''}),
-            'propuesta_entidad': forms.TextInput(attrs={'placeholder': 'Propuesta Entidad', 'autofocus': '', 'required': ''}),
-            'propuesta_modalidad': forms.TextInput(attrs={'placeholder': 'Propuesta Modalidad', 'autofocus': '', 'required': ''}),
-            'fecha_inicio': forms.TextInput(attrs={'placeholder': 'Fecha de Cita', 'autocomplete': 'off', 'type':'date', 'min':'1940-01-01'}),
-            'estado_expediente': forms.Select(choices=estado),
-            'motivo': forms.Textarea,
-            'observaciones': forms.Textarea,
+            'carnet_estudiante': forms.TextInput(attrs={'placeholder': 'Carnet Estudiante', 'autofocus': '', 'required': ''}),
+            'nombre_estudiante': forms.TextInput(attrs={'placeholder': 'Nombres Estudiante', 'autofocus': '', 'required': ''}),
+            'apellido_estudiante': forms.TextInput(attrs={'placeholder': 'Apellidos Estudiante', 'autofocus': '', 'required': ''}),
+            'sexo_estudiante': forms.Select(choices=sexo),
+            'telefono_estudiante': forms.TextInput(attrs={'placeholder': 'Telefono Estudiante', 'autofocus': '', 'required': '', 'maxlength':'8'}),
+            'correo_estudiante': forms.TextInput(attrs={'placeholder': 'Correo Estudiante', 'autofocus': '', 'required': ''}),
+            'direccion_estudiante': forms.TextInput(attrs={'placeholder': 'Direccion Estudiante', 'autofocus': '', 'required': ''}),
         }
         fields = {
-            'codigo_alumno': forms.CharField,
-            'carnet_alumno': forms.CharField,
-            'nombre_alumno': forms.CharField,
-            'sexo_alumno': forms.CharField,
-            'telefono_alumno': forms.IntegerField,
-            'correo_alumno': forms.CharField,
-            'direccion_alumno': forms.CharField,
-            'carrera_alumno': forms.CharField,
-            'porc_carr_apro': forms.IntegerField,
-            'ciclo': forms.IntegerField,
-            'unidades_valorativas': forms.IntegerField,
-            'experiencias_alumno': forms.CharField,
-            'horas_semana': forms.IntegerField,
-            'dias_semana': forms.IntegerField,
-            'propuesta_entidad': forms.CharField,
-            'propuesta_modalidad': forms.CharField,
-            'fecha_inicio': forms.DateField,
-            'estado_expediente': forms.CharField,
-            'motivo': forms.CharField,
-            'observaciones': forms.CharField,
+            'carnet_estudiante': forms.CharField,
+            'nombre_estudiante': forms.CharField,
+            'apellido_estudiante': forms.CharField,
+            'sexo_estudiante': forms.CharField,
+            'telefono_estudiante': forms.IntegerField,
+            'correo_estudiante': forms.CharField,
+            'direccion_estudiante': forms.CharField,
         }
         labels = {
-            'codigo_alumno': 'Codigo',
-            'carnet_alumno': 'Carnet',
-            'nombre_alumno':'Nombre',
-            'sexo_alumno': 'Sexo',
-            'telefono_alumno': 'Telefono',
-            'correo_alumno': 'Correo',
-            'direccion_alumno': 'Direccion',
-            'carrera_alumno': 'Carrera',
-            'porc_carr_apro': 'Porcentaje Carrera',
-            'unidades_valorativas': 'Unidades Valorativas',
-            'ciclo': 'Ciclo',
-            'experiencias_alumno': 'Experiencia',
-            'horas_semana': 'Horas por Semana',
-            'dias_semana': 'Dias por Semana',
-            'propuesta_entidad': 'Propuesta Entidad',
-            'propuesta_modalidad': 'Propuesta Modalidad',
-            'fecha_inicio': 'Fecha Inicio',
-            'estado_expediente': 'Estado',
-            'motivo': 'Motivo',
-            'observaciones': 'Observaciones',
+            'carnet_estudiante': 'Carnet',
+            'nombre_estudiante':'Nombre',
+            'sexo_estudiante': 'Sexo',
+            'telefono_estudiante': 'Telefono',
+            'correo_estudiante': 'Correo',
+            'direccion_estudiante': 'Direccion',
         }
+
+    def __init__(self, *args, **kwargs):
+        super(EstudianteForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+                })
+
+
+
+class EstudioUniversitarioForm(forms.ModelForm):
+    codigo_carrera = forms.ModelChoiceField(queryset=Carrera.objects.all().order_by('nombre_carrera'))
+    codigo_ciclo = forms.ModelChoiceField(queryset=Ciclo.objects.all().order_by('codigo_ciclo'))
+    carnet_estudiante = forms.ModelChoiceField(queryset=Estudiante.objects.all().order_by('carnet_estudiante'))
+    class Meta:
+        model = EstudioUniversitario
+        widgets = {
+            'porc_carrerar_aprob': forms.TextInput(attrs={'placeholder': 'Porcentaje Carrera Aprobado', 'autofocus': '', 'required': '', 'maxlength':'3'}),
+            'unidades_valorativas': forms.TextInput(attrs={'placeholder': 'Unidades Valorativas', 'autofocus': '', 'required': '',  'maxlength':'3'}),
+            'experiencia_areas_conoc': forms.TextInput(attrs={'placeholder': 'Experiencia en Areas Conocidas', 'autofocus': '', 'required': ''}),
+        }
+        fields = {
+            'carnet_estudiante': forms.CharField,
+            'codigo_carrera': forms.CharField,
+            'codigo_ciclo': forms.IntegerField,
+            'porc_carrerar_aprob': forms.IntegerField,
+            'unidades_valorativas': forms.IntegerField,
+            'experiencia_areas_conoc': forms.CharField,
+        }
+        labels = {
+            'carnet_estudiante': 'Carnet Estudiante',
+            'codigo_carrera': 'Carrera Estudiante',
+            'codigo_ciclo': 'Ciclo',
+            'porc_carrerar_aprob': 'Porcentaje Carrera Aprobado',
+            'unidades_valorativas': 'Unidades Valorativas',
+            'experiencia_areas_conoc': 'Experiencia en Areas Conocidas',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(EstudioUniversitarioForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+                })
+
+    def clean(self, *args, **kwargs):
+        cleaned_data = super(EstudioUniversitarioForm, self).clean(*args, **kwargs)
+        porc_carrerar_aprob = cleaned_data.get('porc_carrerar_aprob', None)
+        if porc_carrerar_aprob is not None:
+            if porc_carrerar_aprob < 60:
+                self.add_error('porc_carrerar_aprob', 'Aun no esta apto para realizar el servicio social.')

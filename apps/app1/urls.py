@@ -11,10 +11,10 @@ urlpatterns=[
 	path('proyeccionsocial/index/',index, name='index'),
 
 	#URL para Alumno
-	path('proyeccionsocial/consultaAlumno/',consultaAlumno, name="consulta_alumno"),
-	path('proyeccionsocial/crearAlumno/',crearAlumno.as_view(), name="crear_alumno"),
-	path('proyeccionsocial/editarAlumno/<pk>/',editarAlumno.as_view(), name="editar_alumno"),
-	path('proyeccionsocial/eliminarAlumno/<pk>/',eliminarAlumno.as_view(), name="eliminar_alumno"),
+	path('proyeccionsocial/consultaEstudiante/',consultaEstudiante, name="consulta_estudiante"),
+	path('proyeccionsocial/crearEstudiante/',crearEstudiante.as_view(), name="crear_estudiante"),
+	path('proyeccionsocial/editarEstudiante/<pk>/',editarEstudiante.as_view(), name="editar_estudiante"),
+	path('proyeccionsocial/eliminarEstudiante/<pk>/',eliminarEstudiante.as_view(), name="eliminar_estudiante"),
 
 	#URL para Alumno
 	path('proyeccionsocial/consultaCiclo/',consultaCiclo, name="consulta_ciclo"),
@@ -22,5 +22,13 @@ urlpatterns=[
 	path('proyeccionsocial/editarCiclo/<pk>/',editarCiclo.as_view(), name="editar_ciclo"),
 	path('proyeccionsocial/eliminarCiclo/<pk>/',eliminarCiclo.as_view(), name="eliminar_ciclo"),
 
-	path('proyeccionsocial/generarpdf/<int:codigo_alumno>/',generarpdf.as_view(), name= "generar_pdf"),
+	#URL para Estudio Universitario
+	path('proyeccionsocial/consultaEstudioUniversitario/',consultaEstudioUniversitario, name="consulta_estudio_universitario"),
+	path('proyeccionsocial/crearEstudioUniversitario/', crearEstudioUniversitario.as_view(), name="crear_estudio_universitario"),
+	path('proyeccionsocial/editarEstudioUniversitario/<pk>/',editarEstudioUniversitario.as_view(), name="editar_estudio_universitario"),
+	path('proyeccionsocial/eliminarEstudioUniversitario/<pk>/',eliminarEstudioUniversitario.as_view(), name="eliminar_estudio_universitario"),
+
+	path('proyeccionsocial/generarF1/<str:carnet_estudiante>/',generarF1.as_view(), name= "generar_F1"),
+	path('proyeccionsocial/generarF8/<str:carnet_estudiante>/',generarF8.as_view(), name= "generar_F8"),
+
 ]
