@@ -28,7 +28,15 @@ urlpatterns=[
 	path('proyeccionsocial/editarEstudioUniversitario/<pk>/',editarEstudioUniversitario.as_view(), name="editar_estudio_universitario"),
 	path('proyeccionsocial/eliminarEstudioUniversitario/<pk>/',eliminarEstudioUniversitario.as_view(), name="eliminar_estudio_universitario"),
 
-	path('proyeccionsocial/generarF1/<str:carnet_estudiante>/',generarF1.as_view(), name= "generar_F1"),
-	path('proyeccionsocial/generarF8/<str:carnet_estudiante>/',generarF8.as_view(), name= "generar_F8"),
+	#URL para la Solicitud de Servicio Social
+	path('proyeccionsocial/consultaSolicitudServicioSocial/',consultaSolicitudServicioSocial, name="consulta_solicitud_servicio_social"),
+	path('proyeccionsocial/crearSolicitudServicioSocial/', crearSolicitudServicioSocial.as_view(), name="crear_solicitud_servicio_social"),
+	path('proyeccionsocial/editarSolicitudServicioSocial/<pk>/',editarSolicitudServicioSocial.as_view(), name="editar_solicitud_servicio_social"),
+	path('proyeccionsocial/eliminarSolicitudServicioSocial/<pk>/',eliminarSolicitudServicioSocial.as_view(), name="eliminar_solicitud_servicio_social"),
 
+	#URL para los Formularios
+	path('proyeccionsocial/generarF1/<str:carnet_estudiante>/',generarF1.as_view(), name= "generar_F1"),
+	path('proyeccionsocial/generarF7/<str:carnet_estudiante>/',generarF7.as_view(), name= "generar_F7"),
+	path('proyeccionsocial/generarF8/<str:carnet_estudiante>/',generarF8.as_view(), name= "generar_F8"),
+	path('proyeccionsocial/generarF9/<str:carnet_estudiante>/',generarF9.as_view(), name= "generar_F9"),
 ]

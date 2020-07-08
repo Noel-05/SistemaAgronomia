@@ -27,9 +27,6 @@ Control Estudiante
                     <th>Editar</th>
                     <th>Eliminar</th>
                     <th>Agregar Estudios</th>
-
-                    <th>Imprimir</th>
-
         		</tr>
             </thead>
 
@@ -49,9 +46,6 @@ Control Estudiante
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_estudiante' est.pk %}', 'Eliminar registro con {{ est.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
 
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:consulta_estudio_universitario' %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudio_universitario' %}' )" class = "btn">Agregar Estudio</a></td>
-
-                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{%url 'proyeccionsocial:generar_F1' est.pk %}" class = "btn">Imprimir</a></td>
-
         		</tr>
             {% endfor %}
             {% endif %}

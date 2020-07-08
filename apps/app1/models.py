@@ -6,6 +6,7 @@ import uuid
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 class Ciclo(models.Model):
     codigo_ciclo = models.IntegerField(primary_key=True, null=False)
     tipo_ciclo = models.CharField(max_length=10, null=False)
@@ -60,7 +61,7 @@ class EntidadExterna(models.Model):
     telefono_entidad = models.IntegerField(null=False)
 
     def __str__(self):
-        return self.codigo_entidad   
+        return self.nombre_entidad   
 
 
 
@@ -71,13 +72,21 @@ class Solicitud(models.Model):
     dias_semana = models.IntegerField(null=False)
     modalidad = models.CharField(max_length=30, null=False)
     fecha_inicio = models.DateField(null=False)
-    fecha_fin = models.DateField(null=False)
+    fecha_fin = models.DateField(null=True)
+
+    def __str__(self):
+        return self.carnet_estudiante.__str__()   
+
+
+
+class EstadoSolicitud(models.Model):
+    carnet_estudiante = models.OneToOneField(Solicitud, unique=True, primary_key=True, on_delete = models.CASCADE)
     aceptado = models.CharField(max_length=2, null=False)
     motivo = models.CharField(max_length=200, null=False)
     observaciones = models.CharField(max_length=200, null=False)
 
     def __str__(self):
-        return self.carnet_estudiante.__str__()   
+        return self.carnet_estudiante.__str__() 
 
 
 
@@ -92,24 +101,23 @@ class AsesorExterno(models.Model):
 
 
 
-class AsesorInterno(models.Model):
-    dui_asesor_interno = models.CharField(primary_key=True, max_length=10, null=False)
-    nombre_asesor_interno = models.CharField(max_length=50, null=False)
-    apellido_asesor_interno = models.CharField(max_length=50, null=False)
-    cargo_asesor_interno = models.CharField(max_length=100, null=False)
+class Rol(models.Model):
+    nombre_rol = models.CharField(primary_key=True, max_length=25, null=False)
+    descripcion_rol = models.CharField(max_length=250, null=False)
 
     def __str__(self):
-        return self.dui_asesor_interno
+        return self.nombre_rol
 
 
 
-class JefeDepartamento(models.Model):
-    carnet_jefe_depto = models.CharField(primary_key=True, max_length=10, null=False)
-    nombre_jefe_depto = models.CharField(max_length=50, null=False)
-    apellido_jefe_depto = models.CharField(max_length=50, null=False)
+class Docente(models.Model):
+    carnet_docente = models.CharField(primary_key=True, max_length=10, null=False)
+    nombre_docente = models.CharField(max_length=50, null=False)
+    apellido_docente = models.CharField(max_length=50, null=False)
+    nombre_rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.carnet_jefe_depto
+        return self.carnet_docente
 
 
 
@@ -124,9 +132,8 @@ class Proyecto(models.Model):
 
 class ServicioSocial(models.Model):
     carnet_estudiante = models.OneToOneField(Solicitud, primary_key=True, unique=True, on_delete=models.CASCADE)
+    carnet_docente = models.ForeignKey(Docente, on_delete=models.CASCADE)
     dui_asesor_externo = models.ForeignKey(AsesorExterno, on_delete=models.CASCADE)
-    dui_asesor_interno = models.ForeignKey(AsesorInterno, on_delete=models.CASCADE)
-    carnet_jefe_depto = models.ForeignKey(JefeDepartamento, on_delete=models.CASCADE)
     codigo_proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -134,30 +141,47 @@ class ServicioSocial(models.Model):
 
 
 
-class CoordinadorUnidadProySoc(models.Model):
-    carnet_coordinador_UPS = models.CharField(primary_key=True, max_length=10, null=False)
-    nombre_coordinador_UPS = models.CharField(max_length=50, null=False)
-    apellido_coordinador_UPS = models.CharField(max_length=50, null=False)
+# --------------------------------------------------------------------------
 
-    def __str__(self):
-        return carnet_coordinador_UPS
+# class CoordinadorUnidadProySoc(models.Model):
+#     carnet_coordinador_UPS = models.CharField(primary_key=True, max_length=10, null=False)
+#     nombre_coordinador_UPS = models.CharField(max_length=50, null=False)
+#     apellido_coordinador_UPS = models.CharField(max_length=50, null=False)
 
+#     def __str__(self):
+#         return carnet_coordinador_UPS
 
+# class JefeUnidadProySoc(models.Model):
+#     carnet_jefe_UPS = models.CharField(primary_key=True, max_length=10, null=False)
+#     nombre_jefe_UPS = models.CharField(max_length=50, null=False)
+#     apellido_jefe_UPS = models.CharField(max_length=50, null=False)
 
-class JefeUnidadProySoc(models.Model):
-    carnet_jefe_UPS = models.CharField(primary_key=True, max_length=10, null=False)
-    nombre_jefe_UPS = models.CharField(max_length=50, null=False)
-    apellido_jefe_UPS = models.CharField(max_length=50, null=False)
+#     def __str__(self):
+#         return carnet_jefe_UPS
 
-    def __str__(self):
-        return carnet_jefe_UPS
+# class DirectorEscuela(models.Model):
+#     carnet_director_escuela = models.CharField(primary_key=True, max_length=10, null=False)
+#     nombre_director_escuela = models.CharField(max_length=50, null=False)
+#     apellido_director_escuela = models.CharField(max_length=50, null=False)
 
+#     def __str__(self):
+#         return carnet_director_escuela
 
+# class AsesorInterno(models.Model):
+#     dui_asesor_interno = models.CharField(primary_key=True, max_length=10, null=False)
+#     nombre_asesor_interno = models.CharField(max_length=50, null=False)
+#     apellido_asesor_interno = models.CharField(max_length=50, null=False)
+#     cargo_asesor_interno = models.CharField(max_length=100, null=False)
 
-class DirectorEscuela(models.Model):
-    carnet_director_escuela = models.CharField(primary_key=True, max_length=10, null=False)
-    nombre_director_escuela = models.CharField(max_length=50, null=False)
-    apellido_director_escuela = models.CharField(max_length=50, null=False)
+#     def __str__(self):
+#         return self.dui_asesor_interno
 
-    def __str__(self):
-        return carnet_director_escuela
+# class JefeDepartamento(models.Model):
+#     carnet_jefe_depto = models.CharField(primary_key=True, max_length=10, null=False)
+#     nombre_jefe_depto = models.CharField(max_length=50, null=False)
+#     apellido_jefe_depto = models.CharField(max_length=50, null=False)
+
+#     def __str__(self):
+#         return self.carnet_jefe_depto
+
+# -----------------------------------------------------------------------------------------

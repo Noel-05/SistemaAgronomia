@@ -27,6 +27,7 @@ Estudios Universitarios
                     <th>Experiencia en Areas</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
+                    <th>Registrar Solicitud</th>
         		</tr>
             </thead>
 
@@ -45,6 +46,8 @@ Estudios Universitarios
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_estudio_universitario' estu.pk %}', 'Modificar registro de {{ estu.carnet_estudiante }}')" class = "btn">Editar</a></td>
                     
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_estudio_universitario' estu.pk %}', 'Eliminar registro con {{ estu.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:consulta_solicitud_servicio_social' %}" onclick = "return '{% url 'proyeccionsocial:consulta_solicitud_servicio_social' %}' )" class = "btn">Realizar Solicitud</a></td>
         		</tr>
             {% endfor %}
             {% endif %}

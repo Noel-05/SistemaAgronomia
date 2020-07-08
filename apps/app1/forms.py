@@ -75,6 +75,7 @@ class EstudioUniversitarioForm(forms.ModelForm):
     codigo_carrera = forms.ModelChoiceField(queryset=Carrera.objects.all().order_by('nombre_carrera'))
     codigo_ciclo = forms.ModelChoiceField(queryset=Ciclo.objects.all().order_by('codigo_ciclo'))
     carnet_estudiante = forms.ModelChoiceField(queryset=Estudiante.objects.all().order_by('carnet_estudiante'))
+
     class Meta:
         model = EstudioUniversitario
         widgets = {
@@ -112,3 +113,43 @@ class EstudioUniversitarioForm(forms.ModelForm):
         if porc_carrerar_aprob is not None:
             if porc_carrerar_aprob < 60:
                 self.add_error('porc_carrerar_aprob', 'Aun no esta apto para realizar el servicio social.')
+
+
+class SolicitudForm(forms.ModelForm):
+    codigo_entidad = forms.ModelChoiceField(queryset=EntidadExterna.objects.all().order_by('nombre_entidad'))
+    carnet_estudiante = forms.ModelChoiceField(queryset=Estudiante.objects.all().order_by('carnet_estudiante'))
+
+    class Meta:
+        model = Solicitud
+        widgets = {
+            'horas_semana': forms.TextInput(attrs={'placeholder': 'Horas a la Semana', 'autofocus': '', 'required': '', 'maxlength':'3'}),
+            'dias_semana': forms.TextInput(attrs={'placeholder': 'Días a la Semana', 'autofocus': '', 'required': '',  'maxlength':'1'}),
+            'modalidad': forms.TextInput(attrs={'placeholder': 'Modalidad del Servicio', 'autofocus': '', 'required': ''}),
+            'fecha_inicio': forms.TextInput(attrs={'placeholder': 'Fecha de Inicio', 'autocomplete': 'off', 'type':'date', 'min':'1940-01-01'}),
+            'fecha_fin': forms.TextInput(attrs={'placeholder': 'Fecha de Finalización', 'autocomplete': 'off', 'type':'date', 'min':'1940-01-01', 'required':'false'}),
+        }
+        fields = {
+            'carnet_estudiante': forms.CharField,
+            'codigo_entidad': forms.CharField,
+            'horas_semana': forms.CharField,
+            'dias_semana': forms.CharField,
+            'modalidad': forms.IntegerField,
+            'fecha_inicio': forms.DateField,
+            'fecha_fin': forms.DateField,
+        }
+        labels = {
+            'carnet_estudiante': 'Carnet Estudiante',
+            'codigo_entidad': 'Nombre de la Entidad',
+            'horas_semana': 'Horas a la Semana',
+            'dias_semana': 'Días a la Semana',
+            'modalidad': 'Modalidad del Servicio',
+            'fecha_inicio': 'Fecha de Inicio',
+            'fecha_fin': 'Fecha Finalización',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(SolicitudForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+                })
