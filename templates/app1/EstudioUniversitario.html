@@ -8,7 +8,19 @@ Estudios Universitarios
     <div class="container">
         <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Estudio Universitario</h2>
         </br></br>
+
         <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudio_universitario' %}', 'Registrar Estudio Universitario')" value="Registrar Estudio">
+
+<!--         {% if estudios_list %}
+            {% for estu in estudios_list %}
+                {% if empty %}
+                    <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudio_universitario' %}', 'Registrar Estudio Universitario')" value="Registrar Estudio">
+                {% else %}
+                    <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudio_universitario' %}', 'Registrar Estudio Universitario')" value="Registrar Estudio" style="display:none;">
+                {% endif %}
+            {% endfor %}
+        {% endif %} -->
+        
         </br></br></br>
     </div>
   </header>

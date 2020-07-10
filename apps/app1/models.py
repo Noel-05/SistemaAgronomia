@@ -61,7 +61,7 @@ class EntidadExterna(models.Model):
     telefono_entidad = models.IntegerField(null=False)
 
     def __str__(self):
-        return self.nombre_entidad   
+        return self.nombre_entidad 
 
 
 

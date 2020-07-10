@@ -36,7 +36,13 @@ urlpatterns=[
 
 	#URL para los Formularios
 	path('proyeccionsocial/generarF1/<str:carnet_estudiante>/',generarF1.as_view(), name= "generar_F1"),
+	path('proyeccionsocial/generarF2/<str:carnet_estudiante>/',generarF2.as_view(), name= "generar_F2"),
+	path('proyeccionsocial/generarF3/<str:carnet_estudiante>/',generarF3.as_view(), name= "generar_F3"),
+	path('proyeccionsocial/generarF4TI/<str:carnet_estudiante>/',generarF4TI.as_view(), name= "generar_F4TI"),
+	path('proyeccionsocial/generarF4TE/<str:carnet_estudiante>/',generarF4TE.as_view(), name= "generar_F4TE"),
+	path('proyeccionsocial/generarF6/<str:carnet_estudiante>/',generarF6.as_view(), name= "generar_F6"),
 	path('proyeccionsocial/generarF7/<str:carnet_estudiante>/',generarF7.as_view(), name= "generar_F7"),
 	path('proyeccionsocial/generarF8/<str:carnet_estudiante>/',generarF8.as_view(), name= "generar_F8"),
 	path('proyeccionsocial/generarF9/<str:carnet_estudiante>/',generarF9.as_view(), name= "generar_F9"),
+	path('proyeccionsocial/generarF11/<str:carnet_estudiante>/',generarF11.as_view(), name= "generar_F11"),
 ]

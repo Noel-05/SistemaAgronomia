@@ -115,6 +115,7 @@ class EstudioUniversitarioForm(forms.ModelForm):
                 self.add_error('porc_carrerar_aprob', 'Aun no esta apto para realizar el servicio social.')
 
 
+
 class SolicitudForm(forms.ModelForm):
     codigo_entidad = forms.ModelChoiceField(queryset=EntidadExterna.objects.all().order_by('nombre_entidad'))
     carnet_estudiante = forms.ModelChoiceField(queryset=Estudiante.objects.all().order_by('carnet_estudiante'))
