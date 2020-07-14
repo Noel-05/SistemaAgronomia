@@ -154,3 +154,39 @@ class SolicitudForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
                 })
+
+
+class EstadoSolicitudForm(forms.ModelForm):
+    carnet_estudiante = forms.ModelChoiceField(queryset=Solicitud.objects.all().order_by('carnet_estudiante'))
+
+    class Meta:
+        model = EstadoSolicitud
+        widgets = {
+            'aceptado': forms.Select(choices=estado),
+            'motivo': forms.TextInput(attrs={'placeholder': 'Motivo', 'autofocus': '', 'required': False}),
+            'observaciones': forms.TextInput(attrs={'placeholder': 'Observaciones', 'autofocus': '', 'required': False}),
+        }
+        fields = {
+            'carnet_estudiante': forms.CharField,
+            'aceptado': forms.CharField,
+            'motivo': forms.CharField,
+            'observaciones': forms.CharField,
+        }
+        labels = {
+            'carnet_estudiante': 'Carnet Estudiante',
+            'aceptado': 'Estado de la Solicitud',
+            'motivo': 'Motivo',
+            'observaciones': 'Observaciones',
+        }
+        error_messages = {
+            'motivo': {
+                'max_length': ("This writer's name is too long."),
+            },
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(EstadoSolicitudForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+                })

@@ -8,12 +8,27 @@ Control Estudiante
     <div class="container">
         <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Estudiante</h2>
         </br></br>
-        <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudiante' %}', 'Registrar Estudiante')" value="Agregar">
-        </br></br></br>
+
+        {% if request.user.usuario_administrador %}
+            <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudiante' %}', 'Registrar Estudiante')" value="Agregar"></br></br>
+        {% endif %}
+
+        </br>
     </div>
   </header>
 
 <div class="container">
+    <!--Boton Buscar-->
+    <div align="center" class="busqueda">
+        <form method="POST" action="{% url 'proyeccionsocial:consulta_estudiante_buscar' %}">
+            {% csrf_token %} 
+            <input type="text" name="carnet_estudiante"  id = "carnet_estudiante" class = "input-style" placeholder="Porfavor Ingrese su Carnet" required>
+            <input class="btn-buscar btn-busqueda" type = "submit" value = "Buscar" id = "buscarEstudiante">
+        </form>
+    </div>
+
+    </br>
+
     <div>
         <table>
             <thead>
@@ -25,11 +40,14 @@ Control Estudiante
             	    <th>Correo</th>
             	    <th>Direccion</th>
                     <th>Editar</th>
+                {% if request.user.usuario_administrador %}
                     <th>Eliminar</th>
+                {% endif %}
                     <th>Agregar Estudios</th>
         		</tr>
             </thead>
 
+        {% if request.user.usuario_administrador %}
             {% if estudiante_list %}
             {% for est in estudiante_list %}
 
@@ -49,6 +67,37 @@ Control Estudiante
         		</tr>
             {% endfor %}
             {% endif %}
+        {% endif %}
+
+
+        {% if estudiante_busc %}
+        {% for est in estudiante_busc %}
+        
+            <tr class="etiqueta-tr">
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.carnet_estudiante }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.nombre_estudiante}} {{ est.apellido_estudiante}}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.sexo_estudiante }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.telefono_estudiante }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.correo_estudiante }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.direccion_estudiante }}</td>
+                
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_estudiante' est.pk %}', 'Modificar registro de {{ est.carnet_estudiante }}')" class = "btn">Editar</a></td>
+
+            {% if request.user.usuario_administrador %}
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_estudiante' est.pk %}', 'Eliminar registro con {{ est.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+            {% endif %}  
+
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:consulta_estudio_universitario' %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudio_universitario' %}' )" class = "btn">Agregar Estudio</a></td>
+            </tr>
+
+        {% endfor %}
+        {% else %}
+
+        {% ifequal suma " " %}
+            <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudiante' %}', 'Registrar Estudiante')" value="Agregar"></br></br>
+        {% endifequal %}
+
+        {% endif %}            
 
     	</table>
     </div>

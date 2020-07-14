@@ -26,8 +26,9 @@ Solicitud Servicio Social
                     <th>Fecha Inicio</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
-
                     <th>Imprimir</th>
+
+                    <th>Estado Solicitud</th>
         		</tr>
             </thead>
 
@@ -47,6 +48,10 @@ Solicitud Servicio Social
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_solicitud_servicio_social' sol.pk %}', 'Eliminar registro con {{ sol.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
 
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{%url 'proyeccionsocial:generar_F1' sol.pk %}" class = "btn">Imprimir F-1</a></td>
+
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social' %}', 'Eliminar registro con {{ sol.carnet_estudiante }}')" class = "btn">Agregar Estado</a></td>
+
         		</tr>
             {% endfor %}
             {% endif %}

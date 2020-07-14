@@ -81,9 +81,9 @@ class Solicitud(models.Model):
 
 class EstadoSolicitud(models.Model):
     carnet_estudiante = models.OneToOneField(Solicitud, unique=True, primary_key=True, on_delete = models.CASCADE)
-    aceptado = models.CharField(max_length=2, null=False)
-    motivo = models.CharField(max_length=200, null=False)
-    observaciones = models.CharField(max_length=200, null=False)
+    aceptado = models.CharField(max_length=30, null=False)
+    motivo = models.CharField(max_length=200, null=True, blank=True)
+    observaciones = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.carnet_estudiante.__str__() 

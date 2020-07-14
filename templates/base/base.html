@@ -50,20 +50,28 @@
 <body>
 
   <header id="header">
-
     <div class="container-fluid navbar navbar-light">
+
       <div id="logo" class="pull-left">
         <a  href="{%url 'proyeccionsocial:index'%}"><img src="{% static 'img/logoUPSAgro.png' %}" class ="imglogo"></a>
         <h1>Sistema Gestor de Servicio Social - Agronomia.</h1>
       </div>
+
+      <a href="{% url 'usuario:logout' %}"><input type="button" href="{% url 'usuario:logout' %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cerrar Sesi&oacute;n"></a>
+
     </div>
 
     <div class="bot">
       <ul class="nav-menu">
+
         <li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:index'%}'"><a style="text-decoration:none" href="{%url 'proyeccionsocial:index'%}">Inicio</a></li>
+
         <li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:consulta_estudiante'%}'"><a style="text-decoration:none" href="{%url 'proyeccionsocial:consulta_estudiante' %}">Estudiante</a></li>
+
         <li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:consulta_ciclo'%}'"><a style="text-decoration:none" href="{%url 'proyeccionsocial:consulta_ciclo'%}">Ciclo</a></li>
+
         <li class="list-group-item" ><a style="text-decoration:none" href="#intro">Proyectos</a></li>
+
         <li class="list-group-item menu-has-children"><a style="text-decoration:none" href="#intro">Formularios</a>
           <ul>
             <li><a href = "{%url 'proyeccionsocial:generar_F1' 'RM17039' %}">Formulario F-1</a></li>
@@ -78,6 +86,14 @@
             <li><a href = "{%url 'proyeccionsocial:generar_F11' 'RM17039' %}">Formulario F-11</a></li>
           </ul>
         </li>
+        
+        <li class="list-group-item menu-has-children"><a style="text-decoration:none" href="#">Usuarios</a>
+          <ul>
+            <li><a href="{%url 'usuario:listar_usuarios'%}">Listado de Usuarios</a></li>
+            <li><a href="{%url 'usuario:registrar_usuario'%}">Registrar Usuarios</a></li>
+          </ul>
+        </li>
+        
       </ul>
     </div>
   </header>

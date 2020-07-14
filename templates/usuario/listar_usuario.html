@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{%block title%}
+Listado de Usuarios
+{%endblock%}
+
+{% block content %}
+{% if object_list %}
+
+<header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Usuarios</h2>
+        </br></br>
+    </div>
+  </header>
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-8">
+                
+            </div>
+        </div>
+    </div>
+    <div class="table-stats order-table ov-h">
+        <table id="tabla_usuarios" class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuarios</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+<!--                     <th>Email</th> --> 
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for usuario in object_list %}   
+            <tr>
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.username }}</td>
+                <td>{{ usuario.nombres }}</td>
+                <td>{{ usuario.apellidos }}</td>
+                <td class="width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "" class = "btn">Editar</a></td>
+                <td class="width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "" class = "btn">Eliminar</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<h1>No existen Usuarios registrados</h1>
+{% endif %}
+{% endblock %}

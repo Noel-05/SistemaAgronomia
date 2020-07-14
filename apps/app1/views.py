@@ -93,6 +93,25 @@ class eliminarEstudiante(DeleteView):
 #-----------------------------------------------------------------------------------------------
 
 
+# Busqueda de Estudiante
+def consultaEstudianteBuscar(request):
+    carnet_estudiante = request.POST['carnet_estudiante']
+    if request.method == 'POST':
+        estudiante_busc = Estudiante.objects.filter(carnet_estudiante = carnet_estudiante)
+        
+        suma = " "
+        if len(estudiante_busc) == 0:
+            suma = " "
+
+        contexto = {'estudiante_busc': estudiante_busc,
+        'suma': suma,}
+
+        return render(request, 'app1/Estudiante.html', contexto)
+
+
+#-----------------------------------------------------------------------------------------------
+
+
 def consultaEstudioUniversitario(request):
     estudios_list=EstudioUniversitario.objects.order_by('codigo_carrera')
     context = {
@@ -147,6 +166,36 @@ class editarSolicitudServicioSocial(UpdateView):
 class eliminarSolicitudServicioSocial(DeleteView):
     model = Solicitud
     template_name = 'app1/eliminar_solicitud_servicio_social.html'
+    success_url = reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social')
+
+
+#-----------------------------------------------------------------------------------------------
+
+
+def consultaEstadoSolicitudServicioSocial(request):
+    estadoSolicitudes_list=EstadoSolicitud.objects.order_by('carnet_estudiante')
+    context = {
+        'estadoSolicitudes_list': estadoSolicitudes_list,
+    }
+    return render(
+        request,
+        'app1/Solicitud.html', context
+    )
+
+class crearEstadoSolicitudServicioSocial(CreateView):
+    template_name = 'app1/crear_estado_solicitud_servicio_social.html'
+    form_class = EstadoSolicitudForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social')
+
+class editarEstadoSolicitudServicioSocial(UpdateView):
+    model = EstadoSolicitud
+    template_name = 'app1/crear_estado_solicitud_servicio_social.html'
+    form_class = EstadoSolicitudForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social')
+
+class eliminarEstadoSolicitudServicioSocial(DeleteView):
+    model = EstadoSolicitud
+    template_name = 'app1/eliminar_estado_solicitud_servicio_social.html'
     success_url = reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social')
 
 
@@ -220,10 +269,15 @@ class generarF1(ListView):
             entidad = i.codigo_entidad
             modalidad = i.modalidad
             fecha_inicio = i.fecha_inicio
-        
-        aceptado = "NO"
-        motivo = "Debe escoger otra entidad."
-        observaciones = "Porfavor escoja otra entidad para poder realizar su servicio social."
+
+        aceptado = "** ¡NO ASIGNADO AÚN! **"
+        motivo = "** ¡NO ASIGNADO AÚN! **"
+        observaciones = "** ¡NO ASIGNADO AÚN! **"
+
+        for i in EstadoSolicitud.objects.filter(carnet_estudiante = carnet_estudiante):
+            aceptado = i.aceptado
+            motivo = i.motivo
+            observaciones = i.observaciones
 
         texto = 'No. Correlativo: %s' % numero
         pdf.setFont("Helvetica-Bold", 10)
@@ -359,20 +413,36 @@ class generarF1(ListView):
         pdf.setFont("Helvetica-Bold", 10)
         pdf.drawString(60, 265, u"PARA USO EXCLUSIVO DE PROYECCION SOCIAL ")
 
-        texto = 'Aceptado: %s' % aceptado
-        pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 245, texto)
+        if aceptado == "** ¡NO ASIGNADO AÚN! **":
+            texto = 'Aceptado: %s' % aceptado
+            pdf.setFont("Helvetica-Bold", 10)
+            pdf.drawString(60, 245, texto)
 
-        texto = 'Motivo: %s' % motivo
-        pdf.setFont("Helvetica", 10)
-        pdf.drawString(200, 245, texto)
+            texto = 'Motivo: %s' % motivo
+            pdf.setFont("Helvetica-Bold", 10)
+            pdf.drawString(265, 245, texto)
 
-        pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 225, u"Observaciones: ")
+            pdf.setFont("Helvetica-Bold", 10)
+            pdf.drawString(60, 225, u"Observaciones: ")
 
-        texto = '%s' % observaciones
-        pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 210, texto)
+            texto = '%s' % observaciones
+            pdf.setFont("Helvetica-Bold", 10)
+            pdf.drawString(60, 210, texto)
+        else:
+            texto = 'Aceptado: %s' % aceptado
+            pdf.setFont("Helvetica", 10)
+            pdf.drawString(60, 245, texto)
+
+            texto = 'Motivo: %s' % motivo
+            pdf.setFont("Helvetica", 10)
+            pdf.drawString(200, 245, texto)
+
+            pdf.setFont("Helvetica", 10)
+            pdf.drawString(60, 225, u"Observaciones: ")
+
+            texto = '%s' % observaciones
+            pdf.setFont("Helvetica", 10)
+            pdf.drawString(60, 210, texto)
 
         return queryset
 
