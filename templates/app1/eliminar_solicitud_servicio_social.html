@@ -10,7 +10,7 @@
 			<div class="modal-footer">
             	<div class="col-lg-12 text-right">
             		<input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Si, Eliminar">
-                 	<a href = "{% url 'proyeccionsocial:consulta_solicitud_servicio_social' %}"><input type="button" href="{% url 'proyeccionsocial:consulta_solicitud_servicio_social' %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
+                 	<a href = "{% url 'proyeccionsocial:consulta_solicitud_servicio_social' user.username %}"><input type="button" href="{% url 'proyeccionsocial:consulta_solicitud_servicio_social' user.username %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
             	</div>
         	</div>
 		</form>

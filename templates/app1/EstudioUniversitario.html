@@ -9,19 +9,30 @@ Estudios Universitarios
         <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Estudio Universitario</h2>
         </br></br>
 
-        <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudio_universitario' %}', 'Registrar Estudio Universitario')" value="Registrar Estudio"> 
-
-        <!-- {% if estudios_list %}
-            <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudio_universitario' %}', 'Registrar Estudio Universitario')" value="Registrar Estudio" style="display:none;">
-        {% else %}
-            <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudio_universitario' %}', 'Registrar Estudio Universitario')" value="Registrar Estudio"> 
-        {% endif %} -->
+        {% if request.user.usuario_administrador %}
+            <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudio_universitario' user.username %}', 'Registrar Estudio Universitario')" value="Registrar Estudio"> </br></br>
+        {% endif %}
         
-        </br></br></br>
+        </br>
+
     </div>
   </header>
 
 <div class="container">
+
+    {% if request.user.usuario_administrador %}
+        <!-- Boton Buscar -->
+        <div align="center" class="busqueda">
+            <form method="POST" action="{% url 'proyeccionsocial:consulta_estudio_universitario_buscar' %}">
+                {% csrf_token %} 
+                <input type="text" name="carnet_estudiante"  id = "carnet_estudiante" class = "input-style" placeholder="Porfavor Ingrese su Carnet" required>
+                <input class="btn-buscar btn-busqueda" type = "submit" value = "Buscar" id = "buscarEstudiante">
+            </form>
+        </div>
+    {% endif %}
+
+    </br>
+
     <div>
         <table>
             <thead>
@@ -34,11 +45,14 @@ Estudios Universitarios
                     <th>Unidades Valorativas</th>
                     <th>Experiencia en Areas</th>
                     <th>Editar</th>
+                {% if request.user.usuario_administrador %}
                     <th>Eliminar</th>
+                {% endif %}
                     <th>Registrar Solicitud</th>
         		</tr>
             </thead>
 
+        {% if request.user.usuario_administrador %}
             {% if estudios_list %}
             {% for estu in estudios_list %}
 
@@ -53,18 +67,76 @@ Estudios Universitarios
                     
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_estudio_universitario' estu.pk %}', 'Modificar registro de {{ estu.carnet_estudiante }}')" class = "btn">Editar</a></td>
                     
+                {% if request.user.usuario_administrador %}
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_estudio_universitario' estu.pk %}', 'Eliminar registro con {{ estu.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+                {% endif %}
 
-                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:consulta_solicitud_servicio_social' %}" onclick = "return '{% url 'proyeccionsocial:consulta_solicitud_servicio_social' %}' )" class = "btn">Realizar Solicitud</a></td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:consulta_solicitud_servicio_social' user.username %}" onclick = "return '{% url 'proyeccionsocial:consulta_solicitud_servicio_social' user.username %}' )" class = "btn">Realizar Solicitud</a></td>
         		</tr>
+
             {% endfor %}
             {% endif %}
+
+        {% else %}
+
+            {% if queryset %}
+            {% for estu2 in queryset %}
+
+                <tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.carnet_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.carnet_estudiante.nombre_estudiante }} {{ estu2.carnet_estudiante.apellido_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.codigo_carrera }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.codigo_ciclo }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.porc_carrerar_aprob }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.unidades_valorativas }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.experiencia_areas_conoc }}</td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_estudio_universitario' estu2.pk %}', 'Modificar registro de {{ estu2.carnet_estudiante }}')" class = "btn">Editar</a></td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:consulta_solicitud_servicio_social' user.username %}" onclick = "return '{% url 'proyeccionsocial:consulta_solicitud_servicio_social' user.username %}' )" class = "btn">Realizar Solicitud</a></td>
+                </tr>
+
+            {% endfor %}
+            {% else %}
+
+                {% ifequal suma " " %}
+                    <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudio_universitario' user.username %}', 'Registrar Estudio Universitario')" value="Registrar Estudio"> </br></br>
+                {% endifequal %}
+
+            {% endif %}         
+
+        {% endif %}
+
+        {% if request.user.usuario_administrador %}
+            {% if estudiante_busc %}
+            {% for estu2 in estudiante_busc %}
+            
+                <tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.carnet_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.carnet_estudiante.nombre_estudiante }} {{ estu2.carnet_estudiante.apellido_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.codigo_carrera }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.codigo_ciclo }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.porc_carrerar_aprob }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.unidades_valorativas }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ estu2.experiencia_areas_conoc }}</td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_estudio_universitario' estu2.pk %}', 'Modificar registro de {{ estu2.carnet_estudiante }}')" class = "btn">Editar</a></td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_estudio_universitario' estu2.pk %}', 'Eliminar registro con {{ estu2.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:consulta_solicitud_servicio_social' user.username %}" onclick = "return '{% url 'proyeccionsocial:consulta_solicitud_servicio_social' user.username %}' )" class = "btn">Realizar Solicitud</a></td>
+                </tr>
+
+            {% endfor %}
+            {% endif %}  
+        {% endif %}      
 
     	</table>
     </div>
     
     </br>
-    <a href = "{% url 'proyeccionsocial:consulta_estudiante' %}"><input class = "btn-buscar btn-busqueda"  type="button" href = "{% url 'proyeccionsocial:consulta_estudiante' %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudiante' %}' )" value="Regresar"></a>
+    
+    <a href = "{% url 'proyeccionsocial:consulta_estudiante' user.username %}"><input class = "btn-buscar btn-busqueda"  type="button" href = "{% url 'proyeccionsocial:consulta_estudiante' user.username %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudiante' user.username %}' )" value="Regresar"></a>
 
 </div>
 

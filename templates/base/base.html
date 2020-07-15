@@ -53,7 +53,7 @@
     <div class="container-fluid navbar navbar-light">
 
       <div id="logo" class="pull-left">
-        <a  href="{%url 'proyeccionsocial:index'%}"><img src="{% static 'img/logoUPSAgro.png' %}" class ="imglogo"></a>
+        <a  href="{% url 'proyeccionsocial:index' %}"><img src="{% static 'img/logoUPSAgro.png' %}" class ="imglogo"></a>
         <h1>Sistema Gestor de Servicio Social - Agronomia.</h1>
       </div>
 
@@ -64,11 +64,14 @@
     <div class="bot">
       <ul class="nav-menu">
 
-        <li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:index'%}'"><a style="text-decoration:none" href="{%url 'proyeccionsocial:index'%}">Inicio</a></li>
+        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:index' %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:index' %}">Inicio</a></li>
 
-        <li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:consulta_estudiante'%}'"><a style="text-decoration:none" href="{%url 'proyeccionsocial:consulta_estudiante' %}">Estudiante</a></li>
+  {% if user.is_authenticated %}
+        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_estudiante' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_estudiante' user.username %}">Estudiante</a></li>
 
-        <li class="list-group-item" onclick="window.location.href='{%url 'proyeccionsocial:consulta_ciclo'%}'"><a style="text-decoration:none" href="{%url 'proyeccionsocial:consulta_ciclo'%}">Ciclo</a></li>
+      {% if request.user.usuario_administrador %}
+        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_ciclo' %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_ciclo' %}">Ciclo</a></li>
+      {% endif %}
 
         <li class="list-group-item" ><a style="text-decoration:none" href="#intro">Proyectos</a></li>
 
@@ -87,14 +90,19 @@
           </ul>
         </li>
         
+      {% if request.user.usuario_administrador %}
         <li class="list-group-item menu-has-children"><a style="text-decoration:none" href="#">Usuarios</a>
           <ul>
-            <li><a href="{%url 'usuario:listar_usuarios'%}">Listado de Usuarios</a></li>
-            <li><a href="{%url 'usuario:registrar_usuario'%}">Registrar Usuarios</a></li>
+            <li><a href="{% url 'usuario:listar_usuarios' %}">Listado de Usuarios</a></li>
+            <li><a href="{% url 'usuario:registrar_usuario' %}">Registrar Usuarios</a></li>
           </ul>
         </li>
+      {% endif %}
+
+  {% endif %}
         
       </ul>
+      }
     </div>
   </header>
 

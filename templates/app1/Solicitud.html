@@ -8,12 +8,30 @@ Solicitud Servicio Social
     <div class="container">
         <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Solicitud Servicio Social</h2>
         </br></br>
-        <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_solicitud_servicio_social' %}', 'Registrar Solicitud Servicio Social')" value="Registrar Solicitud">
-        </br></br></br>
+
+        {% if request.user.usuario_administrador %}
+            <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_solicitud_servicio_social' user.username %}', 'Registrar Solicitud Servicio Social')" value="Registrar Solicitud"> </br></br>
+        {% endif %}
+
+        </br>
     </div>
   </header>
 
 <div class="container">
+
+    {% if request.user.usuario_administrador %}
+        <!-- Boton Buscar -->
+        <div align="center" class="busqueda">
+            <form method="POST" action="{% url 'proyeccionsocial:consulta_solicitud_servicio_social_buscar' %}">
+                {% csrf_token %} 
+                <input type="text" name="carnet_estudiante"  id = "carnet_estudiante" class = "input-style" placeholder="Porfavor Ingrese su Carnet" required>
+                <input class="btn-buscar btn-busqueda" type = "submit" value = "Buscar" id = "buscarEstudiante">
+            </form>
+        </div>
+    {% endif %}
+
+    </br>
+
     <div>
         <table>
             <thead>
@@ -25,13 +43,17 @@ Solicitud Servicio Social
                     <th>Modalidad</th>
                     <th>Fecha Inicio</th>
                     <th>Editar</th>
+                {% if request.user.usuario_administrador %}
                     <th>Eliminar</th>
+                {% endif %}
                     <th>Imprimir</th>
-
+                {% if request.user.usuario_administrador %}
                     <th>Estado Solicitud</th>
+                {% endif %}
         		</tr>
             </thead>
 
+        {% if request.user.usuario_administrador %}
             {% if solicitudes_list %}
             {% for sol in solicitudes_list %}
 
@@ -45,22 +67,89 @@ Solicitud Servicio Social
                     
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_solicitud_servicio_social' sol.pk %}', 'Modificar registro de {{ sol.carnet_estudiante }}')" class = "btn">Editar</a></td>
                     
+                {% if request.user.usuario_administrador %}
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_solicitud_servicio_social' sol.pk %}', 'Eliminar registro con {{ sol.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+                {% endif %}
 
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{%url 'proyeccionsocial:generar_F1' sol.pk %}" class = "btn">Imprimir F-1</a></td>
 
-                    
-                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social' %}', 'Eliminar registro con {{ sol.carnet_estudiante }}')" class = "btn">Agregar Estado</a></td>
+                {% if request.user.usuario_administrador %}
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social' user.username %}', 'Registrar Estado Solicitud Servicio Social')" class = "btn">Agregar Estado</a></td>
+                {% endif %}
 
         		</tr>
+
             {% endfor %}
             {% endif %}
+
+        {% else %}
+
+            {% if queryset %}
+            {% for sol2 in queryset %}
+                <tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.carnet_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.codigo_entidad }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.horas_semana }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.dias_semana }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.modalidad }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.fecha_inicio }}</td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_solicitud_servicio_social' sol2.pk %}', 'Modificar registro de {{ sol2.carnet_estudiante }}')" class = "btn">Editar</a></td>
+                    
+                {% if request.user.usuario_administrador %}
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_solicitud_servicio_social' sol2.pk %}', 'Eliminar registro con {{ sol2.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+                {% endif %}
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{%url 'proyeccionsocial:generar_F1' sol2.pk %}" class = "btn">Imprimir F-1</a></td>
+
+                {% if request.user.usuario_administrador %}
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social' user.username %}', 'Registrar Estado Solicitud Servicio Social')" class = "btn">Agregar Estado</a></td>
+                {% endif %}
+
+                </tr>
+
+            {% endfor %}
+            {% else %}
+
+                {% ifequal suma " " %}
+                    <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_solicitud_servicio_social' user.username %}', 'Registrar Solicitud Servicio Social')" value="Registrar Solicitud"> </br></br>
+                {% endifequal %}
+
+            {% endif %}         
+
+        {% endif %}
+
+        {% if request.user.usuario_administrador %}
+            {% if estudiante_busc %}
+            {% for sol2 in estudiante_busc %}
+            
+                <tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.carnet_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.codigo_entidad }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.horas_semana }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.dias_semana }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.modalidad }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol2.fecha_inicio }}</td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_solicitud_servicio_social' sol2.pk %}', 'Modificar registro de {{ sol2.carnet_estudiante }}')" class = "btn">Editar</a></td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_solicitud_servicio_social' sol2.pk %}', 'Eliminar registro con {{ sol2.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{%url 'proyeccionsocial:generar_F1' sol2.pk %}" class = "btn">Imprimir F-1</a></td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social' user.username %}', 'Registrar Estado Solicitud Servicio Social')" class = "btn">Agregar Estado</a></td>
+                </tr>
+
+            {% endfor %}
+            {% endif %}  
+        {% endif %}  
 
     	</table>
     </div>
     
     </br>
-    <a href = "{% url 'proyeccionsocial:consulta_estudio_universitario' %}"><input class = "btn-buscar btn-busqueda"  type="button" href = "{% url 'proyeccionsocial:consulta_estudio_universitario' %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudio_universitario' %}' )" value="Regresar"></a>
+    
+    <a href = "{% url 'proyeccionsocial:consulta_estudio_universitario' user.username %}"><input class = "btn-buscar btn-busqueda"  type="button" href = "{% url 'proyeccionsocial:consulta_estudio_universitario' user.username %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudio_universitario' user.username %}' )" value="Regresar"></a>
 
 </div>
 

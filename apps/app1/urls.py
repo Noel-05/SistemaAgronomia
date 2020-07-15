@@ -8,15 +8,7 @@ app_name='proyeccionsocial'
 urlpatterns=[
 	#URL para el menu de inicio
 	path('', index),
-	path('proyeccionsocial/index/',index, name='index'),
-
-	#URL para Estudiante
-	path('proyeccionsocial/consultaEstudiante/',login_required(consultaEstudiante), name="consulta_estudiante"),
-	path('proyeccionsocial/crearEstudiante/',login_required(crearEstudiante.as_view()), name="crear_estudiante"),
-	path('proyeccionsocial/editarEstudiante/<pk>/',login_required(editarEstudiante.as_view()), name="editar_estudiante"),
-	path('proyeccionsocial/eliminarEstudiante/<pk>/',login_required(eliminarEstudiante.as_view()), name="eliminar_estudiante"),
-	#Buscar Estudiante
-	path('proyeccionsocial/consultaEstudianteBuscar',consultaEstudianteBuscar, name="consulta_estudiante_buscar"),
+	path('proyeccionsocial/index/',login_required(index), name='index'),
 
 
 	#URL para Ciclo
@@ -26,23 +18,36 @@ urlpatterns=[
 	path('proyeccionsocial/eliminarCiclo/<pk>/',login_required(eliminarCiclo.as_view()), name="eliminar_ciclo"),
 
 
+	#URL para Estudiante
+	path('proyeccionsocial/consultaEstudiante/<username>/',login_required(consultaEstudiante), name="consulta_estudiante"),
+	path('proyeccionsocial/crearEstudiante/<username>/',login_required(crearEstudiante.as_view()), name="crear_estudiante"),
+	path('proyeccionsocial/editarEstudiante/<pk>/',login_required(editarEstudiante.as_view()), name="editar_estudiante"),
+	path('proyeccionsocial/eliminarEstudiante/<pk>/',login_required(eliminarEstudiante.as_view()), name="eliminar_estudiante"),
+	#Buscar Estudiante
+	path('proyeccionsocial/consultaEstudianteBuscar/',login_required(consultaEstudianteBuscar), name="consulta_estudiante_buscar"),
+
+
 	#URL para Estudio Universitario
-	path('proyeccionsocial/consultaEstudioUniversitario/',login_required(consultaEstudioUniversitario), name="consulta_estudio_universitario"),
-	path('proyeccionsocial/crearEstudioUniversitario/',login_required(crearEstudioUniversitario.as_view()), name="crear_estudio_universitario"),
+	path('proyeccionsocial/consultaEstudioUniversitario/<username>/',login_required(consultaEstudioUniversitario), name="consulta_estudio_universitario"),
+	path('proyeccionsocial/crearEstudioUniversitario/<username>/',login_required(crearEstudioUniversitario.as_view()), name="crear_estudio_universitario"),
 	path('proyeccionsocial/editarEstudioUniversitario/<pk>/',login_required(editarEstudioUniversitario.as_view()), name="editar_estudio_universitario"),
 	path('proyeccionsocial/eliminarEstudioUniversitario/<pk>/',login_required(eliminarEstudioUniversitario.as_view()), name="eliminar_estudio_universitario"),
+	#Buscar Estudio Universitario
+	path('proyeccionsocial/consultaEstudioUniversitarioBuscar/',login_required(consultaEstudioUniversitarioBuscar), name="consulta_estudio_universitario_buscar"),
 
 
 	#URL para la Solicitud de Servicio Social
-	path('proyeccionsocial/consultaSolicitudServicioSocial/',login_required(consultaSolicitudServicioSocial), name="consulta_solicitud_servicio_social"),
-	path('proyeccionsocial/crearSolicitudServicioSocial/',login_required(crearSolicitudServicioSocial.as_view()), name="crear_solicitud_servicio_social"),
+	path('proyeccionsocial/consultaSolicitudServicioSocial/<username>/',login_required(consultaSolicitudServicioSocial), name="consulta_solicitud_servicio_social"),
+	path('proyeccionsocial/crearSolicitudServicioSocial/<username>/',login_required(crearSolicitudServicioSocial.as_view()), name="crear_solicitud_servicio_social"),
 	path('proyeccionsocial/editarSolicitudServicioSocial/<pk>/',login_required(editarSolicitudServicioSocial.as_view()), name="editar_solicitud_servicio_social"),
 	path('proyeccionsocial/eliminarSolicitudServicioSocial/<pk>/',login_required(eliminarSolicitudServicioSocial.as_view()), name="eliminar_solicitud_servicio_social"),
+	#Buscar Solicitud Servicio Social
+	path('proyeccionsocial/consultaSolicitudServicioSocialBuscar/',login_required(consultaSolicitudServicioSocialBuscar), name="consulta_solicitud_servicio_social_buscar"),
 
 
 	#URL para el Estado de la Solicitud de Servicio Social
-	path('proyeccionsocial/consultaEstadoSolicitudServicioSocial/',login_required(consultaEstadoSolicitudServicioSocial), name="consulta_estado_solicitud_servicio_social"),
-	path('proyeccionsocial/crearEstadoSolicitudServicioSocial/',login_required(crearEstadoSolicitudServicioSocial.as_view()), name="crear_estado_solicitud_servicio_social"),
+	path('proyeccionsocial/consultaEstadoSolicitudServicioSocial/<username>/',login_required(consultaEstadoSolicitudServicioSocial), name="consulta_estado_solicitud_servicio_social"),
+	path('proyeccionsocial/crearEstadoSolicitudServicioSocial/<username>/',login_required(crearEstadoSolicitudServicioSocial.as_view()), name="crear_estado_solicitud_servicio_social"),
 	path('proyeccionsocial/editarEstadoSolicitudServicioSocial/<pk>/',login_required(editarEstadoSolicitudServicioSocial.as_view()), name="editar_estado_solicitud_servicio_social"),
 	path('proyeccionsocial/eliminarEstadoSolicitudServicioSocial/<pk>/',login_required(eliminarEstadoSolicitudServicioSocial.as_view()), name="eliminar_estado_solicitud_servicio_social"),
 

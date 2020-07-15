@@ -34,7 +34,9 @@ def index(request):
         'base/base.html',
     )
 
+
 #-----------------------------------------------------------------------------------------------
+
 
 def consultaCiclo(request):
     ciclo_list=Ciclo.objects.order_by('codigo_ciclo')
@@ -62,33 +64,56 @@ class eliminarCiclo(DeleteView):
     template_name = 'app1/eliminar_ciclo.html'
     success_url = reverse_lazy('proyeccionsocial:consulta_ciclo')
 
+
 #-----------------------------------------------------------------------------------------------
 
-def consultaEstudiante(request):
+
+def consultaEstudiante(request, username):
+    queryset = Estudiante.objects.filter(carnet_estudiante = username)
+
+    suma = " "
+    if len(queryset) == 0:
+        suma = " "
+
     estudiante_list=Estudiante.objects.order_by('carnet_estudiante')
     context = {
         'estudiante_list': estudiante_list,
+        'queryset': queryset,
+        'suma': suma,
     }
     return render(
         request,
         'app1/Estudiante.html', context
     )
 
+
 class crearEstudiante(CreateView):
     template_name = 'app1/crear_estudiante.html'
     form_class = EstudianteForm
-    success_url = reverse_lazy('proyeccionsocial:consulta_estudiante')
+
+    def get_success_url(self):
+      username = self.kwargs['username']
+      return reverse_lazy('proyeccionsocial:consulta_estudiante', kwargs={'username': username})
+
 
 class editarEstudiante(UpdateView):
     model = Estudiante
     template_name = 'app1/crear_estudiante.html'
     form_class = EstudianteForm
-    success_url = reverse_lazy('proyeccionsocial:consulta_estudiante')
+
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_estudiante', kwargs={'username': username})
+
 
 class eliminarEstudiante(DeleteView):
     model = Estudiante
     template_name = 'app1/eliminar_estudiante.html'
-    success_url = reverse_lazy('proyeccionsocial:consulta_estudiante')
+    
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_estudiante', kwargs={'username': username})
+
 
 #-----------------------------------------------------------------------------------------------
 
@@ -104,7 +129,8 @@ def consultaEstudianteBuscar(request):
             suma = " "
 
         contexto = {'estudiante_busc': estudiante_busc,
-        'suma': suma,}
+        'suma': suma,
+        }
 
         return render(request, 'app1/Estudiante.html', contexto)
 
@@ -112,10 +138,18 @@ def consultaEstudianteBuscar(request):
 #-----------------------------------------------------------------------------------------------
 
 
-def consultaEstudioUniversitario(request):
-    estudios_list=EstudioUniversitario.objects.order_by('codigo_carrera')
+def consultaEstudioUniversitario(request, username):
+    queryset = EstudioUniversitario.objects.filter(carnet_estudiante = username)
+
+    suma = " "
+    if len(queryset) == 0:
+        suma = " "
+
+    estudios_list = EstudioUniversitario.objects.order_by('codigo_carrera')
     context = {
         'estudios_list': estudios_list,
+        'queryset': queryset,
+        'suma': suma,
     }
     return render(
         request,
@@ -125,27 +159,71 @@ def consultaEstudioUniversitario(request):
 class crearEstudioUniversitario(CreateView):
     template_name = 'app1/crear_estudio_universitario.html'
     form_class = EstudioUniversitarioForm
-    success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
+
+    def get_success_url(self):
+      username = self.kwargs['username']
+      return reverse_lazy('proyeccionsocial:consulta_estudio_universitario', kwargs={'username': username})
+    #success_url = "/proyeccionsocial/consultaEstudioUniversitario/{username}/"
+    #success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
+
 
 class editarEstudioUniversitario(UpdateView):
     model = EstudioUniversitario
     template_name = 'app1/crear_estudio_universitario.html'
     form_class = EstudioUniversitarioForm
-    success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
+    
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_estudio_universitario', kwargs={'username': username})
+    #success_url = "/proyeccionsocial/consultaEstudioUniversitario/{username}/"
+    #success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
+
 
 class eliminarEstudioUniversitario(DeleteView):
     model = EstudioUniversitario
     template_name = 'app1/eliminar_estudio_universitario.html'
-    success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
+
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_estudio_universitario', kwargs={'username': username})
+    #success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
 
 
 #-----------------------------------------------------------------------------------------------
 
 
-def consultaSolicitudServicioSocial(request):
-    solicitudes_list=Solicitud.objects.order_by('carnet_estudiante')
+# Busqueda de Estudiante
+def consultaEstudioUniversitarioBuscar(request):
+    carnet_estudiante = request.POST['carnet_estudiante']
+    if request.method == 'POST':
+        estudiante_busc = EstudioUniversitario.objects.filter(carnet_estudiante = carnet_estudiante)
+        
+        suma = " "
+        if len(estudiante_busc) == 0:
+            suma = " "
+
+        contexto = {'estudiante_busc': estudiante_busc,
+        'suma': suma,
+        }
+
+        return render(request, 'app1/EstudioUniversitario.html', contexto)
+
+
+#-----------------------------------------------------------------------------------------------
+
+
+def consultaSolicitudServicioSocial(request, username):
+    queryset = Solicitud.objects.filter(carnet_estudiante = username)
+
+    suma = " "
+    if len(queryset) == 0:
+        suma = " "
+
+    solicitudes_list = Solicitud.objects.order_by('carnet_estudiante')
     context = {
         'solicitudes_list': solicitudes_list,
+        'queryset': queryset,
+        'suma': suma,
     }
     return render(
         request,
@@ -155,48 +233,99 @@ def consultaSolicitudServicioSocial(request):
 class crearSolicitudServicioSocial(CreateView):
     template_name = 'app1/crear_solicitud_servicio_social.html'
     form_class = SolicitudForm
-    success_url = reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social')
+
+    def get_success_url(self):
+      username = self.kwargs['username']
+      return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
+
 
 class editarSolicitudServicioSocial(UpdateView):
     model = Solicitud
     template_name = 'app1/crear_solicitud_servicio_social.html'
     form_class = SolicitudForm
-    success_url = reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social')
+
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
+
 
 class eliminarSolicitudServicioSocial(DeleteView):
     model = Solicitud
     template_name = 'app1/eliminar_solicitud_servicio_social.html'
-    success_url = reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social')
+    
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
 
 #-----------------------------------------------------------------------------------------------
 
 
-def consultaEstadoSolicitudServicioSocial(request):
+# Busqueda de Estudiante
+def consultaSolicitudServicioSocialBuscar(request):
+    carnet_estudiante = request.POST['carnet_estudiante']
+    if request.method == 'POST':
+        estudiante_busc = Solicitud.objects.filter(carnet_estudiante = carnet_estudiante)
+        
+        suma = " "
+        if len(estudiante_busc) == 0:
+            suma = " "
+
+        contexto = {'estudiante_busc': estudiante_busc,
+        'suma': suma,
+        }
+
+        return render(request, 'app1/Solicitud.html', contexto)
+
+
+#-----------------------------------------------------------------------------------------------
+
+
+def consultaEstadoSolicitudServicioSocial(request, username):
+    queryset = EstadoSolicitud.objects.filter(carnet_estudiante = username)
+
+    suma = " "
+    if len(queryset) == 0:
+        suma = " "
+
     estadoSolicitudes_list=EstadoSolicitud.objects.order_by('carnet_estudiante')
     context = {
         'estadoSolicitudes_list': estadoSolicitudes_list,
+        'queryset': queryset,
+        'suma': suma,
     }
     return render(
         request,
         'app1/Solicitud.html', context
     )
 
+
 class crearEstadoSolicitudServicioSocial(CreateView):
     template_name = 'app1/crear_estado_solicitud_servicio_social.html'
     form_class = EstadoSolicitudForm
-    success_url = reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social')
+
+    def get_success_url(self):
+      username = self.kwargs['username']
+      return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
+
 
 class editarEstadoSolicitudServicioSocial(UpdateView):
     model = EstadoSolicitud
     template_name = 'app1/crear_estado_solicitud_servicio_social.html'
     form_class = EstadoSolicitudForm
-    success_url = reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social')
+
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
+
 
 class eliminarEstadoSolicitudServicioSocial(DeleteView):
     model = EstadoSolicitud
     template_name = 'app1/eliminar_estado_solicitud_servicio_social.html'
-    success_url = reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social')
+    
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
 
 #-----------------------------------------------------------------------------------------------

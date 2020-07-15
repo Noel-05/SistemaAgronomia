@@ -178,11 +178,6 @@ class EstadoSolicitudForm(forms.ModelForm):
             'motivo': 'Motivo',
             'observaciones': 'Observaciones',
         }
-        error_messages = {
-            'motivo': {
-                'max_length': ("This writer's name is too long."),
-            },
-        }
 
     def __init__(self, *args, **kwargs):
         super(EstadoSolicitudForm, self).__init__(*args, **kwargs)
