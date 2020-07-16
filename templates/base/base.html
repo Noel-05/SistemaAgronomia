@@ -3,9 +3,11 @@
 <html>
 
 <head>
- 	{% block head %}
+ {% block head %}
  	<title>{% block title %} Sistema Servicio Social {% endblock %}</title>
+
 	{% block static %}
+
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 	<!-- Favicon -->
@@ -43,7 +45,7 @@
 
 	{% endblock %}
 
-	{% endblock %}
+{% endblock %}
 
 </head>
 
@@ -54,10 +56,10 @@
 
       <div id="logo" class="pull-left">
         <a  href="{% url 'proyeccionsocial:index' %}"><img src="{% static 'img/logoUPSAgro.png' %}" class ="imglogo"></a>
-        <h1>Sistema Gestor de Servicio Social - Agronomia.</h1>
+        <h1>Servicio Social - Agronomia.</h1>
       </div>
 
-      <a href="{% url 'usuario:logout' %}"><input type="button" href="{% url 'usuario:logout' %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cerrar Sesi&oacute;n"></a>
+      <a href="{% url 'usuario:logout' %}" style="text-decoration:none"><input type="button" href="{% url 'usuario:logout' %}" class="btn btn-success btn-sm" name="submit" value="Cerrar Sesi&oacute;n" style="background:green;"></a>
 
     </div>
 

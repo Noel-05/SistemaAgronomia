@@ -52,6 +52,8 @@ class ListadoUsuario(ListView):
     def get_queryset(self):
         return self.model.objects.filter(usuario_activo=True)
 
+
+
 class RegistrarUsuario(CreateView):
     model=Usuario
     form_class=FormularioUsuario
@@ -70,5 +72,29 @@ class RegistrarUsuario(CreateView):
             nuevo_usuario.save()
 
             return HttpResponseRedirect(reverse_lazy('usuario:listar_usuarios'))
+        else:
+            return render(request, self.template_name,{'form':form})
+
+
+
+class RegistrarUsuarioLogin(CreateView):
+    model=Usuario
+    form_class=FormularioUsuario
+    template_name='usuario/crear_usuario_login.html'
+
+    def post(self, request, *args, **kwargs):
+        form=self.form_class(request.POST)
+        if form.is_valid():
+            nuevo_usuario=Usuario(
+                email=form.cleaned_data.get('email'),
+                username=form.cleaned_data.get('username'),
+                nombres=form.cleaned_data.get('nombres'),
+                apellidos=form.cleaned_data.get('apellidos')
+            )
+            nuevo_usuario.set_password(form.cleaned_data.get('password1'))
+            nuevo_usuario.save()
+
+            login(request, nuevo_usuario)
+            return HttpResponseRedirect(reverse_lazy('usuario:index'))
         else:
             return render(request, self.template_name,{'form':form})

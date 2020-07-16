@@ -2,7 +2,7 @@ from django.urls import path, include
 from .views import *
 from django.contrib.auth.decorators import login_required
 from apps.usuario.views import Login, logoutUsuario
-from apps.usuario.views import ListadoUsuario, RegistrarUsuario
+from apps.usuario.views import ListadoUsuario, RegistrarUsuario, RegistrarUsuarioLogin
 
 
 app_name='usuario'
@@ -16,5 +16,6 @@ urlpatterns=[
 	path('logout/',login_required(logoutUsuario), name='logout'),
 	
 	path('listado_usuarios/', login_required(ListadoUsuario.as_view()), name='listar_usuarios'),
-	path('registrar_usuario/', RegistrarUsuario.as_view(), name='registrar_usuario'),
-	]
+	path('registrar_usuario/', login_required(RegistrarUsuario.as_view()), name='registrar_usuario'),
+	path('registrar_usuario/login', RegistrarUsuarioLogin.as_view(), name='registrar_usuario_login'),
+]
