@@ -45,6 +45,21 @@
 	border-radius: 5px ;
 }
 
+.btn-busquedaform{
+	text-align: center;
+	background: green;
+	color: white;
+	margin: auto;
+	padding: 10px 15px;
+	border-radius: 5px ;
+}
+
+.btn-busquedaform:hover{
+	opacity:0.7;
+	text-decoration: unset;
+	background: #9c9c9c;
+	color: white;
+}
 
 .btn-buscar:hover{
 	opacity:0.7;
@@ -64,7 +79,7 @@
 }
 
 .row{
-	color: #fff;
+	color: black;
 }
 
 .btn-registrar{

@@ -10,7 +10,8 @@ Control Estudiante
         </br></br>
 
         {% if request.user.usuario_administrador %}
-            <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudiante' user.username %}', 'Registrar Estudiante')" value="Agregar"></br></br>
+            {% comment %} <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudiante' user.username %}', 'Registrar Estudiante')" value="Agregar"></br></br> {% endcomment %}
+            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_estudiante' user.username %}'" value="Agregar"></br></br>
         {% endif %}
 
         </br>
@@ -62,8 +63,8 @@ Control Estudiante
             		<td class="th-borde width-th-xx" style = "text-align:center;">{{ est.telefono_estudiante }}</td>
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.correo_estudiante }}</td>
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.direccion_estudiante }}</td>
-                    
-                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_estudiante' est.pk %}', 'Modificar registro de {{ est.carnet_estudiante }}')" class = "btn">Editar</a></td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_estudiante' est.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_estudiante' est.pk %}'" class = "btn">Editar</a></td>
 
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_estudiante' est.pk %}', 'Eliminar registro con {{ est.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
 
@@ -114,7 +115,7 @@ Control Estudiante
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.correo_estudiante }}</td>
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.direccion_estudiante }}</td>
                     
-                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_estudiante' est.pk %}', 'Modificar registro de {{ est.carnet_estudiante }}')" class = "btn">Editar</a></td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_estudiante' est2.pk %}', 'Modificar registro de {{ est2.carnet_estudiante }}')" class = "btn">Editar</a></td>
 
                 {% if request.user.usuario_administrador %}
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_estudiante' est.pk %}', 'Eliminar registro con {{ est.carnet_estudiante }}')" class = "btn">Eliminar</a></td>

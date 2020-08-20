@@ -25,6 +25,8 @@ from .models import *
 from .forms import *
 from io import BytesIO
 import time
+from django.conf import settings
+import os
 
 
 # Vista para el menu de inicio
@@ -86,9 +88,8 @@ def consultaEstudiante(request, username):
         'app1/Estudiante.html', context
     )
 
-
 class crearEstudiante(CreateView):
-    template_name = 'app1/crear_estudiante.html'
+    template_name = 'app1/Crear_Estudiante.html'
     form_class = EstudianteForm
 
     def get_success_url(self):
@@ -98,7 +99,7 @@ class crearEstudiante(CreateView):
 
 class editarEstudiante(UpdateView):
     model = Estudiante
-    template_name = 'app1/crear_estudiante.html'
+    template_name = 'app1/Crear_Estudiante.html'
     form_class = EstudianteForm
 
     def get_success_url(self):
@@ -339,8 +340,8 @@ class generarF1(ListView):
      
     def cabecera(self,pdf):
         #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
-        archivo_imagen1 = 'static/img/logoUPSAgro.png'
-        archivo_imagen2 = 'static/img/logoUES.jpg'
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/logoUPSAgro.png'
+        archivo_imagen2 = settings.BASE_DIR+'/static/img/logoUES.jpg'
 
         #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
         pdf.drawImage(archivo_imagen1, 50, 730, 125, 90,preserveAspectRatio=True) 
@@ -618,9 +619,9 @@ class generarF2(ListView):
     success_url = reverse_lazy('proyeccionsocial:generar_F2')  
      
     def cabecera(self,pdf):
-        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
-        archivo_imagen1 = 'static/img/logoUPSAgro.png'
-        archivo_imagen2 = 'static/img/logoUES.jpg'
+         #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/logoUPSAgro.png'
+        archivo_imagen2 = settings.BASE_DIR+'/static/img/logoUES.jpg'
 
         #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
         pdf.drawImage(archivo_imagen1, 50, 730, 125, 90,preserveAspectRatio=True) 
@@ -777,9 +778,9 @@ class generarF3(ListView):
     success_url = reverse_lazy('proyeccionsocial:generar_F3')  
      
     def cabecera(self,pdf):
-        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
-        archivo_imagen1 = 'static/img/logoUPSAgro.png'
-        archivo_imagen2 = 'static/img/logoUES.jpg'
+         #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/logoUPSAgro.png'
+        archivo_imagen2 = settings.BASE_DIR+'/static/img/logoUES.jpg'
 
         #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
         pdf.drawImage(archivo_imagen1, 50, 730, 125, 90,preserveAspectRatio=True) 
@@ -952,9 +953,9 @@ class generarF4TI(ListView):
     success_url = reverse_lazy('proyeccionsocial:generar_F4TI')  
      
     def cabecera(self,pdf):
-        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
-        archivo_imagen1 = 'static/img/logoUPSAgro.png'
-        archivo_imagen2 = 'static/img/logoUES.jpg'
+         #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/logoUPSAgro.png'
+        archivo_imagen2 = settings.BASE_DIR+'/static/img/logoUES.jpg'
 
         #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
         pdf.drawImage(archivo_imagen1, 50, 730, 125, 90,preserveAspectRatio=True) 
@@ -1124,9 +1125,9 @@ class generarF4TE(ListView):
     success_url = reverse_lazy('proyeccionsocial:generar_F4TE')  
      
     def cabecera(self,pdf):
-        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
-        archivo_imagen1 = 'static/img/logoUPSAgro.png'
-        archivo_imagen2 = 'static/img/logoUES.jpg'
+         #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/logoUPSAgro.png'
+        archivo_imagen2 = settings.BASE_DIR+'/static/img/logoUES.jpg'
 
         #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
         pdf.drawImage(archivo_imagen1, 50, 730, 125, 90,preserveAspectRatio=True) 
@@ -1270,9 +1271,9 @@ class generarF6(ListView):
     success_url = reverse_lazy('proyeccionsocial:generar_F6')  
      
     def cabecera(self,pdf):
-        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
-        archivo_imagen1 = 'static/img/logoUPSAgro.png'
-        archivo_imagen2 = 'static/img/logoUES.jpg'
+         #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/logoUPSAgro.png'
+        archivo_imagen2 = settings.BASE_DIR+'/static/img/logoUES.jpg'
 
         #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
         pdf.drawImage(archivo_imagen1, 50, 730, 125, 90,preserveAspectRatio=True) 
@@ -1442,9 +1443,9 @@ class generarF7(ListView):
     success_url = reverse_lazy('proyeccionsocial:generar_F7')  
      
     def cabecera(self,pdf):
-        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
-        archivo_imagen1 = 'static/img/logoUPSAgro.png'
-        archivo_imagen2 = 'static/img/logoUES.jpg'
+         #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/logoUPSAgro.png'
+        archivo_imagen2 = settings.BASE_DIR+'/static/img/logoUES.jpg'
 
         #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
         pdf.drawImage(archivo_imagen1, 50, 730, 125, 90,preserveAspectRatio=True) 
@@ -1707,9 +1708,9 @@ class generarF8(ListView):
     success_url = reverse_lazy('proyeccionsocial:generar_F1')  
      
     def cabecera(self,pdf):
-        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
-        archivo_imagen1 = 'static/img/logoUPSAgro.png'
-        archivo_imagen2 = 'static/img/logoUES.jpg'
+         #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/logoUPSAgro.png'
+        archivo_imagen2 = settings.BASE_DIR+'/static/img/logoUES.jpg'
 
         #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
         pdf.drawImage(archivo_imagen1, 50, 730, 125, 90,preserveAspectRatio=True) 
@@ -2119,9 +2120,9 @@ class generarF9(ListView):
     success_url = reverse_lazy('proyeccionsocial:generar_F9')  
      
     def cabecera(self,pdf):
-        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
-        archivo_imagen1 = 'static/img/logoUPSAgro.png'
-        archivo_imagen2 = 'static/img/logoUES.jpg'
+         #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/logoUPSAgro.png'
+        archivo_imagen2 = settings.BASE_DIR+'/static/img/logoUES.jpg'
 
         #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
         pdf.drawImage(archivo_imagen1, 50, 730, 125, 90,preserveAspectRatio=True) 
@@ -2295,9 +2296,9 @@ class generarF11(ListView):
     success_url = reverse_lazy('proyeccionsocial:generar_F11')  
 
     def cabecera(self,pdf):
-        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
-        archivo_imagen1 = 'static/img/logoUPSAgro.png'
-        archivo_imagen2 = 'static/img/logoUES.jpg'
+         #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/logoUPSAgro.png'
+        archivo_imagen2 = settings.BASE_DIR+'/static/img/logoUES.jpg'
 
         #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
         pdf.drawImage(archivo_imagen1, 50, 730, 125, 90,preserveAspectRatio=True) 

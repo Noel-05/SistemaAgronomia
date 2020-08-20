@@ -31,16 +31,15 @@ class CicloForm(forms.ModelForm):
                 })
 
 
-
 class  EstudianteForm(forms.ModelForm):
     class Meta:
         model = Estudiante
         widgets = {
-            'carnet_estudiante': forms.TextInput(attrs={'placeholder': 'Carnet Estudiante', 'autofocus': '', 'required': ''}),
-            'nombre_estudiante': forms.TextInput(attrs={'placeholder': 'Nombres Estudiante', 'autofocus': '', 'required': ''}),
-            'apellido_estudiante': forms.TextInput(attrs={'placeholder': 'Apellidos Estudiante', 'autofocus': '', 'required': ''}),
+            'carnet_estudiante': forms.TextInput(attrs={'placeholder': 'Carnet Estudiante', 'autofocus': '', 'required': '', 'maxlength':'7'}),
+            'nombre_estudiante': forms.TextInput(attrs={'placeholder': 'Nombres Estudiante', 'autofocus': '', 'required': '', 'maxlength':'50'}),
+            'apellido_estudiante': forms.TextInput(attrs={'placeholder': 'Apellidos Estudiante', 'autofocus': '', 'required': '', 'maxlength':'50'}),
             'sexo_estudiante': forms.Select(choices=sexo),
-            'telefono_estudiante': forms.TextInput(attrs={'placeholder': 'Telefono Estudiante', 'autofocus': '', 'required': '', 'maxlength':'8'}),
+            'telefono_estudiante': forms.TextInput(attrs={'placeholder': 'Telefono Estudiante', 'autofocus': '', 'required': '', 'maxlength':'15'}),
             'correo_estudiante': forms.TextInput(attrs={'placeholder': 'Correo Estudiante', 'autofocus': '', 'required': ''}),
             'direccion_estudiante': forms.TextInput(attrs={'placeholder': 'Direccion Estudiante', 'autofocus': '', 'required': ''}),
         }
@@ -56,6 +55,7 @@ class  EstudianteForm(forms.ModelForm):
         labels = {
             'carnet_estudiante': 'Carnet',
             'nombre_estudiante':'Nombre',
+            'apellido_estudiante':'Apellido',
             'sexo_estudiante': 'Sexo',
             'telefono_estudiante': 'Telefono',
             'correo_estudiante': 'Correo',
@@ -64,11 +64,29 @@ class  EstudianteForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EstudianteForm, self).__init__(*args, **kwargs)
+
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
+                'class': 'material-control tooltips-general'
+                })
+
+        self.fields['sexo_estudiante'].widget.attrs.update({
                 'class': 'form-control'
                 })
 
+        self.fields['carnet_estudiante'].widget.attrs.update({
+                'pattern': '([a-zA-Z]{2}[0-9]{5})', 
+                'title': 'Ingrese el Carnet, Ej. AA99999.'
+                })
+        
+        self.fields['telefono_estudiante'].widget.attrs.update({
+                'pattern': '[0-9]{8,15}',
+                'title': 'Ingrese el Telefono, Solo Numeros Enteros Sin Espacio.'
+                })
+        
+        self.fields['correo_estudiante'].widget.attrs.update({
+                'pattern': '^[a-z0-9!#$%&*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$'
+                })
 
 
 class EstudioUniversitarioForm(forms.ModelForm):

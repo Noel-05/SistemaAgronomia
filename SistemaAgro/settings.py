@@ -125,4 +125,7 @@ from django.urls import reverse_lazy
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
+MEDIA_URL = 'static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 LOGIN_REDIRECT_URL = reverse_lazy('proyeccionsocial:index')
