@@ -31,7 +31,7 @@ div[class="navbar navbar-light"]{
 }
 .btn{
     display: inline;
-    background-color: rgba(101, 102, 94, 0.973);
+    background-color: green;
     color: white;
     horiz-align: right;
     font-size: 13px;

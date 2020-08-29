@@ -10,7 +10,6 @@ Control Estudiante
         </br></br>
 
         {% if request.user.usuario_administrador %}
-            {% comment %} <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudiante' user.username %}', 'Registrar Estudiante')" value="Agregar"></br></br> {% endcomment %}
             <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_estudiante' user.username %}'" value="Agregar"></br></br>
         {% endif %}
 
@@ -26,7 +25,7 @@ Control Estudiante
         <div align="center" class="busqueda">
             <form method="POST" action="{% url 'proyeccionsocial:consulta_estudiante_buscar' %}">
                 {% csrf_token %} 
-                <input type="text" name="carnet_estudiante"  id = "carnet_estudiante" class = "input-style" placeholder="Porfavor Ingrese su Carnet" required>
+                <input type="text" name="carnet_estudiante"  id = "carnet_estudiante" class = "input-style" placeholder="Porfavor Ingrese su Carnet" required pattern="([a-zA-Z]{2}[0-9]{5})" maxlength="7">
                 <input class="btn-buscar btn-busqueda" type = "submit" value = "Buscar" id = "buscarEstudiante">
             </form>
         </div>
@@ -81,13 +80,13 @@ Control Estudiante
 
                 <tr class="etiqueta-tr">
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ est2.carnet_estudiante }}</td>
-                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ est2.nombre_estudiante}} {{ est.apellido_estudiante}}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ est2.nombre_estudiante}} {{ est2.apellido_estudiante}}</td>
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ est2.sexo_estudiante }}</td>
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ est2.telefono_estudiante }}</td>
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ est2.correo_estudiante }}</td>
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ est2.direccion_estudiante }}</td>
                     
-                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_estudiante' est2.pk %}', 'Modificar registro de {{ est2.carnet_estudiante }}')" class = "btn">Editar</a></td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_estudiante' est2.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_estudiante' est2.pk %}'" class = "btn">Editar</a></td>
 
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:consulta_estudio_universitario' user.username %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudio_universitario' user.username %}' )" class = "btn">Agregar Estudio</a></td>
                 </tr>
@@ -96,7 +95,7 @@ Control Estudiante
             {% else %}
 
                 {% ifequal suma " " %}
-                    <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudiante' user.username %}', 'Registrar Estudiante')" value="Agregar"></br></br>
+                    <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_estudiante' user.username %}'" value="Agregar"></br></br>
                 {% endifequal %}
 
             {% endif %}         
@@ -115,7 +114,7 @@ Control Estudiante
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.correo_estudiante }}</td>
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.direccion_estudiante }}</td>
                     
-                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_estudiante' est2.pk %}', 'Modificar registro de {{ est2.carnet_estudiante }}')" class = "btn">Editar</a></td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_estudiante' est.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_estudiante' est.pk %}'" class = "btn">Editar</a></td>
 
                 {% if request.user.usuario_administrador %}
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_estudiante' est.pk %}', 'Eliminar registro con {{ est.carnet_estudiante }}')" class = "btn">Eliminar</a></td>

@@ -11,16 +11,13 @@ class CicloForm(forms.ModelForm):
     class Meta:
         model = Ciclo
         widgets = {
-            'codigo_ciclo': forms.TextInput(attrs={'placeholder': 'Código Ciclo', 'autofocus': '', 'required': '', 'maxlength':'5'}),
-            'tipo_ciclo': forms.TextInput(attrs={'placeholder': 'Ciclo Lectivo', 'autofocus': '', 'required': ''}),
+            'codigo_ciclo': forms.TextInput(attrs={'placeholder': 'Código Ciclo', 'autofocus': '', 'required': '', 'maxlength':'5', 'pattern': '[1-2]{1}[0-9]{4}', 'title': 'Ingreselo con el formato Numero de Ciclo (1 o 2) y Año calendario,   Ej: 12020. (Esto significa el Ciclo 1, del Año 2020)'}),
         }
         fields = {
             'codigo_ciclo': forms.IntegerField,
-            'tipo_ciclo': forms.CharField,
         }
         labels = {
             'codigo_ciclo': 'Codigo Ciclo',
-            'tipo_ciclo': 'Ciclo Lectivo',
         }
 
     def __init__(self, *args, **kwargs):
@@ -29,19 +26,25 @@ class CicloForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
                 })
+                
+
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 class  EstudianteForm(forms.ModelForm):
+    codigo_carrera = forms.ModelChoiceField(queryset=Carrera.objects.all().order_by('nombre_carrera'))
+
     class Meta:
         model = Estudiante
         widgets = {
-            'carnet_estudiante': forms.TextInput(attrs={'placeholder': 'Carnet Estudiante', 'autofocus': '', 'required': '', 'maxlength':'7'}),
+            'carnet_estudiante': forms.TextInput(attrs={'placeholder': 'Carnet Estudiante', 'autofocus': '', 'required': '', 'maxlength':'7', 'pattern': '([a-zA-Z]{2}[0-9]{5})', 'title': 'Ingrese el Carnet, Ej. AA99999.'}),
+            'telefono_estudiante': forms.TextInput(attrs={'placeholder': 'Telefono Estudiante', 'autofocus': '', 'required': '', 'maxlength':'15', 'pattern': '[0-9]{8,15}', 'title': 'Ingrese el Telefono, Solo Numeros Enteros Sin Espacio.'}),
+            'correo_estudiante': forms.TextInput(attrs={'placeholder': 'Correo Estudiante', 'autofocus': '', 'required': '', 'pattern': '^[a-z0-9!#$%&*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$'}),
             'nombre_estudiante': forms.TextInput(attrs={'placeholder': 'Nombres Estudiante', 'autofocus': '', 'required': '', 'maxlength':'50'}),
             'apellido_estudiante': forms.TextInput(attrs={'placeholder': 'Apellidos Estudiante', 'autofocus': '', 'required': '', 'maxlength':'50'}),
-            'sexo_estudiante': forms.Select(choices=sexo),
-            'telefono_estudiante': forms.TextInput(attrs={'placeholder': 'Telefono Estudiante', 'autofocus': '', 'required': '', 'maxlength':'15'}),
-            'correo_estudiante': forms.TextInput(attrs={'placeholder': 'Correo Estudiante', 'autofocus': '', 'required': ''}),
             'direccion_estudiante': forms.TextInput(attrs={'placeholder': 'Direccion Estudiante', 'autofocus': '', 'required': ''}),
+            'sexo_estudiante': forms.Select(choices=sexo),
         }
         fields = {
             'carnet_estudiante': forms.CharField,
@@ -74,19 +77,8 @@ class  EstudianteForm(forms.ModelForm):
                 'class': 'form-control'
                 })
 
-        self.fields['carnet_estudiante'].widget.attrs.update({
-                'pattern': '([a-zA-Z]{2}[0-9]{5})', 
-                'title': 'Ingrese el Carnet, Ej. AA99999.'
-                })
-        
-        self.fields['telefono_estudiante'].widget.attrs.update({
-                'pattern': '[0-9]{8,15}',
-                'title': 'Ingrese el Telefono, Solo Numeros Enteros Sin Espacio.'
-                })
-        
-        self.fields['correo_estudiante'].widget.attrs.update({
-                'pattern': '^[a-z0-9!#$%&*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$'
-                })
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 class EstudioUniversitarioForm(forms.ModelForm):
@@ -97,9 +89,9 @@ class EstudioUniversitarioForm(forms.ModelForm):
     class Meta:
         model = EstudioUniversitario
         widgets = {
-            'porc_carrerar_aprob': forms.TextInput(attrs={'placeholder': 'Porcentaje Carrera Aprobado', 'autofocus': '', 'required': '', 'maxlength':'3'}),
-            'unidades_valorativas': forms.TextInput(attrs={'placeholder': 'Unidades Valorativas', 'autofocus': '', 'required': '',  'maxlength':'3'}),
-            'experiencia_areas_conoc': forms.TextInput(attrs={'placeholder': 'Experiencia en Areas Conocidas', 'autofocus': '', 'required': ''}),
+            'porc_carrerar_aprob': forms.TextInput(attrs={'placeholder': 'Porcentaje Carrera Aprobado', 'autofocus': '', 'required': '', 'maxlength':'3', 'pattern': '([0-9]{1,3})', 'title': 'Ingrese el Pocentaje de Carrera Aprobado, Solo Numeros Enteros, No Coloque Signo de %.'}),
+            'unidades_valorativas': forms.TextInput(attrs={'placeholder': 'Unidades Valorativas', 'autofocus': '', 'required': '',  'maxlength':'3', 'pattern': '([0-9]{1,3})', 'title': 'Ingrese la Cantidad de Unidades Valorativas Obtenidas.'}),
+            'experiencia_areas_conoc': forms.TextInput(attrs={'placeholder': 'Experiencia en Areas Conocidas', 'autofocus': '', 'required': '', 'maxlength':'200', 'title': 'Si no tiene ninguna experiencia porfavor escriba "Ninguna".'}),
         }
         fields = {
             'carnet_estudiante': forms.CharField,
@@ -120,9 +112,32 @@ class EstudioUniversitarioForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EstudioUniversitarioForm, self).__init__(*args, **kwargs)
+
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-                'class': 'form-control'
+                'class': 'material-control tooltips-general'
+                })
+
+        self.fields['carnet_estudiante'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Busca tu carnet en la siguiente lista, estos están ordenados en forma ascendente para una búsqueda más rápida. Por favor verifica que hayas seleccionado tu carnet correctamente.'
+                })
+        self.fields['codigo_carrera'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Selecciona la carrera a la que perteneces.'
+                })
+        self.fields['codigo_ciclo'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Selecciona el ciclo correspondiente a este año lectivo, este se divide en Número de ciclo (1 o 2) y Año calendario.'
                 })
 
     def clean(self, *args, **kwargs):
@@ -133,6 +148,8 @@ class EstudioUniversitarioForm(forms.ModelForm):
                 self.add_error('porc_carrerar_aprob', 'Aun no esta apto para realizar el servicio social.')
 
 
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 class SolicitudForm(forms.ModelForm):
     codigo_entidad = forms.ModelChoiceField(queryset=EntidadExterna.objects.all().order_by('nombre_entidad'))
@@ -141,9 +158,9 @@ class SolicitudForm(forms.ModelForm):
     class Meta:
         model = Solicitud
         widgets = {
-            'horas_semana': forms.TextInput(attrs={'placeholder': 'Horas a la Semana', 'autofocus': '', 'required': '', 'maxlength':'3'}),
-            'dias_semana': forms.TextInput(attrs={'placeholder': 'Días a la Semana', 'autofocus': '', 'required': '',  'maxlength':'1'}),
-            'modalidad': forms.TextInput(attrs={'placeholder': 'Modalidad del Servicio', 'autofocus': '', 'required': ''}),
+            'horas_semana': forms.TextInput(attrs={'placeholder': 'Horas a la Semana', 'autofocus': '', 'required': '', 'maxlength':'3', 'pattern': '([0-9]{1,3})', 'title': 'Ingrese el Total de Horas que realizara a la semana.'}),
+            'dias_semana': forms.TextInput(attrs={'placeholder': 'Días a la Semana', 'autofocus': '', 'required': '',  'maxlength':'1', 'pattern': '([0-9]{1})', 'title': 'Ingrese el Total de Días que realizara a la semana.'}),
+            'modalidad': forms.TextInput(attrs={'placeholder': 'Modalidad del Servicio', 'autofocus': '', 'required': '', 'pattern': '([a-zA-Záéíóú,- ]{1,30})', 'title': 'Ingrese la Modalidad en que desea realizar el Servicio Social.'}),
             'fecha_inicio': forms.TextInput(attrs={'placeholder': 'Fecha de Inicio', 'autocomplete': 'off', 'type':'date', 'min':'1940-01-01'}),
             'fecha_fin': forms.TextInput(attrs={'placeholder': 'Fecha de Finalización', 'autocomplete': 'off', 'type':'date', 'min':'1940-01-01', 'required':'false'}),
         }
@@ -168,10 +185,29 @@ class SolicitudForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(SolicitudForm, self).__init__(*args, **kwargs)
+        
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-                'class': 'form-control'
+                'class': 'material-control tooltips-general'
                 })
+        
+        self.fields['carnet_estudiante'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Busca tu carnet en la siguiente lista, estos están ordenados en forma ascendente para una búsqueda más rápida. Por favor verifica que hayas seleccionado tu carnet correctamente.'
+                })
+        self.fields['codigo_entidad'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Selecciona la entidad en la que deseas realizar tu servicio social. Si no encuentras la que deseas puedes sugerir una presionando el botón.'
+                })
+
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 class EstadoSolicitudForm(forms.ModelForm):
@@ -203,3 +239,8 @@ class EstadoSolicitudForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
                 })
+
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
