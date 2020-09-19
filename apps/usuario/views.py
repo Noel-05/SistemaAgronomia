@@ -14,11 +14,13 @@ from apps.usuario.models import Usuario
 from apps.usuario.forms import FormularioLogin, FormularioUsuario
 #from apps.usuario.mixins import LoginYSuperStaffMixin, ValidarPermisosRequeridosUsuariosMixin
 
+from apps.app1 import *
+
 # Vista para el menu de inicio
 def index(request):
     return render(
         request,
-        'base/base.html',
+        'usuario/index_usuario.html',
     )
 
 

@@ -10,7 +10,7 @@ Control Estudiante
         </br></br>
 
         {% if request.user.usuario_administrador %}
-            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_estudiante' user.username %}'" value="Agregar"></br></br>
+            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_estudiante' user.username %}'" value="Agregar Estudiante"></br></br>
         {% endif %}
 
         </br>
@@ -129,6 +129,14 @@ Control Estudiante
 
     	</table>
     </div>
+
+    {% if request.user.usuario_administrador %}
+        </br>
+        <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:consulta_estudio_universitario' user.username %}'" value="Estudio Universitario">
+        </br>
+    {% endif %}
+    </br>
+
 </div>
 
     <div id = "popup"> 

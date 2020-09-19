@@ -7,8 +7,8 @@ app_name='proyeccionsocial'
 
 urlpatterns=[
 	#URL para el menu de inicio
-	path('', index),
-	path('proyeccionsocial/index/',login_required(index), name='index'),
+	#path('', index),
+	path('proyeccionsocial/index/<username>',login_required(index), name='index'),
 
 
 	#URL para Ciclo
@@ -43,13 +43,22 @@ urlpatterns=[
 	path('proyeccionsocial/eliminarSolicitudServicioSocial/<pk>/',login_required(eliminarSolicitudServicioSocial.as_view()), name="eliminar_solicitud_servicio_social"),
 	#Buscar Solicitud Servicio Social
 	path('proyeccionsocial/consultaSolicitudServicioSocialBuscar/',login_required(consultaSolicitudServicioSocialBuscar), name="consulta_solicitud_servicio_social_buscar"),
+	# Para el boton Solicitudes del Base para Administrador
+	path('proyeccionsocial/editarSolicitudServicioSocial2/<pk>/',login_required(editarSolicitudServicioSocial2.as_view()), name="editar_solicitud_servicio_social2"),
+	path('proyeccionsocial/eliminarSolicitudServicioSocial2/<pk>/',login_required(eliminarSolicitudServicioSocial2.as_view()), name="eliminar_solicitud_servicio_social2"),
 
 
 	#URL para el Estado de la Solicitud de Servicio Social
 	path('proyeccionsocial/consultaEstadoSolicitudServicioSocial/<username>/',login_required(consultaEstadoSolicitudServicioSocial), name="consulta_estado_solicitud_servicio_social"),
 	path('proyeccionsocial/crearEstadoSolicitudServicioSocial/<username>/',login_required(crearEstadoSolicitudServicioSocial.as_view()), name="crear_estado_solicitud_servicio_social"),
-	path('proyeccionsocial/editarEstadoSolicitudServicioSocial/<pk>/',login_required(editarEstadoSolicitudServicioSocial.as_view()), name="editar_estado_solicitud_servicio_social"),
+	path('proyeccionsocial/editarEstadoSolicitudServicioSocial/<pk>/',login_required(editarEstadoSolicitudServicioSocial.as_view()), name="editar_estado_solicitud_servicio_social_consulta"),
 	path('proyeccionsocial/eliminarEstadoSolicitudServicioSocial/<pk>/',login_required(eliminarEstadoSolicitudServicioSocial.as_view()), name="eliminar_estado_solicitud_servicio_social"),
+	# Para el boton Solicitudes del Base para Administrador
+	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialConsulta/<username>/',login_required(consultaEstadoSolicitudServicioSocialConsulta), name="consulta_estado_solicitud_servicio_social_consulta"),
+	path('proyeccionsocial/crearEstadoSolicitudServicioSocial2/<username>/',login_required(crearEstadoSolicitudServicioSocial2.as_view()), name="crear_estado_solicitud_servicio_social2"),
+	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialBuscar/',login_required(consultaEstadoSolicitudServicioSocialBuscar), name="consulta_estado_solicitud_servicio_social_buscar"),
+	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialBuscar2/',login_required(consultaEstadoSolicitudServicioSocialBuscar2), name="consulta_estado_solicitud_servicio_social_buscar2"),
+	
 
 
 	#URL para los Formularios

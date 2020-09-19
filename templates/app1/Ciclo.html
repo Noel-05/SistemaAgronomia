@@ -30,8 +30,8 @@
             <tr class="etiqueta-tr">
                 <td class="th-borde width-th-xx" style = "text-align:center;">{{ ci.codigo_ciclo }}</td>
                 <td class="th-borde width-th-xx" style = "text-align:center;">{{ ci.tipo_ciclo }}</td>
-                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_ciclo' ci.pk %}', 'Modificar cita con {{ ci.codigo_ciclo }}')" class = "btn">Editar</a></td>
-                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_ciclo' ci.pk %}', 'Eliminar cita con {{ ci.codigo_ciclo }}')" class = "btn">Eliminar</a></td>
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_ciclo' ci.pk %}', 'Modificar registro con {{ ci.codigo_ciclo }}')" class = "btn">Editar</a></td>
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_ciclo' ci.pk %}', 'Eliminar registro con {{ ci.codigo_ciclo }}')" class = "btn">Eliminar</a></td>
             </tr>
 
           {% endfor %}

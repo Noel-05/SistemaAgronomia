@@ -135,6 +135,11 @@ Estudios Universitarios
     </br>
     
     <a href = "{% url 'proyeccionsocial:consulta_estudiante' user.username %}"><input class = "btn-buscar btn-busqueda"  type="button" href = "{% url 'proyeccionsocial:consulta_estudiante' user.username %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudiante' user.username %}' )" value="Regresar"></a>
+    {% if request.user.usuario_administrador %}
+        <input class = "btn-buscar btn-busqueda"  type="button" onclick = "window.location.href='{% url 'proyeccionsocial:consulta_solicitud_servicio_social' user.username %}'" value="Solicitud"></a>
+        </br>
+    {% endif %}
+    </br>
 
 </div>
 

@@ -431,12 +431,19 @@ class generarF2(ListView):
         pdf.drawString(360, 305, u"del año")
         pdf.line(400, 305, 430, 305)
 
-        pdf.drawString(200, 250, u'"HACIA LA LIBERTAD POR LA CULTURA"')
+        pdf.drawString(200, 265, u'"HACIA LA LIBERTAD POR LA CULTURA"')
 
         pdf.drawString(60, 150, u'Firma y sello')
         pdf.line(130,150,450,150)
 
-        pdf.drawString(145, 135, u'Jefe(a) de la Unidad de Proyección Social')
+         #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/firmaYSello.jpg'
+
+        #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
+        pdf.drawImage(archivo_imagen1, 60, 151, 460, 95,preserveAspectRatio=True) 
+        # 60 es el ancho de la imagen, 151 es el alto en posicion, 450 es el tamaño del borde izq., 60 es lo alto en diagonal de la imagen
+
+        pdf.drawString(195, 135, u'Jefe(a) de la Unidad de Proyección Social')
 
         return queryset
 

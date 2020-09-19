@@ -33,16 +33,14 @@ class CicloForm(forms.ModelForm):
 
 
 class  EstudianteForm(forms.ModelForm):
-    codigo_carrera = forms.ModelChoiceField(queryset=Carrera.objects.all().order_by('nombre_carrera'))
-
     class Meta:
         model = Estudiante
         widgets = {
             'carnet_estudiante': forms.TextInput(attrs={'placeholder': 'Carnet Estudiante', 'autofocus': '', 'required': '', 'maxlength':'7', 'pattern': '([a-zA-Z]{2}[0-9]{5})', 'title': 'Ingrese el Carnet, Ej. AA99999.'}),
-            'telefono_estudiante': forms.TextInput(attrs={'placeholder': 'Telefono Estudiante', 'autofocus': '', 'required': '', 'maxlength':'15', 'pattern': '[0-9]{8,15}', 'title': 'Ingrese el Telefono, Solo Numeros Enteros Sin Espacio.'}),
-            'correo_estudiante': forms.TextInput(attrs={'placeholder': 'Correo Estudiante', 'autofocus': '', 'required': '', 'pattern': '^[a-z0-9!#$%&*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$'}),
-            'nombre_estudiante': forms.TextInput(attrs={'placeholder': 'Nombres Estudiante', 'autofocus': '', 'required': '', 'maxlength':'50'}),
-            'apellido_estudiante': forms.TextInput(attrs={'placeholder': 'Apellidos Estudiante', 'autofocus': '', 'required': '', 'maxlength':'50'}),
+            'telefono_estudiante': forms.TextInput(attrs={'placeholder': 'Telefono Estudiante', 'autofocus': '', 'required': '', 'autocomplete': 'off', 'maxlength':'15', 'pattern': '[0-9]{8,15}', 'title': 'Ingrese el Telefono, Solo Numeros Enteros Sin Espacio.'}),
+            'correo_estudiante': forms.TextInput(attrs={'placeholder': 'Correo Estudiante', 'autofocus': '', 'required': '', 'autocomplete': 'off', 'pattern': '^[a-z0-9!#$%&*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$'}),
+            'nombre_estudiante': forms.TextInput(attrs={'placeholder': 'Nombres Estudiante', 'autofocus': '', 'autocomplete': 'off', 'required': '', 'maxlength':'50'}),
+            'apellido_estudiante': forms.TextInput(attrs={'placeholder': 'Apellidos Estudiante', 'autofocus': '', 'autocomplete': 'off', 'required': '', 'maxlength':'50'}),
             'direccion_estudiante': forms.TextInput(attrs={'placeholder': 'Direccion Estudiante', 'autofocus': '', 'required': ''}),
             'sexo_estudiante': forms.Select(choices=sexo),
         }
@@ -91,7 +89,7 @@ class EstudioUniversitarioForm(forms.ModelForm):
         widgets = {
             'porc_carrerar_aprob': forms.TextInput(attrs={'placeholder': 'Porcentaje Carrera Aprobado', 'autofocus': '', 'required': '', 'maxlength':'3', 'pattern': '([0-9]{1,3})', 'title': 'Ingrese el Pocentaje de Carrera Aprobado, Solo Numeros Enteros, No Coloque Signo de %.'}),
             'unidades_valorativas': forms.TextInput(attrs={'placeholder': 'Unidades Valorativas', 'autofocus': '', 'required': '',  'maxlength':'3', 'pattern': '([0-9]{1,3})', 'title': 'Ingrese la Cantidad de Unidades Valorativas Obtenidas.'}),
-            'experiencia_areas_conoc': forms.TextInput(attrs={'placeholder': 'Experiencia en Areas Conocidas', 'autofocus': '', 'required': '', 'maxlength':'200', 'title': 'Si no tiene ninguna experiencia porfavor escriba "Ninguna".'}),
+            'experiencia_areas_conoc': forms.TextInput(attrs={'placeholder': 'Experiencia en Areas Conocidas', 'autofocus': '', 'maxlength':'200', 'title': 'Si no tiene ninguna experiencia porfavor escriba "Ninguna".'}),
         }
         fields = {
             'carnet_estudiante': forms.CharField,
@@ -160,7 +158,7 @@ class SolicitudForm(forms.ModelForm):
         widgets = {
             'horas_semana': forms.TextInput(attrs={'placeholder': 'Horas a la Semana', 'autofocus': '', 'required': '', 'maxlength':'3', 'pattern': '([0-9]{1,3})', 'title': 'Ingrese el Total de Horas que realizara a la semana.'}),
             'dias_semana': forms.TextInput(attrs={'placeholder': 'Días a la Semana', 'autofocus': '', 'required': '',  'maxlength':'1', 'pattern': '([0-9]{1})', 'title': 'Ingrese el Total de Días que realizara a la semana.'}),
-            'modalidad': forms.TextInput(attrs={'placeholder': 'Modalidad del Servicio', 'autofocus': '', 'required': '', 'pattern': '([a-zA-Záéíóú,- ]{1,30})', 'title': 'Ingrese la Modalidad en que desea realizar el Servicio Social.'}),
+            'modalidad': forms.TextInput(attrs={'placeholder': 'Modalidad del Servicio', 'autofocus': '', 'required': '', 'maxlength':'30', 'pattern': '([a-zA-Záéíóú ]{3,30})', 'title': 'Ingrese la Modalidad en que desea realizar el Servicio Social.'}),
             'fecha_inicio': forms.TextInput(attrs={'placeholder': 'Fecha de Inicio', 'autocomplete': 'off', 'type':'date', 'min':'1940-01-01'}),
             'fecha_fin': forms.TextInput(attrs={'placeholder': 'Fecha de Finalización', 'autocomplete': 'off', 'type':'date', 'min':'1940-01-01', 'required':'false'}),
         }
@@ -235,11 +233,25 @@ class EstadoSolicitudForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EstadoSolicitudForm, self).__init__(*args, **kwargs)
+        
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-                'class': 'form-control'
+                'class': 'material-control tooltips-general'
+                })
+        
+        self.fields['carnet_estudiante'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Busca el carnet del estudiante en la siguiente lista, estos están ordenados en forma ascendente para una búsqueda más rápida. Por favor verificar que se haya seleccionado el carnet correcto.'
                 })
 
+        self.fields['aceptado'].widget.attrs.update({
+                'class': 'form-control',
+                })
+
+   
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

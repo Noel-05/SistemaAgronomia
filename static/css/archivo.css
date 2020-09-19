@@ -21,6 +21,8 @@ section{
 }
 header div[class="navbar navbar-light"] a{
     margin-left: 650px;
+    
+    white-space: nowrap;
 }
 div[class="navbar navbar-light"]{
     background-color: white;
@@ -36,6 +38,7 @@ div[class="navbar navbar-light"]{
     horiz-align: right;
     font-size: 13px;
     text-align: center;
+    white-space: nowrap;
 }
 .list-group-item{
     display: inline-block;
@@ -129,6 +132,7 @@ input[type="button"], input[type="submit"]{
     font-size: 15px;
     width: auto;
     height: 40px;
+    white-space: nowrap;
 }
 select, option{
     width: 150px;

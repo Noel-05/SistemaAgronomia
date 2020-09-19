@@ -17,11 +17,33 @@ from .formularios import *
 import time
 from django.conf import settings
 
+
 # Vista para el menu de inicio
-def index(request):
+def index(request, username):
+
+    prb_btn = EstadoSolicitud.objects.filter(carnet_estudiante = username)
+
+    buscar = []
+    i=0
+    while(i < len(prb_btn)):
+        buscar.append((prb_btn[i].aceptado))
+        i+=1
+    
+    resp = "No"
+    for b in buscar:
+        if (b == "Aceptado"):
+            resp = "Si"
+        else:
+            resp = "No"
+
+    context = {
+        'resp' : resp,
+    }
+
     return render(
         request,
         'base/base.html',
+        context,
     )
 
 
@@ -257,6 +279,16 @@ class editarSolicitudServicioSocial(UpdateView):
       username = self.kwargs['pk']
       return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
+    # Para el boton Solicitudes del Base para Administrador
+class editarSolicitudServicioSocial2(UpdateView):
+    model = Solicitud
+    template_name = 'app1/Crear_Solicitud_Servicio_Social_Consulta.html'
+    form_class = SolicitudForm
+
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_estado_solicitud_servicio_social', kwargs={'username': username})
+
 
 class eliminarSolicitudServicioSocial(DeleteView):
     model = Solicitud
@@ -265,6 +297,15 @@ class eliminarSolicitudServicioSocial(DeleteView):
     def get_success_url(self):
       username = self.kwargs['pk']
       return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
+
+# Para el boton Solicitudes del Base para Administrador
+class eliminarSolicitudServicioSocial2(DeleteView):
+    model = Solicitud
+    template_name = 'app1/eliminar_solicitud_servicio_social_consulta.html'
+    
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_estado_solicitud_servicio_social', kwargs={'username': username})
 
 
 #-----------------------------------------------------------------------------------------------
@@ -291,41 +332,95 @@ def consultaSolicitudServicioSocialBuscar(request):
 
 
 def consultaEstadoSolicitudServicioSocial(request, username):
-    queryset = EstadoSolicitud.objects.filter(carnet_estudiante = username)
+    queryset = Solicitud.objects.filter(carnet_estudiante = username)
 
     suma = " "
     if len(queryset) == 0:
         suma = " "
 
-    estadoSolicitudes_list=EstadoSolicitud.objects.order_by('carnet_estudiante')
+    solicitudes_list = Solicitud.objects.order_by('carnet_estudiante')
     context = {
-        'estadoSolicitudes_list': estadoSolicitudes_list,
+        'solicitudes_list': solicitudes_list,
         'queryset': queryset,
         'suma': suma,
     }
     return render(
         request,
-        'app1/Solicitud.html', context
+        'app1/SolicitudConsulta.html', context
     )
 
+def consultaEstadoSolicitudServicioSocialConsulta(request, username):
+    querysetEstado = EstadoSolicitud.objects.filter(carnet_estudiante = username)
 
+    estadoSolicitudes_list = EstadoSolicitud.objects.order_by('carnet_estudiante')
+    context = {
+        'estadoSolicitudes_list': estadoSolicitudes_list,
+        'querysetEstado': querysetEstado,
+    }
+    return render(
+        request,
+        'app1/SolicitudEstadoConsulta.html', context
+    )
+
+# Para el boton Solicitudes del Base para Administrador
+def consultaEstadoSolicitudServicioSocialBuscar(request):
+    carnet_estudiante = request.POST['carnet_estudiante']
+    if request.method == 'POST':
+        estudiante_busc = Solicitud.objects.filter(carnet_estudiante = carnet_estudiante)
+        
+        suma = " "
+        if len(estudiante_busc) == 0:
+            suma = " "
+
+        contexto = {'estudiante_busc': estudiante_busc,
+        'suma': suma,
+        }
+
+        return render(request, 'app1/SolicitudConsulta.html', contexto)
+
+def consultaEstadoSolicitudServicioSocialBuscar2(request):
+    carnet_estudiante = request.POST['carnet_estudiante']
+    if request.method == 'POST':
+        estudiante_busc = EstadoSolicitud.objects.filter(carnet_estudiante = carnet_estudiante)
+        
+        suma = " "
+        if len(estudiante_busc) == 0:
+            suma = " "
+
+        contexto = {
+            'estudiante_busc': estudiante_busc,
+            'suma': suma,
+        }
+
+        return render(request, 'app1/SolicitudEstadoConsulta.html', contexto)
+
+
+# Para el boton Solicitudes del Base para Administrador
 class crearEstadoSolicitudServicioSocial(CreateView):
-    template_name = 'app1/crear_estado_solicitud_servicio_social.html'
+    template_name = 'app1/Crear_Estado_Solicitud_Servicio_Social.html'
     form_class = EstadoSolicitudForm
 
     def get_success_url(self):
       username = self.kwargs['username']
       return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
+class crearEstadoSolicitudServicioSocial2(CreateView):
+    template_name = 'app1/Crear_Estado_Solicitud_Servicio_Social_Consulta.html'
+    form_class = EstadoSolicitudForm
+
+    def get_success_url(self):
+      username = self.kwargs['username']
+      return reverse_lazy('proyeccionsocial:consulta_estado_solicitud_servicio_social_consulta', kwargs={'username': username})
+
 
 class editarEstadoSolicitudServicioSocial(UpdateView):
     model = EstadoSolicitud
-    template_name = 'app1/crear_estado_solicitud_servicio_social.html'
+    template_name = 'app1/Crear_Estado_Solicitud_Servicio_Social_Consulta.html'
     form_class = EstadoSolicitudForm
 
     def get_success_url(self):
       username = self.kwargs['pk']
-      return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
+      return reverse_lazy('proyeccionsocial:consulta_estado_solicitud_servicio_social_consulta', kwargs={'username': username})
 
 
 class eliminarEstadoSolicitudServicioSocial(DeleteView):
@@ -334,7 +429,7 @@ class eliminarEstadoSolicitudServicioSocial(DeleteView):
     
     def get_success_url(self):
       username = self.kwargs['pk']
-      return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
+      return reverse_lazy('proyeccionsocial:consulta_estado_solicitud_servicio_social_consulta', kwargs={'username': username})
 
 
 #-----------------------------------------------------------------------------------------------

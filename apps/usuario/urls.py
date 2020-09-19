@@ -9,7 +9,7 @@ app_name='usuario'
 
 urlpatterns=[
 	#URL para el menu de inicio
-	path('', index),
+	path('', Login.as_view()),
 	path('usuario/index/',login_required(index), name='index'),
 
 	path('accounts/login/',Login.as_view(), name='login'),
