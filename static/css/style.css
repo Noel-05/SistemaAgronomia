@@ -1589,3 +1589,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     display: inline;
   }
 }
+
+.tableButton{
+  margin: 5px;
+}
