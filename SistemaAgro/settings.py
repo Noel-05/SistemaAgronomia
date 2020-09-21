@@ -129,3 +129,5 @@ MEDIA_URL = 'static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = reverse_lazy('proyeccionsocial:index')
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
