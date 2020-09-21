@@ -1,8 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 
+roles=[
+    ('ADM', 'Administrador'),
+    ('EST', 'Estudiante'),
+    ('DOC', 'Profesor')
+]
+
 class UsuarioManager(BaseUserManager):
-    def create_user(self, email,username,nombres,password=None):
+    def create_user(self, email,username,nombres, apellidos, password=None):
         if not email:
             raise ValueError('El usuario debe tener un correo electronico')
 
@@ -10,18 +16,20 @@ class UsuarioManager(BaseUserManager):
             username = username,
             email = self.normalize_email(email),
             nombres = nombres,    
+            apellidos=apellidos,
         )
-
+        
         user.set_password(password)
         user.save()
         return user
     
-    def create_superuser(self,username,email,nombres,password):
+    def create_superuser(self,username,email,nombres,apellidos, password):
         user=self.create_user(
             email,
             username = username,
             nombres = nombres,
-            password=password
+            apellidos=apellidos,
+            password=password,
         )
 
         user.usuario_administrador= True
@@ -37,10 +45,12 @@ class Usuario(AbstractBaseUser):
     imagen = models.ImageField('Imagen de Perfil', upload_to='perfil/', max_length=200,blank = True,null = True)
     usuario_activo = models.BooleanField(default = True)
     usuario_administrador = models.BooleanField(default = False)
+    rol=models.CharField(max_length=3,null=False, blank=False,choices=roles,default='EST')
+
     objects = UsuarioManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email','nombres']
+    REQUIRED_FIELDS = ['email','nombres', 'apellidos']
 
     def __str__(self):
         return f'{self.nombres},{self.apellidos}'
