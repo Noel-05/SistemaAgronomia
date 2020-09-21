@@ -8,8 +8,6 @@
 
 	{% block static %}
 
-  <!-- Mas Pruebas -->
-
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 	<!-- Favicon -->
@@ -43,11 +41,24 @@
 	<script type = "text/javascript" src = "{% static 'js/bootstrap.min.js' %}" charset="UTF-8"></script>
 	<script type = "text/javascript" src = "{% static 'js/jquery-ui.js' %}"></script>
 	<script type = "text/javascript" src = "{% static 'js/jquery.dataTables.min.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script type = "text/javascript" src = "{% static 'js/main.js' %}"></script>
+  <script>
+      {% if messages %}
+          var html_mensaje = '';
+          {% for mensaje in messages %}
+              html_mensaje += '{{ mensaje }}';
+          {% endfor %}
+          notificacionError(html_mensaje);
+      {% endif %}
+  </script>
 
 	{% endblock %}
 
 {% endblock %}
+
+  {% block extra_css %}
+  {% endblock extra_css %}
 
 </head>
 
@@ -124,14 +135,10 @@
             <li><a href = "">Administrar Carreras</a></li>
 
             <li><a href = "{% url 'proyeccionsocial:consulta_ciclo' %}">Administrar Ciclos</a></li>
-
-            <li class=" menu-has-children"><a style="text-decoration:none" href="#">Administrar Usuarios</a>
-              <ul>
-                <!-- Prueba 1 -->
-                <li><a href="{% url 'usuario:listar_usuarios' %}">Listado de Usuarios</a></li>
-                <li><a href="{% url 'usuario:registrar_usuario' %}">Registrar Usuarios</a></li>
-              </ul>
-            </li>
+            
+      {% if request.user.usuario_administrador or request.user.rol == 'DOC' %}
+        <li class="list-group-item"><a style="text-decoration:none" href="{% url 'usuario:inicio_usuarios' %}">Administrar Usuarios</a></li>
+      {% endif %}
 
           </ul>
         </li>
