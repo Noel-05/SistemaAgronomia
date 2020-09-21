@@ -17,5 +17,5 @@ urlpatterns=[
 	
 	path('listado_usuarios/', login_required(ListadoUsuario.as_view()), name='listar_usuarios'),
 	path('registrar_usuario/', login_required(RegistrarUsuario.as_view()), name='registrar_usuario'),
-	path('registrar_usuario/login', RegistrarUsuarioLogin.as_view(), name='registrar_usuario_login'),
+	path('registrar_usuario/login/', RegistrarUsuarioLogin.as_view(), name='registrar_usuario_login'),
 ]
