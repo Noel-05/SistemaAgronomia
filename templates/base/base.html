@@ -73,7 +73,7 @@
       </div>
 
       <div id="logo" class="pull-rigth">
-				<input type="button" href="" class="btn-success btn" name="submit" value="{{ user.username }}" disabled style="background-color:transparent; border:none;"></a> 
+				<input type="button" href="{% url 'proyeccionsocial:index' user.username %}" class="btn-success btn" name="submit" value="{{ user.username }}" disabled style="background-color:transparent; border:none;"></a> 
         <a href="{% url 'usuario:logout' %}" style="text-decoration:none"><input type="button" href="{% url 'usuario:logout' %}" class="btn btn-success btn-sm" name="submit" value="Cerrar Sesi&oacute;n" style="background:green;"></a> 
 			</div>
 

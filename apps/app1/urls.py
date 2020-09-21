@@ -8,7 +8,7 @@ app_name='proyeccionsocial'
 urlpatterns=[
 	#URL para el menu de inicio
 	#path('', index),
-	path('proyeccionsocial/index/<username>',login_required(index), name='index'),
+	path('proyeccionsocial/index/<username>/',login_required(index), name='index'),
 
 
 	#URL para Ciclo
@@ -59,7 +59,6 @@ urlpatterns=[
 	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialBuscar/',login_required(consultaEstadoSolicitudServicioSocialBuscar), name="consulta_estado_solicitud_servicio_social_buscar"),
 	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialBuscar2/',login_required(consultaEstadoSolicitudServicioSocialBuscar2), name="consulta_estado_solicitud_servicio_social_buscar2"),
 	
-
 
 	#URL para los Formularios
 	path('proyeccionsocial/generarF1/<str:carnet_estudiante>/',login_required(generarF1.as_view()), name= "generar_F1"),
