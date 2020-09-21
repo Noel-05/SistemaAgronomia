@@ -16,6 +16,8 @@ from apps.usuario.forms import FormularioLogin, FormularioUsuario
 
 from apps.app1 import *
 
+#Prueba2
+
 # Vista para el menu de inicio
 def index(request):
     return render(
