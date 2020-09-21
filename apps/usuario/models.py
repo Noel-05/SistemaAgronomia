@@ -55,6 +55,13 @@ class Usuario(AbstractBaseUser):
     def __str__(self):
         return f'{self.nombres},{self.apellidos}'
 
+    def save(self, *args, **kwargs):
+
+        if self.usuario_administrador == True:
+            self.rol = 'ADM'
+
+        super().save(*args, **kwargs)
+
     def has_perm(self, perm,obj=None):
         return True
 
