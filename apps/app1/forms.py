@@ -243,4 +243,38 @@ class EstadoSolicitudForm(forms.ModelForm):
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+class ArchivosEstudianteForm(forms.ModelForm):
+    class Meta:
+        model = ArchivosEstudiante
+        widgets = {
+            'documento': forms.ClearableFileInput
+        }
+        fields = {
+            'carnet_estudiante': forms.HiddenInput,
+            'documento': forms.FileField,
+        }
+        labels = {
+            'documento': 'Documento'
+        }
+    def __init__(self, *args, **kwargs):
+        super(ArchivosEstudianteForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'material-control tooltips-general'
+            })
+        self.fields['carnet_estudiante'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Busca tu carnet en la siguiente lista, estos están ordenados en forma ascendente para una búsqueda más rápida. Por favor verifica que hayas seleccionado tu carnet correctamente.'
+        })
+        self.fields['carnet_estudiante'].disabled = True
 
+        self.fields['documento'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'tittle': 'Seleccione el documento a almacenar en la ventana de selección'
+        })

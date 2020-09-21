@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{%block title%}
+    Crear Estudiante
+{%endblock%}
+{% block content %}
+
+{% load static %}
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Registro de Estudiante</h2>
+        </br></br></br>
+    </div>
+  </header>
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+
+{% endblock %}

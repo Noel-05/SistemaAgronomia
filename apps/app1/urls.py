@@ -63,4 +63,8 @@ urlpatterns=[
 	path('proyeccionsocial/generarF8/<str:carnet_estudiante>/',login_required(generarF8.as_view()), name= "generar_F8"),
 	path('proyeccionsocial/generarF9/<str:carnet_estudiante>/',login_required(generarF9.as_view()), name= "generar_F9"),
 	path('proyeccionsocial/generarF11/<str:carnet_estudiante>/',login_required(generarF11.as_view()), name= "generar_F11"),
+
+	path('proyeccionsocial/listarDocumentos/<pk>/', login_required(documentosEstudianteListView.as_view()), name="listar_documentos"),
+	path('proyeccionsocial/agregarDocumentos/<pk>/', login_required(agregarDocumentos.as_view()), name="agregar_documentos"),
+	path('proyeccionsocial/eliminarDocumento/<pk>/', login_required(eliminarDocumento.as_view()), name="eliminar_documento")
 ]

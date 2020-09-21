@@ -339,4 +339,32 @@ class eliminarEstadoSolicitudServicioSocial(DeleteView):
 
 #-----------------------------------------------------------------------------------------------
 
+class documentosEstudianteListView(ListView):
+    model = ArchivosEstudiante
+    template_name = 'app1/documentos_estudiante.html'
+    context_object_name = 'archivos'
+
+    def get_queryset(self):
+        return ArchivosEstudiante.objects.filter(carnet_estudiante=self.kwargs.get("pk"))
+
+class agregarDocumentos(CreateView):
+    model = ArchivosEstudiante
+    form_class = ArchivosEstudianteForm
+    template_name = 'app1/agregar_documentos.html'
+
+    def get_initial(self):
+        return {"carnet_estudiante": self.kwargs.get("pk")}
+
+    def get_success_url(self):
+      username = str(self.object.carnet_estudiante)
+      return reverse_lazy('proyeccionsocial:listar_documentos', kwargs={'pk': username})
+
+class eliminarDocumento(DeleteView):
+    model = ArchivosEstudiante
+    template_name = 'app1/eliminar_documento.html'
+
+    def get_success_url(self):
+        username = str(self.object.carnet_estudiante)
+        return reverse_lazy('proyeccionsocial:listar_documentos', kwargs={'pk': username})
+
         # Aqui iban los Formularios pero se pasaron al archivo formularios.py

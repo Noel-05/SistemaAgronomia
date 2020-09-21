@@ -48,6 +48,7 @@ Control Estudiante
                     <th>Eliminar</th>
                 {% endif %}
                     <th>Agregar Estudios</th>
+                    <th>Documentos</th>
         		</tr>
             </thead>
 
@@ -68,6 +69,8 @@ Control Estudiante
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_estudiante' est.pk %}', 'Eliminar registro con {{ est.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
 
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:consulta_estudio_universitario' user.username %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudio_universitario' user.username %}' )" class = "btn">Agregar Estudio</a></td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:listar_documentos' est.pk%}" onclick="window.location.href= '{% url 'proyeccionsocial:agregar_documentos' est.pk %}'" class="btn">Documentos</a></td>
         		</tr>
 
             {% endfor %}
