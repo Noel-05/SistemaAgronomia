@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+{%block title%}
+Documentos de estudiante
+{%endblock%}
+{% block content %}
+    <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Archivos de estudiante {{ view.kwargs.pk }}</h2>
+        </br></br>
+        {% if request.user.usuario_administrador %}
+            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:agregar_documentos' view.kwargs.pk %}'" value="Agregar"></br></br>
+        {% endif %}
+    </br>
+    </div>
+<div class="container">
+  </header>
+    <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descargar</th>
+        <th>Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for archivo in archivos %}
+        <tr class="etiqueta-tr">
+          <td class="th-borde width-th-xx" style = "text-align:center;">{{ archivo.filename }}</td>
+          <td class="th-borde width-th-xx" style = "text-align:center;">
+            <a class="a-btn" href="{{ archivo.documento.url }}" target="_blank">
+              Descarga
+            </a>
+          </td>
+        <td class="th-borde width-th-xx" style = "text-align:center;">
+            <form method="post">
+                {% csrf_token %}
+                <a class="a-btn" href=# onclick="return abrir_modal('{% url 'proyeccionsocial:eliminar_documento' archivo.id %}', 'Eliminar documento {{ archivo.filename }}' )" >Eliminar</a>
+            </form>
+        </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+<div id = "popup">
+
+</div>
+{% endblock %}
+{% block js %}
+
+    <script>
+        var modal;
+        function abrir_modal(url, titulo)
+        {
+            modal = $('#popup').dialog({
+                title :titulo,
+                modal :true,
+                width :500,
+                resizable :false
+            }).dialog('open').load(url)
+        }
+    </script>
+
+{% endblock %}

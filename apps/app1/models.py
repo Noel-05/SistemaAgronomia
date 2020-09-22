@@ -1,9 +1,11 @@
+import os
+
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 import uuid
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 
@@ -137,9 +139,23 @@ class ServicioSocial(models.Model):
     codigo_proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.carnet_estudiante.__str__() 
+        return self.carnet_estudiante.__str__()
 
 
+class ArchivosEstudiante(models.Model):
+    carnet_estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
+    documento = models.FileField(upload_to=lambda instance, filename: '/'.join([str(instance.carnet_estudiante), filename]), null=True, blank=True)
+
+    def filename(self):
+        return os.path.basename(self.documento.name)
+
+    def __str__(self):
+        return self.carnet_estudiante
+
+
+@receiver(post_delete, sender=ArchivosEstudiante)
+def submission_delete(sender, instance, **kwargs):
+    instance.documento.delete(False)
 
 # --------------------------------------------------------------------------
 
