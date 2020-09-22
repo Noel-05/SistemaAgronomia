@@ -59,6 +59,20 @@ urlpatterns=[
 	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialBuscar/',login_required(consultaEstadoSolicitudServicioSocialBuscar), name="consulta_estado_solicitud_servicio_social_buscar"),
 	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialBuscar2/',login_required(consultaEstadoSolicitudServicioSocialBuscar2), name="consulta_estado_solicitud_servicio_social_buscar2"),
 	
+	
+	#URL para Carrera
+	path('proyeccionsocial/consultaCarrera/',login_required(consultaCarrera), name="consulta_carrera"),
+	path('proyeccionsocial/crearCarrera/',login_required(crearCarrera.as_view()), name="crear_carrera"),
+	path('proyeccionsocial/editarCarrera/<pk>/',login_required(editarCarrera.as_view()), name="editar_carrera"),
+	path('proyeccionsocial/eliminarCarrera/<pk>/',login_required(eliminarCarrera.as_view()), name="eliminar_carrera"),
+	
+	#URL para ServicioSocial
+	path('proyeccionsocial/consultaServicioSocial/<username>/',login_required(consultaServicioSocial), name="consulta_servicio_social"),
+	path('proyeccionsocial/crearServicioSocial/<username>/',login_required(crearServicioSocial.as_view()), name="crear_servicio_social"),
+	path('proyeccionsocial/editarServicioSocial/<pk>/',login_required(editarServicioSocial.as_view()), name="editar_servicio_social"),
+	path('proyeccionsocial/eliminarServicioSocial/<pk>/',login_required(eliminarServicioSocial.as_view()), name="eliminar_servicio_social"),
+	path('proyeccionsocial/consultaServicioSocialBuscar/',login_required(consultaServicioSocialBuscar), name="consulta_servicio_social_buscar"),
+
 
 	#URL para los Formularios
 	path('proyeccionsocial/generarF1/<str:carnet_estudiante>/',login_required(generarF1.as_view()), name= "generar_F1"),

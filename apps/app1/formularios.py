@@ -517,17 +517,38 @@ class generarF3(ListView):
         queryset = Estudiante.objects.filter(carnet_estudiante = carnet_estudiante)
         #Declaracion y asignacion de variables que se recuperaran de la BD
 
-        nombre = "Karla María Abrego Reyes"
-        numero_control = "2"
-        domicilio= "Urb. Valle del Quetzal, pje El Nogal "
-        tel = "78680257"
-        correo = "ar14019@ues.edu.sv"
-        carrera = "Ingeniería de Sistemas Informáticos"
-        ciclo = "Impar"
-        entidad = "I"
-        domicilio_entidad ="L"
-        fecha_inicio = "12/10/20"
-        fecha_final = "12/10/21"
+
+        for i in Estudiante.objects.filter(carnet_estudiante = carnet_estudiante):
+            carnet = i.carnet_estudiante 
+            nombre = i.nombre_estudiante
+            apellido = i.apellido_estudiante
+            telefono = i.telefono_estudiante
+            correo = i.correo_estudiante
+            direccion = i.direccion_estudiante
+
+        j=0
+
+        for i in Estudiante.objects.all():
+            carnetBusqueda = i.carnet_estudiante
+            if carnetBusqueda == carnet:
+                posicion = j + 1
+            else:
+                j = j + 1
+
+        numero = posicion
+        
+        for i in EstudioUniversitario.objects.filter(carnet_estudiante = carnet_estudiante):
+
+            carrera = i.codigo_carrera.nombre_carrera
+            ciclo_lect = i.codigo_ciclo_id
+
+        for i in Solicitud.objects.filter(carnet_estudiante = carnet_estudiante):
+           
+            entidad = i.codigo_entidad
+            domicilio_entidad = i.codigo_entidad.direccion_entidad
+            fecha_inicio = i.fecha_inicio
+            fecha_final = i.fecha_fin            
+
         
         pdf.setFont("Helvetica-Bold", 10)
         pdf.drawString(180, 710, u"CARTA DE COMPROMISO DEL SERVICIO SOCIAL")
@@ -539,19 +560,19 @@ class generarF3(ListView):
         pdf.drawString(60, 690, u"Con el fin de dar cumplimiento a lo establecido en el Manual de Procedimientos del Servicio Social")
         pdf.drawString(60, 675, u"de la Facultad de Ciencias Agronómicas de la Universidad de El Salvador, el suscrito:")
 
-        texto = 'NOMBRE:  %s' % nombre
+        texto = 'NOMBRE:  %s' % nombre +' '+ apellido
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 652, texto)
 
-        texto = 'No. DE CONTROL:  %s' % numero_control
+        texto = 'No. DE CONTROL:  %s' % numero
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 637, texto)
 
-        texto = 'DOMICILIO:  %s' % domicilio
+        texto = 'DOMICILIO:  %s' % direccion
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 602, texto)
 
-        texto = 'TEL:  %s' % tel
+        texto = 'TEL:  %s' % telefono
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 584, texto)
 
@@ -563,7 +584,7 @@ class generarF3(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 534, texto)
 
-        texto = 'CICLO:  %s' % ciclo
+        texto = 'CICLO:  %s' % ciclo_lect
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 519, texto)
 
@@ -652,7 +673,6 @@ class generarF3(ListView):
         buffer.close()
         response.write(pdf)
         return response
-
 
 # #-----------------------------------------------------------------------------------------------
 
@@ -2035,8 +2055,12 @@ class generarF11(ListView):
         queryset = Estudiante.objects.filter(carnet_estudiante = carnet_estudiante)
         #Declaracion y asignacion de variables que se recuperaran de la BD
 
-        nombre = "Karla María Abrego Reyes"
-        nombre_proyecto = "NOSE"
+        for i in Estudiante.objects.filter(carnet_estudiante = carnet_estudiante):
+            nombre = i.nombre_estudiante
+            apellido = i.apellido_estudiante
+
+        for i in ServicioSocial.objects.filter(carnet_estudiante = carnet_estudiante):    
+            nombre_proyecto = i.codigo_proyecto.descripcion_proyecto
         
         pdf.setFont("Helvetica-Bold", 10)
         pdf.drawString(90, 700, u"FICHA DE EVALUACIÓN DE DESEMPEÑO DEL ESTUDIANTE POR EL TUTOR EXTERNO")
@@ -2044,7 +2068,7 @@ class generarF11(ListView):
         pdf.setFont("Helvetica-Bold", 26)
         pdf.drawString(100, 723, u"F11")
 
-        texto = 'Nombre del alumno:   %s' % nombre
+        texto = 'Nombre del alumno:   %s' % nombre +' '+ apellido
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 675, texto)
 

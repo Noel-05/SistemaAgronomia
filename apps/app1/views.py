@@ -462,4 +462,94 @@ class eliminarDocumento(DeleteView):
         username = str(self.object.carnet_estudiante)
         return reverse_lazy('proyeccionsocial:listar_documentos', kwargs={'pk': username})
 
+def consultaCarrera(request):
+        carrera_list=Carrera.objects.order_by('codigo_carrera')
+        context = {
+        'carrera_list': carrera_list,
+    }
+        return render(
+        request,
+        'app1/Carrera.html', context
+    )
+
+class crearCarrera(CreateView):
+    template_name = 'app1/crear_carrera.html'
+    form_class = CarreraForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_carrera')
+
+class editarCarrera(UpdateView):
+    model = Carrera
+    template_name = 'app1/crear_carrera.html'
+    form_class = CarreraForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_carrera')
+
+class eliminarCarrera(DeleteView):
+    model = Carrera
+    template_name = 'app1/eliminar_carrera.html'
+    success_url = reverse_lazy('proyeccionsocial:consulta_carrera')
+
+
+def consultaServicioSocial(request, username):
+    queryset = ServicioSocial.objects.filter(carnet_estudiante = username)
+
+    suma = " "
+    if len(queryset) == 0:
+        suma = " "
+
+    servicio_social_list=ServicioSocial.objects.order_by('carnet_estudiante')
+    context = {
+        'servicio_social_list': servicio_social_list,
+        'queryset': queryset,
+        'suma': suma,
+    }
+    return render(
+        request,
+        'app1/ServicioSocial.html', context
+    )
+
+class crearServicioSocial(CreateView):
+    template_name = 'app1/crear_servicio_social.html'
+    form_class = ServicioSocialForm
+
+    def get_success_url(self):
+      username = self.kwargs['username']
+      return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
+
+
+class editarServicioSocial(UpdateView):
+    model = ServicioSocial
+    template_name = 'app1/crear_servicio_social.html'
+    form_class = ServicioSocialForm
+
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
+
+
+class eliminarServicioSocial(DeleteView):
+    model = ServicioSocial
+    template_name = 'app1/eliminar_servicio_social.html'
+
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
+
+# Busqueda de Estudiante
+def consultaServicioSocialBuscar(request):
+    carnet_estudiante = request.POST['carnet_estudiante']
+    if request.method == 'POST':
+       estudiante_busc = ServicioSocial.objects.filter(carnet_estudiante = carnet_estudiante)
+        
+    suma = " "
+    if len( estudiante_busc) == 0:
+        suma = " "
+    
+    contexto = {'estudiante_busc ': estudiante_busc,
+    'suma': suma,
+        }
+
+    return render(request, 'app1/ServicioSocial.html', contexto)
+
+
+
         # Aqui iban los Formularios pero se pasaron al archivo formularios.py

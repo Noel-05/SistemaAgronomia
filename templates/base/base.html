@@ -87,6 +87,7 @@
 
   {% if user.is_authenticated %}
         <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_estudiante' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_estudiante' user.username %}">Estudiante</a></li>
+        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_servicio_social' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}">Servicio Social</a></li>
 
 
 
@@ -101,7 +102,7 @@
       {% if request.user.usuario_administrador %}
         <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_estado_solicitud_servicio_social' user.username %}'' "><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_estado_solicitud_servicio_social' user.username %} ">Solicitudes</a></li>
         
-        <li class="list-group-item" onclick=" "><a style="text-decoration:none" href=" ">Horas Sociales</a></li>
+       
 
         <li class="list-group-item" onclick=" "><a style="text-decoration:none" href=" ">Tutores</a></li>
       {% endif %}
@@ -132,7 +133,8 @@
           <ul>
             <li><a href = "">Administrar Proyectos</a></li>
 
-            <li><a href = "">Administrar Carreras</a></li>
+            <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_carrera' %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_carrera'%}">Administrar Carreras</a></li>
+
 
             <li><a href = "{% url 'proyeccionsocial:consulta_ciclo' %}">Administrar Ciclos</a></li>
             

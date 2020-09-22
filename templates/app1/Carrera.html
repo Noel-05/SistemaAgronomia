@@ -1,0 +1,76 @@
+{% extends 'base/base.html' %}
+{%block title%}
+Control Estudiante
+{%endblock%}
+{% block content %}
+
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Carrera</h2>
+        </br></br>
+
+        {% if request.user.usuario_administrador %}
+            {% comment %} <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_carrera' %}', 'Registrar Carrera')" value="Agregar"></br></br> {% endcomment %}
+            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_carrera' %}'" value="Agregar"></br></br>
+        {% endif %}
+
+        </br>
+
+    </div>
+  </header>
+
+  <div class="container">
+    <div>
+    <table>
+        <thead>
+            <tr>
+                <th>C&oacute;digo Carrera</th>
+                <th>Carrera</th>
+                <th>Departamento</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+
+          {% if carrera_list %}
+          {% for ca in carrera_list %}
+
+            </tr>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ ca.codigo_carrera }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ ca.nombre_carrera }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ ca.departamento }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_carrera' ca.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_carrera' ca.pk %}'" class = "btn">Editar</a></td>
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_carrera'  ca.pk %}', 'Eliminar carrera {{ ca.codigo_carrera }}')" class = "btn">Eliminar</a></td>
+            </tr>
+
+          {% endfor %}
+              {% endif %}  
+         
+
+            </table>
+    </div>
+    
+  </div>
+
+    <div id = "popup">
+  
+  </div>
+
+   {% endblock %}
+
+{% block js %}
+
+    <script>
+        var modal;
+        function abrir_modal(url, titulo)
+        {
+            modal = $('#popup').dialog({
+                title :titulo,
+                modal :true,
+                width :500,
+                resizable :false
+            }).dialog('open').load(url)
+        }
+    </script>
+
+{% endblock %}
