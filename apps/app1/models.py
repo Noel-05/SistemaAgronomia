@@ -142,9 +142,13 @@ class ServicioSocial(models.Model):
         return self.carnet_estudiante.__str__()
 
 
+def crear_subcarpeta(instance, filename):
+    return '/'.join([str(instance.carnet_estudiante), filename])
+
+
 class ArchivosEstudiante(models.Model):
     carnet_estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
-    documento = models.FileField(upload_to=lambda instance, filename: '/'.join([str(instance.carnet_estudiante), filename]), null=True, blank=True)
+    documento = models.FileField(upload_to=crear_subcarpeta, null=True, blank=True)
 
     def filename(self):
         return os.path.basename(self.documento.name)
