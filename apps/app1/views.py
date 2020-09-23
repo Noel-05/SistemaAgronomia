@@ -553,3 +553,81 @@ def consultaServicioSocialBuscar(request):
 
 
         # Aqui iban los Formularios pero se pasaron al archivo formularios.py
+    
+#Asesor Externo ---------------------------------------------------------------------------
+
+def consultaAsesorExterno(request):
+    
+    
+    asesoresExternos=AsesorExterno.objects.order_by('dui_asesor_externo')
+    
+    
+    if asesoresExternos:
+        existenRegistros=True
+        diccionario={"asesores_externos": asesoresExternos, "existenRegistros":existenRegistros}
+    
+    else:
+        existenRegistros=False
+        diccionario={"existenRegistros": existenRegistros}
+    
+    return render(request, 'app1/AsesorExterno.html', diccionario)
+
+class crearAsesorExterno(CreateView):
+    template_name = 'app1/crear_asesor_externo.html'
+    form_class = AsesorExternoForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_asesor_externo')
+    
+class editarAsesorExterno(UpdateView):
+    model = AsesorExterno
+    template_name = 'app1/crear_asesor_externo.html'
+    form_class = AsesorExternoForm
+
+    def get_success_url(self):
+      
+      return reverse_lazy('proyeccionsocial:consulta_asesor_externo')
+
+class eliminarAsesorExterno(DeleteView):
+    model = AsesorExterno
+    template_name = 'app1/eliminar_asesor_externo.html'
+    
+    def get_success_url(self):
+      return reverse_lazy('proyeccionsocial:consulta_asesor_externo')
+    
+#Docente (Asesor Interno) ---------------------------------------------------------------------------
+
+def consultaAsesorInterno(request):
+    
+    
+    docentes=Docente.objects.order_by('carnet_docente')
+    
+    
+    if docentes:
+        existenRegistros=True
+        diccionario={"asesores_internos": docentes, "existenRegistros":existenRegistros}
+    
+    else:
+        existenRegistros=False
+        diccionario={"existenRegistros": existenRegistros}
+    
+    return render(request, 'app1/AsesorInterno.html', diccionario)
+
+class crearAsesorInterno(CreateView):
+    template_name = 'app1/crear_asesor_interno.html'
+    form_class = AsesorInternoForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_asesor_interno')
+    
+class editarAsesorInterno(UpdateView):
+    model = Docente
+    template_name = 'app1/crear_asesor_interno.html'
+    form_class = AsesorInternoForm
+
+    def get_success_url(self):
+      
+      return reverse_lazy('proyeccionsocial:consulta_asesor_interno')
+
+class eliminarAsesorInterno(DeleteView):
+    model = Docente
+    template_name = 'app1/eliminar_asesor_interno.html'
+    
+    def get_success_url(self):
+      return reverse_lazy('proyeccionsocial:consulta_asesor_interno')

@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+{%block title%}
+  Registro Asesor Interno
+{%endblock%}
+{% block content %}
+
+    <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Asesor Interno</h2>
+        </br></br>
+
+        
+            {% if request.user.usuario_administrador %}
+            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_asesor_interno'  %}'" value="Agregar"></br></br>
+            {% endif %}
+
+
+    </div>
+  </header>
+
+  <div class="container">
+    <div>
+        {% if existenRegistros %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Carnet</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            
+            {% for asesor in asesores_internos %}
+            
+            <tr class="etiqueta-tr">
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ asesor.carnet_docente }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ asesor.nombre_docente }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ asesor.apellido_docente }}</td>
+                </td>
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_asesor_interno' asesor.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_asesor_interno' asesor.pk %}'" class = "btn">Editar</a></td>
+                
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_asesor_interno' asesor.pk %}', 'Eliminar Asesor con Carnet: {{asesor.carnet_docente}}' )" class = "btn">Eliminar</a></td>
+            </tr>
+       
+
+             {% endfor %}
+             </table>
+        {% else %}
+        
+        <p><strong>No hay registros de Asesores Internos</strong></p>
+        
+        {% endif %}
+      
+      </div>
+    
+  </div>
+
+    <div id = "popup">
+  
+  </div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        var modal;
+        function abrir_modal(url, titulo)
+        {
+            modal = $('#popup').dialog({
+                title :titulo,
+                modal :true,
+                width :500,
+                resizable :false
+            }).dialog('open').load(url)
+        }
+    </script>
+
+{% endblock %}

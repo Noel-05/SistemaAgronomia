@@ -394,3 +394,63 @@ class ServicioSocialForm(forms.ModelForm):
                 'data-placement': 'right',
                 'title': 'Selecciona el codigo del proyecto a realizar para el servicio social'
                 })
+            
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Asesor Externo
+
+class AsesorExternoForm(forms.ModelForm):
+    class Meta:
+        model = AsesorExterno
+        widgets = {
+            """'dui_asesor_externo' forms.TextInput(attrs={'placeholder': 'dui ', 'autofocus': '', 'required': '', 'maxlength':'5', 'pattern': '[1-2]{1}[0-9]{4}', 'title': 'Ingreselo con el formato Numero de Ciclo (1 o 2) y Año calendario,   Ej: 12020. (Esto significa el Ciclo 1, del Año 2020)'}),"""
+        }
+        fields = {
+            'dui_asesor_externo': forms.CharField,
+            'nombre_asesor_externo': forms.CharField,
+            'apellido_asesor_externo': forms.CharField,
+            'cargo_asesor_externo': forms.CharField,
+        }
+        labels = {
+            'dui_asesor_externo': 'DUI Asesor Externo' ,
+            'nombre_asesor_externo': 'Nombre Asesor Externo' ,
+            'apellido_asesor_externo': 'Apellido Asesor Externo',
+            'cargo_asesor_externo': 'Cargo Asesor Externo',
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super(AsesorExternoForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'material-control tooltips-general'
+                })
+
+ #Asesor Interno       
+
+class AsesorInternoForm(forms.ModelForm):
+    class Meta:
+        model = Docente
+        widgets = {
+            """'dui_asesor_externo' forms.TextInput(attrs={'placeholder': 'dui ', 'autofocus': '', 'required': '', 'maxlength':'5', 'pattern': '[1-2]{1}[0-9]{4}', 'title': 'Ingreselo con el formato Numero de Ciclo (1 o 2) y Año calendario,   Ej: 12020. (Esto significa el Ciclo 1, del Año 2020)'}),"""
+        }
+        fields = {
+            'carnet_docente': forms.CharField,
+            'nombre_docente': forms.CharField,
+            'apellido_docente': forms.CharField,
+            'nombre_rol': forms.CharField,
+            
+        }
+        labels = {
+            'carnet_docente': 'Carnet del docente' ,
+            'nombre_docente': 'Nombre del docente' ,
+            'apellido_docente': 'Apellido de docente',
+            'nombre_rol': 'Nombre Rol',
+            
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super(AsesorInternoForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'material-control tooltips-general'
+                })

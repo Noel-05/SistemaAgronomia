@@ -1,0 +1,83 @@
+{% extends 'base/base.html' %}
+{%block title%}
+  Registro Asesor Externo
+{%endblock%}
+{% block content %}
+
+    <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Asesor Externo</h2>
+        </br></br>
+
+        
+            {% if request.user.usuario_administrador %}
+            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_asesor_externo'  %}'" value="Agregar"></br></br>
+            {% endif %}
+
+
+    </div>
+  </header>
+
+  <div class="container">
+    <div>
+        {% if existenRegistros %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>DUI</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Cargo</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            
+            {% for asesor in asesores_externos %}
+            
+            <tr class="etiqueta-tr">
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ asesor.dui_asesor_externo }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ asesor.nombre_asesor_externo }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ asesor.apellido_asesor_externo }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ asesor.cargo_asesor_externo }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_asesor_externo' asesor.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_asesor_externo' asesor.pk %}'" class = "btn">Editar</a></td>
+                
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_asesor_externo' asesor.pk %}', 'Eliminar Asesor con DUI: {{asesor.dui_asesor_externo}}' )" class = "btn">Eliminar</a></td>
+            </tr>
+       
+
+             {% endfor %}
+             </table>
+        {% else %}
+        
+        <p><strong>No hay registros de Asesores Externos</strong></p>
+        
+        {% endif %}
+      
+      </div>
+    
+  </div>
+
+    <div id = "popup">
+  
+  </div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        var modal;
+        function abrir_modal(url, titulo)
+        {
+            modal = $('#popup').dialog({
+                title :titulo,
+                modal :true,
+                width :500,
+                resizable :false
+            }).dialog('open').load(url)
+        }
+    </script>
+
+{% endblock %}

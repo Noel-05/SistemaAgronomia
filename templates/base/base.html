@@ -104,7 +104,15 @@
         
        
 
-        <li class="list-group-item" onclick=" "><a style="text-decoration:none" href=" ">Tutores</a></li>
+        <li class="list-group-item"  onclick=""><a style="text-decoration:none;" href="">Asesores</a>
+            <ul >
+                <li ><a style="text-decoration:none; padding: 20px 0px;" href="{% url 'proyeccionsocial:consulta_asesor_interno' %}">ASESOR INTERNO</a></li>
+                <li ><a style="text-decoration:none; padding: 20px 0px;" href="{% url 'proyeccionsocial:consulta_asesor_externo' %}">ASESOR EXTERNO</a></li>
+                
+            </ul>
+
+          
+        </li>
       {% endif %}
 
 
