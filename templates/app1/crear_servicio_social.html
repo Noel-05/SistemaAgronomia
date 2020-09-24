@@ -68,6 +68,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="group-material">
                             <div class="row-xx">
                                 <div class="col-8 col-sm-5">
@@ -77,8 +78,12 @@
                                     {{form.dui_asesor_externo}}
                                     </br>
                                 </div>
+                                <div class="col-4 col-sm-1">
+                                    <input type="button" class="btn btn-success" onclick="window.location.href='{% url 'proyeccionsocial:crear_asesor_externo_estudiante' user.username %}'" value="+"></br></br>
+                                </div>
                             </div>
                         </div>
+
                         <div class="group-material">
                             <div class="row-xx">
                                 <div class="col-8 col-sm-5">

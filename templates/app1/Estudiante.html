@@ -47,10 +47,30 @@ Control Estudiante
                 {% if request.user.usuario_administrador %}
                     <th>Eliminar</th>
                 {% endif %}
+                {% ifnotequal request.user.rol 'DOC' %}
                     <th>Agregar Estudios</th>
+                {% endifnotequal %}
+                {% if request.user.usuario_administrador %}
                     <th>Documentos</th>
+                {% endif %}
         		</tr>
             </thead>
+
+        {% ifequal request.user.rol 'DOC' %}
+            {% if estudiante_list %}
+            {% for est in estudiante_list %}
+        		<tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.carnet_estudiante }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ est.nombre_estudiante}} {{ est.apellido_estudiante}}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.sexo_estudiante }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ est.telefono_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.correo_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.direccion_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_estudiante' est.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_estudiante' est.pk %}'" class = "btn">Editar</a></td>
+        		</tr>
+            {% endfor %}
+            {% endif %}
+        {% endifequal %}
 
         {% if request.user.usuario_administrador %}
             {% if estudiante_list %}
@@ -124,6 +144,8 @@ Control Estudiante
                 {% endif %}  
 
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:consulta_estudio_universitario' user.username %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudio_universitario' user.username %}' )" class = "btn">Agregar Estudio</a></td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:listar_documentos' est.pk%}" onclick="window.location.href= '{% url 'proyeccionsocial:agregar_documentos' est.pk %}'" class="btn">Documentos</a></td>
                 </tr>
 
             {% endfor %}

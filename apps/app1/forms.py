@@ -251,9 +251,9 @@ class EstadoSolicitudForm(forms.ModelForm):
                 'class': 'form-control',
                 })
 
-   
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 class ArchivosEstudianteForm(forms.ModelForm):
     class Meta:
@@ -290,7 +290,11 @@ class ArchivosEstudianteForm(forms.ModelForm):
                 'data-placement': 'right',
                 'tittle': 'Seleccione el documento a almacenar en la ventana de selección'
         })
+
+
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 class CarreraForm(forms.ModelForm):
     class Meta:
         model = Carrera
@@ -323,15 +327,19 @@ class CarreraForm(forms.ModelForm):
                 })
 
             self.fields['nombre_carrera'].widget.attrs.update({
-                'pattern': '[A-Za-záéíóú ]{0,25}', 
+                'pattern': '[A-Za-záéíóú ]{1,100}', 
                 'title': 'Ingrese el Codigo, Ej. Ingeniería Industrial.'
                 })
 
             self.fields['departamento'].widget.attrs.update({
-                'pattern': '[A-Za-záéíóú ]{0,25}', 
+                'pattern': '[A-Za-záéíóú ]{1,100}', 
                 'title': 'Ingrese el Codigo, Ej. Escuela Sistemas.'
                 })
+
+
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 class ServicioSocialForm(forms.ModelForm):
     carnet_estudiante = forms.ModelChoiceField(queryset=Solicitud.objects.all().order_by('carnet_estudiante'))
     carnet_docente = forms.ModelChoiceField(queryset=Docente.objects.all().order_by('carnet_docente'))
@@ -378,21 +386,21 @@ class ServicioSocialForm(forms.ModelForm):
                 'data-toggle': 'tooltip',
                 'data-html': 'true',
                 'data-placement': 'right',
-                'title': 'Selecciona el docente para tutor del servicio social'
+                'title': 'Selecciona el docente para tutor del servicio social.'
                 })
             self.fields['dui_asesor_externo'].widget.attrs.update({
                 'class': 'form-control',
                 'data-toggle': 'tooltip',
                 'data-html': 'true',
                 'data-placement': 'right',
-                'title': 'Elegir el dui del asesor externo para el servicio social'
+                'title': 'Selecciona el Asesor Externo para el Servicio Social, si NO esta registrado porfavor registralo en el boton de al lado.'
                 })
             self.fields['codigo_proyecto'].widget.attrs.update({
                 'class': 'form-control',
                 'data-toggle': 'tooltip',
                 'data-html': 'true',
                 'data-placement': 'right',
-                'title': 'Selecciona el codigo del proyecto a realizar para el servicio social'
+                'title': 'Selecciona el proyecto a realizar para el servicio social.'
                 })
             
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

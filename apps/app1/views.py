@@ -103,6 +103,21 @@ class eliminarCiclo(DeleteView):
 def consultaEstudiante(request, username):
     queryset = Estudiante.objects.filter(carnet_estudiante = username)
 
+    prb_btn = EstadoSolicitud.objects.filter(carnet_estudiante = username)
+
+    buscar = []
+    i=0
+    while(i < len(prb_btn)):
+        buscar.append((prb_btn[i].aceptado))
+        i+=1
+    
+    resp = "No"
+    for b in buscar:
+        if (b == "Aceptado"):
+            resp = "Si"
+        else:
+            resp = "No"
+
     suma = " "
     if len(queryset) == 0:
         suma = " "
@@ -112,6 +127,7 @@ def consultaEstudiante(request, username):
         'estudiante_list': estudiante_list,
         'queryset': queryset,
         'suma': suma,
+        'resp': resp,
     }
     return render(
         request,
@@ -172,6 +188,21 @@ def consultaEstudianteBuscar(request):
 def consultaEstudioUniversitario(request, username):
     queryset = EstudioUniversitario.objects.filter(carnet_estudiante = username)
 
+    prb_btn = EstadoSolicitud.objects.filter(carnet_estudiante = username)
+
+    buscar = []
+    i=0
+    while(i < len(prb_btn)):
+        buscar.append((prb_btn[i].aceptado))
+        i+=1
+    
+    resp = "No"
+    for b in buscar:
+        if (b == "Aceptado"):
+            resp = "Si"
+        else:
+            resp = "No"
+
     suma = " "
     if len(queryset) == 0:
         suma = " "
@@ -181,11 +212,14 @@ def consultaEstudioUniversitario(request, username):
         'estudios_list': estudios_list,
         'queryset': queryset,
         'suma': suma,
+        'resp': resp,
     }
     return render(
         request,
         'app1/EstudioUniversitario.html', context
     )
+
+
 
 class crearEstudioUniversitario(CreateView):
     template_name = 'app1/Crear_Estudio_Universitario.html'
@@ -246,6 +280,21 @@ def consultaEstudioUniversitarioBuscar(request):
 def consultaSolicitudServicioSocial(request, username):
     queryset = Solicitud.objects.filter(carnet_estudiante = username)
 
+    prb_btn = EstadoSolicitud.objects.filter(carnet_estudiante = username)
+
+    buscar = []
+    i=0
+    while(i < len(prb_btn)):
+        buscar.append((prb_btn[i].aceptado))
+        i+=1
+    
+    resp = "No"
+    for b in buscar:
+        if (b == "Aceptado"):
+            resp = "Si"
+        else:
+            resp = "No"
+
     suma = " "
     if len(queryset) == 0:
         suma = " "
@@ -255,6 +304,7 @@ def consultaSolicitudServicioSocial(request, username):
         'solicitudes_list': solicitudes_list,
         'queryset': queryset,
         'suma': suma,
+        'resp': resp,
     }
     return render(
         request,
@@ -462,6 +512,10 @@ class eliminarDocumento(DeleteView):
         username = str(self.object.carnet_estudiante)
         return reverse_lazy('proyeccionsocial:listar_documentos', kwargs={'pk': username})
 
+
+#-----------------------------------------------------------------------------------------------
+
+
 def consultaCarrera(request):
         carrera_list=Carrera.objects.order_by('codigo_carrera')
         context = {
@@ -489,10 +543,28 @@ class eliminarCarrera(DeleteView):
     success_url = reverse_lazy('proyeccionsocial:consulta_carrera')
 
 
+#-----------------------------------------------------------------------------------------------
+
+
 def consultaServicioSocial(request, username):
     queryset = ServicioSocial.objects.filter(carnet_estudiante = username)
 
-    suma = " "
+    prb_btn = EstadoSolicitud.objects.filter(carnet_estudiante = username)
+
+    buscar = []
+    i=0
+    while(i < len(prb_btn)):
+        buscar.append((prb_btn[i].aceptado))
+        i+=1
+    
+    resp = "No"
+    for b in buscar:
+        if (b == "Aceptado"):
+            resp = "Si"
+        else:
+            resp = "No"
+
+    suma = "No"
     if len(queryset) == 0:
         suma = " "
 
@@ -501,6 +573,7 @@ def consultaServicioSocial(request, username):
         'servicio_social_list': servicio_social_list,
         'queryset': queryset,
         'suma': suma,
+        'resp': resp,
     }
     return render(
         request,
@@ -550,22 +623,16 @@ def consultaServicioSocialBuscar(request):
 
     return render(request, 'app1/ServicioSocial.html', contexto)
 
-
-
-        # Aqui iban los Formularios pero se pasaron al archivo formularios.py
     
 #Asesor Externo ---------------------------------------------------------------------------
 
+
 def consultaAsesorExterno(request):
-    
-    
     asesoresExternos=AsesorExterno.objects.order_by('dui_asesor_externo')
-    
     
     if asesoresExternos:
         existenRegistros=True
         diccionario={"asesores_externos": asesoresExternos, "existenRegistros":existenRegistros}
-    
     else:
         existenRegistros=False
         diccionario={"existenRegistros": existenRegistros}
@@ -576,14 +643,23 @@ class crearAsesorExterno(CreateView):
     template_name = 'app1/crear_asesor_externo.html'
     form_class = AsesorExternoForm
     success_url = reverse_lazy('proyeccionsocial:consulta_asesor_externo')
+
     
+class crearAsesorExternoEstudiante(CreateView):
+    template_name = 'app1/crear_asesor_externo_estudiante.html'
+    form_class = AsesorExternoForm
+
+    def get_success_url(self):
+      username = self.kwargs['username']
+      return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
+    
+
 class editarAsesorExterno(UpdateView):
     model = AsesorExterno
     template_name = 'app1/crear_asesor_externo.html'
     form_class = AsesorExternoForm
 
     def get_success_url(self):
-      
       return reverse_lazy('proyeccionsocial:consulta_asesor_externo')
 
 class eliminarAsesorExterno(DeleteView):
@@ -593,13 +669,12 @@ class eliminarAsesorExterno(DeleteView):
     def get_success_url(self):
       return reverse_lazy('proyeccionsocial:consulta_asesor_externo')
     
+
 #Docente (Asesor Interno) ---------------------------------------------------------------------------
 
+
 def consultaAsesorInterno(request):
-    
-    
     docentes=Docente.objects.order_by('carnet_docente')
-    
     
     if docentes:
         existenRegistros=True
@@ -631,3 +706,6 @@ class eliminarAsesorInterno(DeleteView):
     
     def get_success_url(self):
       return reverse_lazy('proyeccionsocial:consulta_asesor_interno')
+
+
+#-----------------------------------------------------------------------------------------------

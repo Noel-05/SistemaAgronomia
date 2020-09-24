@@ -99,7 +99,7 @@ class AsesorExterno(models.Model):
     cargo_asesor_externo = models.CharField(max_length=100, null=False)
 
     def __str__(self):
-        return self.dui_asesor_externo
+        return self.nombre_asesor_externo.__str__() +' '+ self.apellido_asesor_externo.__str__()
 
 
 
@@ -119,8 +119,8 @@ class Docente(models.Model):
     nombre_rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.carnet_docente
-
+        return self.nombre_docente.__str__() +' '+ self.apellido_docente.__str__()
+        
 
 
 class Proyecto(models.Model):
@@ -128,7 +128,7 @@ class Proyecto(models.Model):
     descripcion_proyecto = models.CharField(max_length=200, null=False)
 
     def __str__(self):
-        return self.codigo_proyecto
+        return self.codigo_proyecto.__str__() +' - '+ self.descripcion_proyecto.__str__()
 
 
 

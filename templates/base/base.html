@@ -87,68 +87,66 @@
 
   {% if user.is_authenticated %}
         <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_estudiante' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_estudiante' user.username %}">Estudiante</a></li>
-        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_servicio_social' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}">Servicio Social</a></li>
-
-
-
-<!-- Debo Borrar Esta Linea, solo es para prueba -->
-      {% ifequal resp 'Si' %}
-        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_estado_solicitud_servicio_social' user.username %}'' "><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_estado_solicitud_servicio_social' user.username %} ">Solicitudes</a></li>
-      {% endifequal %}
-<!-- Fin de la Prueba, solo la linea de arriba -->
-
-
 
       {% if request.user.usuario_administrador %}
         <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_estado_solicitud_servicio_social' user.username %}'' "><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_estado_solicitud_servicio_social' user.username %} ">Solicitudes</a></li>
-        
-       
+      {% endif %}
 
+      {% ifequal request.user.rol 'DOC' %}
+        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_estado_solicitud_servicio_social' user.username %}'' "><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_estado_solicitud_servicio_social' user.username %} ">Solicitudes</a></li>
+      {% endifequal %}
+
+  <!-- Restriccion de Acceso -->
+      {% ifequal resp 'Si' %}
+        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_servicio_social' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}">Servicio Social</a></li>
+      {% endifequal %}
+
+      {% if request.user.usuario_administrador %}
+        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_servicio_social' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}">Servicio Social</a></li>
+      {% endif %}
+
+      {% ifequal request.user.rol 'DOC' %}
+        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_servicio_social' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}">Servicio Social</a></li>
+      {% endifequal %}
+  <!-- Fin de la Restriccion de Acceso -->
+
+
+      {% if request.user.usuario_administrador %}
         <li class="list-group-item"  onclick=""><a style="text-decoration:none;" href="">Asesores</a>
             <ul >
                 <li ><a style="text-decoration:none; padding: 20px 0px;" href="{% url 'proyeccionsocial:consulta_asesor_interno' %}">ASESOR INTERNO</a></li>
                 <li ><a style="text-decoration:none; padding: 20px 0px;" href="{% url 'proyeccionsocial:consulta_asesor_externo' %}">ASESOR EXTERNO</a></li>
-                
             </ul>
-
-          
         </li>
       {% endif %}
 
-
-
-      
-      <li class="list-group-item menu-has-children"><a style="text-decoration:none" href="#intro">Formularios</a>
-        <ul>
-          <li><a href = "{%url 'proyeccionsocial:generar_F1' 'RM17039' %}">Formulario F-1</a></li>
-          <li><a href = "{%url 'proyeccionsocial:generar_F2' 'RM17039' %}">Formulario F-2</a></li>
-          <li><a href = "{%url 'proyeccionsocial:generar_F3' 'RM17039' %}">Formulario F-3</a></li>
-          <li><a href = "{%url 'proyeccionsocial:generar_F4TI' 'RM17039' %}">Formulario F-4 - TI</a></li>
-          <li><a href = "{%url 'proyeccionsocial:generar_F4TE' 'RM17039' %}">Formulario F-4 - TE</a></li>
-          <li><a href = "{%url 'proyeccionsocial:generar_F6' 'RM17039' %}">Formulario F-6</a></li>
-          <li><a href = "{%url 'proyeccionsocial:generar_F7' 'RM17039' %}">Formulario F-7</a></li>
-          <li><a href = "{%url 'proyeccionsocial:generar_F8' 'RM17039' %}">Formulario F-8</a></li>
-          <li><a href = "{%url 'proyeccionsocial:generar_F9' 'RM17039' %}">Formulario F-9</a></li>
-          <li><a href = "{%url 'proyeccionsocial:generar_F11' 'RM17039' %}">Formulario F-11</a></li>
-        </ul>
-      </li>
-      
-
-        
-      {% if request.user.usuario_administrador %}
+   {% if request.user.usuario_administrador %}
+        <li class="list-group-item menu-has-children"><a style="text-decoration:none" href="#intro">Formularios</a>
+          <ul>
+            <li><a href = "{%url 'proyeccionsocial:generar_F1' 'RM17039' %}">Formulario F-1</a></li>
+            <li><a href = "{%url 'proyeccionsocial:generar_F2' 'RM17039' %}">Formulario F-2</a></li>
+            <li><a href = "{%url 'proyeccionsocial:generar_F3' 'RM17039' %}">Formulario F-3</a></li>
+            <li><a href = "{%url 'proyeccionsocial:generar_F4TI' 'RM17039' %}">Formulario F-4 - TI</a></li>
+            <li><a href = "{%url 'proyeccionsocial:generar_F4TE' 'RM17039' %}">Formulario F-4 - TE</a></li>
+            <li><a href = "{%url 'proyeccionsocial:generar_F6' 'RM17039' %}">Formulario F-6</a></li>
+            <li><a href = "{%url 'proyeccionsocial:generar_F7' 'RM17039' %}">Formulario F-7</a></li>
+            <li><a href = "{%url 'proyeccionsocial:generar_F8' 'RM17039' %}">Formulario F-8</a></li>
+            <li><a href = "{%url 'proyeccionsocial:generar_F9' 'RM17039' %}">Formulario F-9</a></li>
+            <li><a href = "{%url 'proyeccionsocial:generar_F11' 'RM17039' %}">Formulario F-11</a></li>
+          </ul>
+        </li>
 
         <li class="list-group-item menu-has-children"><a style="text-decoration:none" href="#intro">Opciones</a>
           <ul>
             <li><a href = "">Administrar Proyectos</a></li>
-
-            <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_carrera' %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_carrera'%}">Administrar Carreras</a></li>
-
-
+            
+            <li><a href="{% url 'proyeccionsocial:consulta_carrera'%}">Administrar Carreras</a></li>
+            
             <li><a href = "{% url 'proyeccionsocial:consulta_ciclo' %}">Administrar Ciclos</a></li>
             
-      {% if request.user.usuario_administrador or request.user.rol == 'DOC' %}
-        <li class="list-group-item"><a style="text-decoration:none" href="{% url 'usuario:inicio_usuarios' %}">Administrar Usuarios</a></li>
-      {% endif %}
+          {% if request.user.usuario_administrador or request.user.rol == 'DOC' %}
+            <li><a href="{% url 'usuario:inicio_usuarios' %}">Administrar Usuarios</a></li>
+          {% endif %}
 
           </ul>
         </li>

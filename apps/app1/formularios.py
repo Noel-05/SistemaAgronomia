@@ -367,9 +367,10 @@ class generarF2(ListView):
             fecha_inicio = i.fecha_inicio
             fecha_fin = i.fecha_fin
 
-        aceptado = "NO"
-        motivo = "Debe escoger otra entidad."
-        observaciones = "Porfavor escoja otra entidad para poder realizar su servicio social."
+        for i in ServicioSocial.objects.filter(carnet_estudiante = carnet_estudiante):
+            AsesorInterno = i.carnet_docente.nombre_docente + ' ' +i.carnet_docente.apellido_docente
+            AsesorExterno = i.dui_asesor_externo.nombre_asesor_externo + ' ' + i.dui_asesor_externo.apellido_asesor_externo
+            Proyecto = i.codigo_proyecto
 
         pdf.setFont("Helvetica-Bold", 26)
         pdf.drawString(100, 720, u"F2")
@@ -414,10 +415,10 @@ class generarF2(ListView):
         t.wrapOn(pdf,560,590)
         t.drawOn(pdf,60,420)
 
-        texto = 'Asesor por parte de la entidad externa: %s' % 'Asesor'
+        texto = 'Asesor por parte de la entidad externa: %s' %AsesorExterno
         pdf.drawString(60, 400,texto)
 
-        texto = 'Asesor por parte de la Facultad: %s' % 'Asesor'
+        texto = 'Asesor por parte de la Facultad: %s' %AsesorInterno
         pdf.drawString(60, 370, texto)
 
         pdf.drawString(60, 340, u"Y para los tramites de presentación en la institución o comunidad se extiende la presente")
@@ -517,7 +518,6 @@ class generarF3(ListView):
         queryset = Estudiante.objects.filter(carnet_estudiante = carnet_estudiante)
         #Declaracion y asignacion de variables que se recuperaran de la BD
 
-
         for i in Estudiante.objects.filter(carnet_estudiante = carnet_estudiante):
             carnet = i.carnet_estudiante 
             nombre = i.nombre_estudiante
@@ -538,12 +538,10 @@ class generarF3(ListView):
         numero = posicion
         
         for i in EstudioUniversitario.objects.filter(carnet_estudiante = carnet_estudiante):
-
             carrera = i.codigo_carrera.nombre_carrera
             ciclo_lect = i.codigo_ciclo_id
 
         for i in Solicitud.objects.filter(carnet_estudiante = carnet_estudiante):
-           
             entidad = i.codigo_entidad
             domicilio_entidad = i.codigo_entidad.direccion_entidad
             fecha_inicio = i.fecha_inicio
@@ -678,9 +676,9 @@ class generarF3(ListView):
 
 
 class generarF4TI(ListView):
-    model = Estudiante
-    template_name = 'app1/Estudiante.html'
-    context_object_name = 'estudiante'
+    model = Docente
+    template_name = 'app1/ServicioSocial.html'
+    context_object_name = 'docente'
     success_url = reverse_lazy('proyeccionsocial:generar_F4TI')  
      
     def cabecera(self,pdf):
@@ -709,17 +707,19 @@ class generarF4TI(ListView):
 
     def get_queryset(self, pdf, **kwargs):
         carnet_estudiante = self.kwargs.get('carnet_estudiante')
-        queryset = Estudiante.objects.filter(carnet_estudiante = carnet_estudiante)
+        queryset = ServicioSocial.objects.filter(carnet_estudiante = carnet_estudiante)
         #Declaracion y asignacion de variables que se recuperaran de la BD
 
-        tutor="(nombre completo del TUTOR)"
-        alumno="(nombre completo del ALUMNO)"
-        proyecto="(nombre del PROYECTO)"
+        for i in ServicioSocial.objects.filter(carnet_estudiante = carnet_estudiante):
+            tutor = i.carnet_docente
+            alumno = i.carnet_estudiante.carnet_estudiante.nombre_estudiante +' '+ i.carnet_estudiante.carnet_estudiante.apellido_estudiante
+            proyecto = i.codigo_proyecto.descripcion_proyecto
+            fecha = i.carnet_estudiante.fecha_inicio
+            externo = i.dui_asesor_externo.nombre_asesor_externo +' '+ i.dui_asesor_externo.apellido_asesor_externo
+            entidad = i.carnet_estudiante.codigo_entidad
+            
         departamento="(nombre del DEPARTAMENTO)"
         superior="(nombre del INGENIERO o LICENCIADO)"
-        fecha="(00/00/00)"
-        externo="(nombre completo del TUTOR EXTERNO)"
-        entidad="(nombre completo de la ENTIDAD o COMUNIDAD)"
 
         pdf.setFont("Helvetica-Bold", 26)
         pdf.drawString(100, 720, u"F4-TI")
@@ -767,7 +767,7 @@ class generarF4TI(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 520, texto)
         
-        texto = "El proyecto se iniciará a partir de esta fecha (dd/mm/aa): " 
+        texto = "El proyecto se iniciará a partir de esta fecha (aaaa-mm-dd): " 
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 505, texto)
         
@@ -881,14 +881,17 @@ class generarF4TE(ListView):
 
     def get_queryset(self, pdf, **kwargs):
         carnet_estudiante = self.kwargs.get('carnet_estudiante')
-        queryset = Estudiante.objects.filter(carnet_estudiante = carnet_estudiante)
+        queryset = ServicioSocial.objects.filter(carnet_estudiante = carnet_estudiante)
         #Declaracion y asignacion de variables que se recuperaran de la BD
 
-        entidad="(nombre de la ENTIDAD)"
-        externo="(nombre del TUTOR EXTERNO)"
-        alumno="(nombre del ALUMNO)"
-        proyecto="(nombre del PROYECTO)"
-        fecha="(00/00/00)"
+        for i in ServicioSocial.objects.filter(carnet_estudiante = carnet_estudiante):
+            tutor = i.carnet_docente
+            alumno = i.carnet_estudiante.carnet_estudiante.nombre_estudiante +' '+ i.carnet_estudiante.carnet_estudiante.apellido_estudiante
+            proyecto = i.codigo_proyecto.descripcion_proyecto
+            fecha = i.carnet_estudiante.fecha_inicio
+            externo = i.dui_asesor_externo.nombre_asesor_externo +' '+ i.dui_asesor_externo.apellido_asesor_externo
+            entidad = i.carnet_estudiante.codigo_entidad
+
         dia = "(00)"
         mes = "(mes)"
         anio= "(0000)"
@@ -924,7 +927,7 @@ class generarF4TE(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 585, texto)
         
-        texto = "El proyecto se iniciará a partir de esta fecha (dd/mm/aa): " 
+        texto = "El proyecto se iniciará a partir de esta fecha (aaaa-mm-dd): " 
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 555, texto)
         
