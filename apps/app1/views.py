@@ -16,6 +16,7 @@ from .forms import *
 from .formularios import *
 import time
 from django.conf import settings
+from apps.usuario.views import *
 
 
 # Vista para el menu de inicio
@@ -80,18 +81,18 @@ def consultaCiclo(request):
         'app1/Ciclo.html', context
     )
 
-class crearCiclo(CreateView):
+class crearCiclo(LoginAMixin, CreateView):
     template_name = 'app1/crear_ciclo.html'
     form_class = CicloForm
     success_url = reverse_lazy('proyeccionsocial:consulta_ciclo')
 
-class editarCiclo(UpdateView):
+class editarCiclo(LoginAMixin, UpdateView):
     model = Ciclo
     template_name = 'app1/crear_ciclo.html'
     form_class = CicloForm
     success_url = reverse_lazy('proyeccionsocial:consulta_ciclo')
 
-class eliminarCiclo(DeleteView):
+class eliminarCiclo(LoginAMixin, DeleteView):
     model = Ciclo
     template_name = 'app1/eliminar_ciclo.html'
     success_url = reverse_lazy('proyeccionsocial:consulta_ciclo')
@@ -143,7 +144,7 @@ class crearEstudiante(CreateView):
       return reverse_lazy('proyeccionsocial:consulta_estudiante', kwargs={'username': username})
 
 
-class editarEstudiante(UpdateView):
+class editarEstudiante(LoginPEAMixin, UpdateView):
     model = Estudiante
     template_name = 'app1/Crear_Estudiante.html'
     form_class = EstudianteForm
@@ -153,7 +154,7 @@ class editarEstudiante(UpdateView):
       return reverse_lazy('proyeccionsocial:consulta_estudiante', kwargs={'username': username})
 
 
-class eliminarEstudiante(DeleteView):
+class eliminarEstudiante(LoginAMixin, DeleteView):
     model = Estudiante
     template_name = 'app1/eliminar_estudiante.html'
     
@@ -221,7 +222,7 @@ def consultaEstudioUniversitario(request, username):
 
 
 
-class crearEstudioUniversitario(CreateView):
+class crearEstudioUniversitario(LoginEAMixin, CreateView):
     template_name = 'app1/Crear_Estudio_Universitario.html'
     form_class = EstudioUniversitarioForm
 
@@ -232,7 +233,7 @@ class crearEstudioUniversitario(CreateView):
     #success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
 
 
-class editarEstudioUniversitario(UpdateView):
+class editarEstudioUniversitario(LoginEAMixin, UpdateView):
     model = EstudioUniversitario
     template_name = 'app1/Crear_Estudio_Universitario.html'
     form_class = EstudioUniversitarioForm
@@ -244,7 +245,7 @@ class editarEstudioUniversitario(UpdateView):
     #success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
 
 
-class eliminarEstudioUniversitario(DeleteView):
+class eliminarEstudioUniversitario(LoginAMixin, DeleteView):
     model = EstudioUniversitario
     template_name = 'app1/eliminar_estudio_universitario.html'
 
@@ -311,7 +312,7 @@ def consultaSolicitudServicioSocial(request, username):
         'app1/Solicitud.html', context
     )
 
-class crearSolicitudServicioSocial(CreateView):
+class crearSolicitudServicioSocial(LoginEAMixin, CreateView):
     template_name = 'app1/Crear_Solicitud_Servicio_Social.html'
     form_class = SolicitudForm
 
@@ -320,7 +321,7 @@ class crearSolicitudServicioSocial(CreateView):
       return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
 
-class editarSolicitudServicioSocial(UpdateView):
+class editarSolicitudServicioSocial(LoginEAMixin, UpdateView):
     model = Solicitud
     template_name = 'app1/Crear_Solicitud_Servicio_Social.html'
     form_class = SolicitudForm
@@ -330,7 +331,7 @@ class editarSolicitudServicioSocial(UpdateView):
       return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
     # Para el boton Solicitudes del Base para Administrador
-class editarSolicitudServicioSocial2(UpdateView):
+class editarSolicitudServicioSocial2(LoginPAMixin, UpdateView):
     model = Solicitud
     template_name = 'app1/Crear_Solicitud_Servicio_Social_Consulta.html'
     form_class = SolicitudForm
@@ -340,7 +341,7 @@ class editarSolicitudServicioSocial2(UpdateView):
       return reverse_lazy('proyeccionsocial:consulta_estado_solicitud_servicio_social', kwargs={'username': username})
 
 
-class eliminarSolicitudServicioSocial(DeleteView):
+class eliminarSolicitudServicioSocial(LoginPAMixin, DeleteView):
     model = Solicitud
     template_name = 'app1/eliminar_solicitud_servicio_social.html'
     
@@ -349,7 +350,7 @@ class eliminarSolicitudServicioSocial(DeleteView):
       return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
 # Para el boton Solicitudes del Base para Administrador
-class eliminarSolicitudServicioSocial2(DeleteView):
+class eliminarSolicitudServicioSocial2(LoginPAMixin, DeleteView):
     model = Solicitud
     template_name = 'app1/eliminar_solicitud_servicio_social_consulta.html'
     
@@ -446,7 +447,7 @@ def consultaEstadoSolicitudServicioSocialBuscar2(request):
 
 
 # Para el boton Solicitudes del Base para Administrador
-class crearEstadoSolicitudServicioSocial(CreateView):
+class crearEstadoSolicitudServicioSocial(LoginPAMixin, CreateView):
     template_name = 'app1/Crear_Estado_Solicitud_Servicio_Social.html'
     form_class = EstadoSolicitudForm
 
@@ -454,7 +455,7 @@ class crearEstadoSolicitudServicioSocial(CreateView):
       username = self.kwargs['username']
       return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
-class crearEstadoSolicitudServicioSocial2(CreateView):
+class crearEstadoSolicitudServicioSocial2(LoginPAMixin, CreateView):
     template_name = 'app1/Crear_Estado_Solicitud_Servicio_Social_Consulta.html'
     form_class = EstadoSolicitudForm
 
@@ -463,7 +464,7 @@ class crearEstadoSolicitudServicioSocial2(CreateView):
       return reverse_lazy('proyeccionsocial:consulta_estado_solicitud_servicio_social_consulta', kwargs={'username': username})
 
 
-class editarEstadoSolicitudServicioSocial(UpdateView):
+class editarEstadoSolicitudServicioSocial(LoginPAMixin, UpdateView):
     model = EstadoSolicitud
     template_name = 'app1/Crear_Estado_Solicitud_Servicio_Social_Consulta.html'
     form_class = EstadoSolicitudForm
@@ -473,7 +474,7 @@ class editarEstadoSolicitudServicioSocial(UpdateView):
       return reverse_lazy('proyeccionsocial:consulta_estado_solicitud_servicio_social_consulta', kwargs={'username': username})
 
 
-class eliminarEstadoSolicitudServicioSocial(DeleteView):
+class eliminarEstadoSolicitudServicioSocial(LoginPAMixin, DeleteView):
     model = EstadoSolicitud
     template_name = 'app1/eliminar_estado_solicitud_servicio_social.html'
     
@@ -526,18 +527,18 @@ def consultaCarrera(request):
         'app1/Carrera.html', context
     )
 
-class crearCarrera(CreateView):
+class crearCarrera(LoginAMixin, CreateView):
     template_name = 'app1/crear_carrera.html'
     form_class = CarreraForm
     success_url = reverse_lazy('proyeccionsocial:consulta_carrera')
 
-class editarCarrera(UpdateView):
+class editarCarrera(LoginAMixin, UpdateView):
     model = Carrera
     template_name = 'app1/crear_carrera.html'
     form_class = CarreraForm
     success_url = reverse_lazy('proyeccionsocial:consulta_carrera')
 
-class eliminarCarrera(DeleteView):
+class eliminarCarrera(LoginAMixin, DeleteView):
     model = Carrera
     template_name = 'app1/eliminar_carrera.html'
     success_url = reverse_lazy('proyeccionsocial:consulta_carrera')
@@ -580,7 +581,7 @@ def consultaServicioSocial(request, username):
         'app1/ServicioSocial.html', context
     )
 
-class crearServicioSocial(CreateView):
+class crearServicioSocial(LoginPEAMixin, CreateView):
     template_name = 'app1/crear_servicio_social.html'
     form_class = ServicioSocialForm
 
@@ -589,7 +590,7 @@ class crearServicioSocial(CreateView):
       return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
 
 
-class editarServicioSocial(UpdateView):
+class editarServicioSocial(LoginEAMixin, UpdateView):
     model = ServicioSocial
     template_name = 'app1/crear_servicio_social.html'
     form_class = ServicioSocialForm
@@ -599,7 +600,7 @@ class editarServicioSocial(UpdateView):
       return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
 
 
-class eliminarServicioSocial(DeleteView):
+class eliminarServicioSocial(LoginAMixin, DeleteView):
     model = ServicioSocial
     template_name = 'app1/eliminar_servicio_social.html'
 
@@ -639,13 +640,13 @@ def consultaAsesorExterno(request):
     
     return render(request, 'app1/AsesorExterno.html', diccionario)
 
-class crearAsesorExterno(CreateView):
+class crearAsesorExterno(LoginPEAMixin, CreateView):
     template_name = 'app1/crear_asesor_externo.html'
     form_class = AsesorExternoForm
     success_url = reverse_lazy('proyeccionsocial:consulta_asesor_externo')
 
     
-class crearAsesorExternoEstudiante(CreateView):
+class crearAsesorExternoEstudiante(LoginPEAMixin, CreateView):
     template_name = 'app1/crear_asesor_externo_estudiante.html'
     form_class = AsesorExternoForm
 
@@ -654,7 +655,7 @@ class crearAsesorExternoEstudiante(CreateView):
       return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
     
 
-class editarAsesorExterno(UpdateView):
+class editarAsesorExterno(LoginAMixin, UpdateView):
     model = AsesorExterno
     template_name = 'app1/crear_asesor_externo.html'
     form_class = AsesorExternoForm
@@ -662,7 +663,7 @@ class editarAsesorExterno(UpdateView):
     def get_success_url(self):
       return reverse_lazy('proyeccionsocial:consulta_asesor_externo')
 
-class eliminarAsesorExterno(DeleteView):
+class eliminarAsesorExterno(LoginAMixin, DeleteView):
     model = AsesorExterno
     template_name = 'app1/eliminar_asesor_externo.html'
     
@@ -686,12 +687,12 @@ def consultaAsesorInterno(request):
     
     return render(request, 'app1/AsesorInterno.html', diccionario)
 
-class crearAsesorInterno(CreateView):
+class crearAsesorInterno(LoginAMixin, CreateView):
     template_name = 'app1/crear_asesor_interno.html'
     form_class = AsesorInternoForm
     success_url = reverse_lazy('proyeccionsocial:consulta_asesor_interno')
     
-class editarAsesorInterno(UpdateView):
+class editarAsesorInterno(LoginAMixin, UpdateView):
     model = Docente
     template_name = 'app1/crear_asesor_interno.html'
     form_class = AsesorInternoForm
@@ -700,7 +701,7 @@ class editarAsesorInterno(UpdateView):
       
       return reverse_lazy('proyeccionsocial:consulta_asesor_interno')
 
-class eliminarAsesorInterno(DeleteView):
+class eliminarAsesorInterno(LoginAMixin, DeleteView):
     model = Docente
     template_name = 'app1/eliminar_asesor_interno.html'
     
