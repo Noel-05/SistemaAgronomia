@@ -795,21 +795,28 @@ class generarF4TI(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 400, texto)
         
-        texto = "de la Facultad y al Reglamento respectivo, por lo que se solicita velar por el fiel cumplimiento del" 
+        texto = "de la Facultad y al Reglamento respectivo, por lo que se solicita velar por el fiel cumplimiento del"
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 385, texto)
-        
-        texto = "trabajo antes mencionado." 
+
+        texto = "trabajo antes mencionado."
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 370, texto)
-        
-        texto = "Firma y sello: _______________________________" 
+
+        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes
+        archivo_imagen1 = settings.BASE_DIR+'/static/img/firmaYSello.jpg'
+
+        #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes
+        pdf.drawImage(archivo_imagen1, 40, 265, 460, 95,preserveAspectRatio=True)
+        # 40 es el ancho de la imagen, 275 es el alto en posicion, 460 es el tamaño del borde izq., 95 es lo alto en diagonal de la imagen
+
+        texto = "Firma y sello:"
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 300, texto)
-        
-        texto = "Fecha:_________________ de _________________ de _________________" 
+        pdf.drawString(60, 274, texto)
+
+        texto = "Fecha:_________________ de _________________ de _________________"
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 250, texto)
+        pdf.drawString(60, 230, texto)
 
         return queryset
  

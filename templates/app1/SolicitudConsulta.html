@@ -45,6 +45,9 @@ Solicitud Servicio Social
                     <th>Eliminar</th>
                 {% endifequal %}
                     <th>Imprimir</th>
+                {% if request.user.usuario_administrador %}
+                    <th>Estado Solicitud</th>
+                {% endif %}
                 {% ifequal request.user.rol 'DOC' %}
                     <th>Estado Solicitud</th>
                 {% endifequal %}
