@@ -158,8 +158,7 @@ class EliminarUsuario(LoginAMixin, DeleteView):
     def delete(self,request,*args,**kwargs):
         if request.is_ajax():
             usuario = self.get_object()
-            usuario.usuario_activo = False
-            usuario.save()
+            usuario.delete()
             mensaje = f'{self.model.__name__} eliminado correctamente!'
             error = 'No hay error!'
             response = JsonResponse({'mensaje': mensaje, 'error': error})
