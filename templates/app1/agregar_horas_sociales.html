@@ -1,0 +1,103 @@
+{% extends 'base/base.html' %}
+{%block title%}
+    Agregar Horas Sociales
+{%endblock%}
+{% block content %}
+
+{% load static %}
+    <link rel = "stylesheet" href = "{% static 'css/stylePrueba.css' %}">
+    <link rel = "stylesheet" href = "{% static 'css/sweet-alert.css' %}">
+    <link rel = "stylesheet" href = "{% static 'css/bootstrap.min-PRUEBA.css' %}">
+
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Registro de Horas Sociales</h2>
+        </br></br></br>
+    </div>
+  </header>
+
+<div class="container-fluid">
+    <div class="container-flat-form">
+                <form method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-xs-14 col-sm-8 col-sm-offset-2">
+                    {% csrf_token %}
+                        {{form.errors}}
+
+                        {% if object %}
+                            <div class="group-material" style="display:none;">
+                                <div class="row-xx">
+                                    <div class="col-8 col-sm-6">
+                                        {{form.carnet_estudiante.label_tag}}
+                                    </div>
+                                    <div class="col-4 col-sm-6">
+                                        {{form.carnet_estudiante}}
+                                        </br>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="group-material">
+                                <div class="row-xx">
+                                    <div class="col-8 col-sm-6">
+                                        {{form.carnet_estudiante.label_tag}}
+                                    </div>
+                                    <div class="col-4 col-sm-6">
+                                        {{form.carnet_estudiante}}
+                                        </br>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if object %}
+                            </br>
+                        {% else %}
+                            </br>
+                        {% endif %}
+
+                        <div class="group-material">
+                            {{form.fecha_servicio}}
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            {{form.fecha_servicio.label_tag}}
+                        </div>
+                        <div class="group-material">
+                            {{ form.hora_entrada }}
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            {{form.hora_entrada.label_tag}}
+                        </div>
+
+                        <div class="group-material">
+                            {{form.actividad_realizada}}
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            {{form.actividad_realizada.label_tag}}
+                        </div>
+
+                        <div class="group-material">
+                            {{form.hora_salida}}
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            {{form.hora_salida.label_tag}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="col-lg-5 text-center">
+                         <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Guardar">
+                    </div>
+                </div>
+
+                
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -8,7 +8,7 @@ app_name='proyeccionsocial'
 urlpatterns=[
 	#URL para el menu de inicio
 	#path('', index),
-	path('proyeccionsocial/index/<username>',login_required(index), name='index'),
+	path('proyeccionsocial/index/<username>/',login_required(index), name='index'),
 
 
 	#URL para Ciclo
@@ -58,6 +58,47 @@ urlpatterns=[
 	path('proyeccionsocial/crearEstadoSolicitudServicioSocial2/<username>/',login_required(crearEstadoSolicitudServicioSocial2.as_view()), name="crear_estado_solicitud_servicio_social2"),
 	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialBuscar/',login_required(consultaEstadoSolicitudServicioSocialBuscar), name="consulta_estado_solicitud_servicio_social_buscar"),
 	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialBuscar2/',login_required(consultaEstadoSolicitudServicioSocialBuscar2), name="consulta_estado_solicitud_servicio_social_buscar2"),
+	
+	
+	#URL para Carrera
+	path('proyeccionsocial/consultaCarrera/',login_required(consultaCarrera), name="consulta_carrera"),
+	path('proyeccionsocial/crearCarrera/',login_required(crearCarrera.as_view()), name="crear_carrera"),
+	path('proyeccionsocial/editarCarrera/<pk>/',login_required(editarCarrera.as_view()), name="editar_carrera"),
+	path('proyeccionsocial/eliminarCarrera/<pk>/',login_required(eliminarCarrera.as_view()), name="eliminar_carrera"),
+	
+
+	#URL para ServicioSocial
+	path('proyeccionsocial/consultaServicioSocial/<username>/',login_required(consultaServicioSocial), name="consulta_servicio_social"),
+	path('proyeccionsocial/crearServicioSocial/<username>/',login_required(crearServicioSocial.as_view()), name="crear_servicio_social"),
+	path('proyeccionsocial/editarServicioSocial/<pk>/',login_required(editarServicioSocial.as_view()), name="editar_servicio_social"),
+	path('proyeccionsocial/eliminarServicioSocial/<pk>/',login_required(eliminarServicioSocial.as_view()), name="eliminar_servicio_social"),
+	path('proyeccionsocial/consultaServicioSocialBuscar/',login_required(consultaServicioSocialBuscar), name="consulta_servicio_social_buscar"),
+    
+
+    #URL para AsesorExterno
+    path('proyeccionsocial/consultaAsesorExterno/',login_required(consultaAsesorExterno), name="consulta_asesor_externo"),
+    path('proyeccionsocial/crearAsesorExterno/',login_required(crearAsesorExterno.as_view()), name="crear_asesor_externo"),
+	path('proyeccionsocial/crearAsesorExternoEstd/<username>/',login_required(crearAsesorExternoEstudiante.as_view()), name="crear_asesor_externo_estudiante"),
+    path('proyeccionsocial/editarAsesorExterno/<pk>/',login_required(editarAsesorExterno.as_view()), name="editar_asesor_externo"),
+    path('proyeccionsocial/eliminarAsesorExterno/<pk>/',login_required(eliminarAsesorExterno.as_view()), name="eliminar_asesor_externo"),
+    
+
+    #URL para AsesorInterno
+    path('proyeccionsocial/consultaAsesorInterno/',login_required(consultaAsesorInterno), name="consulta_asesor_interno"),
+    path('proyeccionsocial/crearAsesorInterno/',login_required(crearAsesorInterno.as_view()), name="crear_asesor_interno"),
+    path('proyeccionsocial/editarAsesorInterno/<pk>/',login_required(editarAsesorInterno.as_view()), name="editar_asesor_interno"),
+    path('proyeccionsocial/eliminarAsesorInterno/<pk>/',login_required(eliminarAsesorInterno.as_view()), name="eliminar_asesor_interno"),
+
+
+    #URL para Documentos
+	path('proyeccionsocial/listarDocumentos/<pk>/', login_required(documentosEstudianteListView.as_view()), name="listar_documentos"),
+	path('proyeccionsocial/agregarDocumentos/<pk>/', login_required(agregarDocumentos.as_view()), name="agregar_documentos"),
+	path('proyeccionsocial/eliminarDocumento/<pk>/', login_required(eliminarDocumento.as_view()), name="eliminar_documento"),
+	
+	#URL para Horas Sociales
+	path('proyeccionsocial/listarHorasSociales/<pk>/', login_required(horasSocialesListView.as_view()), name="listar_horas_sociales"),
+	path('proyeccionsocial/agregarHorasSociales/<pk>/', login_required(agregarHorasSociales.as_view()), name="agregar_horas_sociales"),
+	path('proyeccionsocial/eliminarDocumento/<pk>/', login_required(eliminarDocumento.as_view()), name="eliminar_documento"),
 	
 
 

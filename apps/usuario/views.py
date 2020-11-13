@@ -14,11 +14,12 @@ from apps.usuario.models import Usuario
 from apps.usuario.forms import FormularioLogin, FormularioUsuario, FormularioUsuarioEditar, FormularioUsuarioLogin
 from apps.usuario.mixins import LoginPEAMixin, LoginPAMixin, LoginEAMixin, LoginAMixin
 
-# Vista para el menu de inicio
+from apps.app1 import *
+
 def index(request):
     return render(
         request,
-        'base/base.html',
+        'usuario/index_usuario.html',
     )
 
 
@@ -157,8 +158,7 @@ class EliminarUsuario(LoginAMixin, DeleteView):
     def delete(self,request,*args,**kwargs):
         if request.is_ajax():
             usuario = self.get_object()
-            usuario.usuario_activo = False
-            usuario.save()
+            usuario.delete()
             mensaje = f'{self.model.__name__} eliminado correctamente!'
             error = 'No hay error!'
             response = JsonResponse({'mensaje': mensaje, 'error': error})

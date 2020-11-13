@@ -1,0 +1,124 @@
+{% extends 'base/base.html' %}
+{%block title%}
+    Control Servicio Social
+{%endblock%}
+{% block content %}
+
+{% load static %}
+   
+        <link rel = "stylesheet" href = "{% static 'css/stylePrueba.css' %}">
+        <link rel = "stylesheet" href = "{% static 'css/sweet-alert.css' %}">
+        <link rel = "stylesheet" href = "{% static 'css/bootstrap.min-PRUEBA.css' %}">
+
+    
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Registro de Servicio Social</h2>
+        </br></br></br>
+    </div>
+  </header>
+
+<div class="container-fluid">
+    <div class="container-flat-form">
+        <div class="title-flat-form title-flat-green">Registrar Servicio Social</div>
+            {% if object %}
+                <form role="form" method="POST" action="{% url  'proyeccionsocial:editar_servicio_social' object.pk  %}">
+            {% else %}
+                <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_servicio_social' user.username %}">
+            {% endif %}
+
+                <div class="row">
+                    <div class="col-xs-14 col-sm-8 col-sm-offset-2">
+                        {% csrf_token %}
+                        {{form.errors}}
+
+                        {% if object %}
+                            <div class="group-material" style="display:none;">
+                                <div class="row-xx">
+                                    <div class="col-8 col-sm-6">
+                                        {{form.carnet_estudiante.label_tag}}
+                                    </div>
+                                    <div class="col-4 col-sm-6">
+                                        {{form.carnet_estudiante}}
+                                        </br>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="group-material">
+                                <div class="row-xx">
+                                    <div class="col-8 col-sm-5">
+                                        {{form.carnet_estudiante.label_tag}}
+                                    </div>
+                                    <div class="col-4 col-sm-6">
+                                        {{form.carnet_estudiante}}
+                                        </br>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="group-material">
+                            <div class="row-xx">
+                                <div class="col-8 col-sm-5">
+                                    {{form.carnet_docente.label_tag}}
+                                </div>
+                                <div class="col-4 col-sm-6">
+                                    {{form.carnet_docente}}
+                                    </br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="group-material">
+                            <div class="row-xx">
+                                <div class="col-8 col-sm-5">
+                                    {{form.dui_asesor_externo.label_tag}}
+                                </div>
+                                <div class="col-4 col-sm-6">
+                                    {{form.dui_asesor_externo}}
+                                    </br>
+                                </div>
+                                <div class="col-4 col-sm-1">
+                                    <input type="button" class="btn btn-success" onclick="window.location.href='{% url 'proyeccionsocial:crear_asesor_externo_estudiante' user.username %}'" value="+"></br></br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="group-material">
+                            <div class="row-xx">
+                                <div class="col-8 col-sm-5">
+                                    {{form.codigo_proyecto.label_tag}}
+                                </div>
+                                <div class="col-4 col-sm-6">
+                                    {{form.codigo_proyecto}}
+                                    </br>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <div class="col-lg-5 text-center">
+                        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Guardar">
+                        <a href = "{% url 'proyeccionsocial:consulta_servicio_social' user.username %}"><input type="button" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
+                    </div>
+                </div>
+                
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+{% endblock %}
+

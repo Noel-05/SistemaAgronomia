@@ -16,6 +16,7 @@ from .forms import *
 from .formularios import *
 import time
 from django.conf import settings
+from apps.usuario.views import *
 
 
 # Vista para el menu de inicio
@@ -80,18 +81,18 @@ def consultaCiclo(request):
         'app1/Ciclo.html', context
     )
 
-class crearCiclo(CreateView):
+class crearCiclo(LoginAMixin, CreateView):
     template_name = 'app1/crear_ciclo.html'
     form_class = CicloForm
     success_url = reverse_lazy('proyeccionsocial:consulta_ciclo')
 
-class editarCiclo(UpdateView):
+class editarCiclo(LoginAMixin, UpdateView):
     model = Ciclo
     template_name = 'app1/crear_ciclo.html'
     form_class = CicloForm
     success_url = reverse_lazy('proyeccionsocial:consulta_ciclo')
 
-class eliminarCiclo(DeleteView):
+class eliminarCiclo(LoginAMixin, DeleteView):
     model = Ciclo
     template_name = 'app1/eliminar_ciclo.html'
     success_url = reverse_lazy('proyeccionsocial:consulta_ciclo')
@@ -103,6 +104,21 @@ class eliminarCiclo(DeleteView):
 def consultaEstudiante(request, username):
     queryset = Estudiante.objects.filter(carnet_estudiante = username)
 
+    prb_btn = EstadoSolicitud.objects.filter(carnet_estudiante = username)
+
+    buscar = []
+    i=0
+    while(i < len(prb_btn)):
+        buscar.append((prb_btn[i].aceptado))
+        i+=1
+    
+    resp = "No"
+    for b in buscar:
+        if (b == "Aceptado"):
+            resp = "Si"
+        else:
+            resp = "No"
+
     suma = " "
     if len(queryset) == 0:
         suma = " "
@@ -112,6 +128,7 @@ def consultaEstudiante(request, username):
         'estudiante_list': estudiante_list,
         'queryset': queryset,
         'suma': suma,
+        'resp': resp,
     }
     return render(
         request,
@@ -127,7 +144,7 @@ class crearEstudiante(CreateView):
       return reverse_lazy('proyeccionsocial:consulta_estudiante', kwargs={'username': username})
 
 
-class editarEstudiante(UpdateView):
+class editarEstudiante(LoginPEAMixin, UpdateView):
     model = Estudiante
     template_name = 'app1/Crear_Estudiante.html'
     form_class = EstudianteForm
@@ -137,7 +154,7 @@ class editarEstudiante(UpdateView):
       return reverse_lazy('proyeccionsocial:consulta_estudiante', kwargs={'username': username})
 
 
-class eliminarEstudiante(DeleteView):
+class eliminarEstudiante(LoginAMixin, DeleteView):
     model = Estudiante
     template_name = 'app1/eliminar_estudiante.html'
     
@@ -172,6 +189,21 @@ def consultaEstudianteBuscar(request):
 def consultaEstudioUniversitario(request, username):
     queryset = EstudioUniversitario.objects.filter(carnet_estudiante = username)
 
+    prb_btn = EstadoSolicitud.objects.filter(carnet_estudiante = username)
+
+    buscar = []
+    i=0
+    while(i < len(prb_btn)):
+        buscar.append((prb_btn[i].aceptado))
+        i+=1
+    
+    resp = "No"
+    for b in buscar:
+        if (b == "Aceptado"):
+            resp = "Si"
+        else:
+            resp = "No"
+
     suma = " "
     if len(queryset) == 0:
         suma = " "
@@ -181,13 +213,16 @@ def consultaEstudioUniversitario(request, username):
         'estudios_list': estudios_list,
         'queryset': queryset,
         'suma': suma,
+        'resp': resp,
     }
     return render(
         request,
         'app1/EstudioUniversitario.html', context
     )
 
-class crearEstudioUniversitario(CreateView):
+
+
+class crearEstudioUniversitario(LoginEAMixin, CreateView):
     template_name = 'app1/Crear_Estudio_Universitario.html'
     form_class = EstudioUniversitarioForm
 
@@ -198,7 +233,7 @@ class crearEstudioUniversitario(CreateView):
     #success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
 
 
-class editarEstudioUniversitario(UpdateView):
+class editarEstudioUniversitario(LoginEAMixin, UpdateView):
     model = EstudioUniversitario
     template_name = 'app1/Crear_Estudio_Universitario.html'
     form_class = EstudioUniversitarioForm
@@ -210,7 +245,7 @@ class editarEstudioUniversitario(UpdateView):
     #success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
 
 
-class eliminarEstudioUniversitario(DeleteView):
+class eliminarEstudioUniversitario(LoginAMixin, DeleteView):
     model = EstudioUniversitario
     template_name = 'app1/eliminar_estudio_universitario.html'
 
@@ -246,6 +281,21 @@ def consultaEstudioUniversitarioBuscar(request):
 def consultaSolicitudServicioSocial(request, username):
     queryset = Solicitud.objects.filter(carnet_estudiante = username)
 
+    prb_btn = EstadoSolicitud.objects.filter(carnet_estudiante = username)
+
+    buscar = []
+    i=0
+    while(i < len(prb_btn)):
+        buscar.append((prb_btn[i].aceptado))
+        i+=1
+    
+    resp = "No"
+    for b in buscar:
+        if (b == "Aceptado"):
+            resp = "Si"
+        else:
+            resp = "No"
+
     suma = " "
     if len(queryset) == 0:
         suma = " "
@@ -255,13 +305,14 @@ def consultaSolicitudServicioSocial(request, username):
         'solicitudes_list': solicitudes_list,
         'queryset': queryset,
         'suma': suma,
+        'resp': resp,
     }
     return render(
         request,
         'app1/Solicitud.html', context
     )
 
-class crearSolicitudServicioSocial(CreateView):
+class crearSolicitudServicioSocial(LoginEAMixin, CreateView):
     template_name = 'app1/Crear_Solicitud_Servicio_Social.html'
     form_class = SolicitudForm
 
@@ -270,7 +321,7 @@ class crearSolicitudServicioSocial(CreateView):
       return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
 
-class editarSolicitudServicioSocial(UpdateView):
+class editarSolicitudServicioSocial(LoginEAMixin, UpdateView):
     model = Solicitud
     template_name = 'app1/Crear_Solicitud_Servicio_Social.html'
     form_class = SolicitudForm
@@ -280,7 +331,7 @@ class editarSolicitudServicioSocial(UpdateView):
       return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
     # Para el boton Solicitudes del Base para Administrador
-class editarSolicitudServicioSocial2(UpdateView):
+class editarSolicitudServicioSocial2(LoginPAMixin, UpdateView):
     model = Solicitud
     template_name = 'app1/Crear_Solicitud_Servicio_Social_Consulta.html'
     form_class = SolicitudForm
@@ -290,7 +341,7 @@ class editarSolicitudServicioSocial2(UpdateView):
       return reverse_lazy('proyeccionsocial:consulta_estado_solicitud_servicio_social', kwargs={'username': username})
 
 
-class eliminarSolicitudServicioSocial(DeleteView):
+class eliminarSolicitudServicioSocial(LoginPAMixin, DeleteView):
     model = Solicitud
     template_name = 'app1/eliminar_solicitud_servicio_social.html'
     
@@ -299,7 +350,7 @@ class eliminarSolicitudServicioSocial(DeleteView):
       return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
 # Para el boton Solicitudes del Base para Administrador
-class eliminarSolicitudServicioSocial2(DeleteView):
+class eliminarSolicitudServicioSocial2(LoginPAMixin, DeleteView):
     model = Solicitud
     template_name = 'app1/eliminar_solicitud_servicio_social_consulta.html'
     
@@ -396,7 +447,7 @@ def consultaEstadoSolicitudServicioSocialBuscar2(request):
 
 
 # Para el boton Solicitudes del Base para Administrador
-class crearEstadoSolicitudServicioSocial(CreateView):
+class crearEstadoSolicitudServicioSocial(LoginPAMixin, CreateView):
     template_name = 'app1/Crear_Estado_Solicitud_Servicio_Social.html'
     form_class = EstadoSolicitudForm
 
@@ -404,7 +455,7 @@ class crearEstadoSolicitudServicioSocial(CreateView):
       username = self.kwargs['username']
       return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
-class crearEstadoSolicitudServicioSocial2(CreateView):
+class crearEstadoSolicitudServicioSocial2(LoginPAMixin, CreateView):
     template_name = 'app1/Crear_Estado_Solicitud_Servicio_Social_Consulta.html'
     form_class = EstadoSolicitudForm
 
@@ -413,7 +464,7 @@ class crearEstadoSolicitudServicioSocial2(CreateView):
       return reverse_lazy('proyeccionsocial:consulta_estado_solicitud_servicio_social_consulta', kwargs={'username': username})
 
 
-class editarEstadoSolicitudServicioSocial(UpdateView):
+class editarEstadoSolicitudServicioSocial(LoginPAMixin, UpdateView):
     model = EstadoSolicitud
     template_name = 'app1/Crear_Estado_Solicitud_Servicio_Social_Consulta.html'
     form_class = EstadoSolicitudForm
@@ -423,7 +474,7 @@ class editarEstadoSolicitudServicioSocial(UpdateView):
       return reverse_lazy('proyeccionsocial:consulta_estado_solicitud_servicio_social_consulta', kwargs={'username': username})
 
 
-class eliminarEstadoSolicitudServicioSocial(DeleteView):
+class eliminarEstadoSolicitudServicioSocial(LoginPAMixin, DeleteView):
     model = EstadoSolicitud
     template_name = 'app1/eliminar_estado_solicitud_servicio_social.html'
     
@@ -434,4 +485,251 @@ class eliminarEstadoSolicitudServicioSocial(DeleteView):
 
 #-----------------------------------------------------------------------------------------------
 
-        # Aqui iban los Formularios pero se pasaron al archivo formularios.py
+class documentosEstudianteListView(ListView):
+    model = ArchivosEstudiante
+    template_name = 'app1/documentos_estudiante.html'
+    context_object_name = 'archivos'
+
+    def get_queryset(self):
+        return ArchivosEstudiante.objects.filter(carnet_estudiante=self.kwargs.get("pk"))
+
+class agregarDocumentos(CreateView):
+    model = ArchivosEstudiante
+    form_class = ArchivosEstudianteForm
+    template_name = 'app1/agregar_documentos.html'
+
+    def get_initial(self):
+        return {"carnet_estudiante": self.kwargs.get("pk")}
+
+    def get_success_url(self):
+      username = str(self.object.carnet_estudiante)
+      return reverse_lazy('proyeccionsocial:listar_documentos', kwargs={'pk': username})
+
+class eliminarDocumento(DeleteView):
+    model = ArchivosEstudiante
+    template_name = 'app1/eliminar_documento.html'
+
+    def get_success_url(self):
+        username = str(self.object.carnet_estudiante)
+        return reverse_lazy('proyeccionsocial:listar_documentos', kwargs={'pk': username})
+
+
+#-----------------------------------------------------------------------------------------------
+
+
+def consultaCarrera(request):
+        carrera_list=Carrera.objects.order_by('codigo_carrera')
+        context = {
+        'carrera_list': carrera_list,
+    }
+        return render(
+        request,
+        'app1/Carrera.html', context
+    )
+
+class crearCarrera(LoginAMixin, CreateView):
+    template_name = 'app1/crear_carrera.html'
+    form_class = CarreraForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_carrera')
+
+class editarCarrera(LoginAMixin, UpdateView):
+    model = Carrera
+    template_name = 'app1/crear_carrera.html'
+    form_class = CarreraForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_carrera')
+
+class eliminarCarrera(LoginAMixin, DeleteView):
+    model = Carrera
+    template_name = 'app1/eliminar_carrera.html'
+    success_url = reverse_lazy('proyeccionsocial:consulta_carrera')
+
+
+#-----------------------------------------------------------------------------------------------
+
+
+def consultaServicioSocial(request, username):
+    queryset = ServicioSocial.objects.filter(carnet_estudiante = username)
+
+    prb_btn = EstadoSolicitud.objects.filter(carnet_estudiante = username)
+
+    buscar = []
+    i=0
+    while(i < len(prb_btn)):
+        buscar.append((prb_btn[i].aceptado))
+        i+=1
+    
+    resp = "No"
+    for b in buscar:
+        if (b == "Aceptado"):
+            resp = "Si"
+        else:
+            resp = "No"
+
+    suma = "No"
+    if len(queryset) == 0:
+        suma = " "
+
+    servicio_social_list=ServicioSocial.objects.order_by('carnet_estudiante')
+    context = {
+        'servicio_social_list': servicio_social_list,
+        'queryset': queryset,
+        'suma': suma,
+        'resp': resp,
+    }
+    return render(
+        request,
+        'app1/ServicioSocial.html', context
+    )
+
+class crearServicioSocial(LoginPEAMixin, CreateView):
+    template_name = 'app1/crear_servicio_social.html'
+    form_class = ServicioSocialForm
+
+    def get_success_url(self):
+      username = self.kwargs['username']
+      return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
+
+
+class editarServicioSocial(LoginEAMixin, UpdateView):
+    model = ServicioSocial
+    template_name = 'app1/crear_servicio_social.html'
+    form_class = ServicioSocialForm
+
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
+
+
+class eliminarServicioSocial(LoginAMixin, DeleteView):
+    model = ServicioSocial
+    template_name = 'app1/eliminar_servicio_social.html'
+
+    def get_success_url(self):
+      username = self.kwargs['pk']
+      return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
+
+# Busqueda de Estudiante
+def consultaServicioSocialBuscar(request):
+    carnet_estudiante = request.POST['carnet_estudiante']
+    if request.method == 'POST':
+       estudiante_busc = ServicioSocial.objects.filter(carnet_estudiante = carnet_estudiante)
+        
+    suma = " "
+    if len( estudiante_busc) == 0:
+        suma = " "
+    
+    contexto = {'estudiante_busc ': estudiante_busc,
+    'suma': suma,
+        }
+
+    return render(request, 'app1/ServicioSocial.html', contexto)
+
+    
+#Asesor Externo ---------------------------------------------------------------------------
+
+
+def consultaAsesorExterno(request):
+    asesoresExternos=AsesorExterno.objects.order_by('dui_asesor_externo')
+    
+    if asesoresExternos:
+        existenRegistros=True
+        diccionario={"asesores_externos": asesoresExternos, "existenRegistros":existenRegistros}
+    else:
+        existenRegistros=False
+        diccionario={"existenRegistros": existenRegistros}
+    
+    return render(request, 'app1/AsesorExterno.html', diccionario)
+
+class crearAsesorExterno(LoginPEAMixin, CreateView):
+    template_name = 'app1/crear_asesor_externo.html'
+    form_class = AsesorExternoForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_asesor_externo')
+
+    
+class crearAsesorExternoEstudiante(LoginPEAMixin, CreateView):
+    template_name = 'app1/crear_asesor_externo_estudiante.html'
+    form_class = AsesorExternoForm
+
+    def get_success_url(self):
+      username = self.kwargs['username']
+      return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
+    
+
+class editarAsesorExterno(LoginAMixin, UpdateView):
+    model = AsesorExterno
+    template_name = 'app1/crear_asesor_externo.html'
+    form_class = AsesorExternoForm
+
+    def get_success_url(self):
+      return reverse_lazy('proyeccionsocial:consulta_asesor_externo')
+
+class eliminarAsesorExterno(LoginAMixin, DeleteView):
+    model = AsesorExterno
+    template_name = 'app1/eliminar_asesor_externo.html'
+    
+    def get_success_url(self):
+      return reverse_lazy('proyeccionsocial:consulta_asesor_externo')
+    
+
+#Docente (Asesor Interno) ---------------------------------------------------------------------------
+
+
+def consultaAsesorInterno(request):
+    docentes=Docente.objects.order_by('carnet_docente')
+    
+    if docentes:
+        existenRegistros=True
+        diccionario={"asesores_internos": docentes, "existenRegistros":existenRegistros}
+    
+    else:
+        existenRegistros=False
+        diccionario={"existenRegistros": existenRegistros}
+    
+    return render(request, 'app1/AsesorInterno.html', diccionario)
+
+class crearAsesorInterno(LoginAMixin, CreateView):
+    template_name = 'app1/crear_asesor_interno.html'
+    form_class = AsesorInternoForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_asesor_interno')
+    
+class editarAsesorInterno(LoginAMixin, UpdateView):
+    model = Docente
+    template_name = 'app1/crear_asesor_interno.html'
+    form_class = AsesorInternoForm
+
+    def get_success_url(self):
+      
+      return reverse_lazy('proyeccionsocial:consulta_asesor_interno')
+
+class eliminarAsesorInterno(LoginAMixin, DeleteView):
+    model = Docente
+    template_name = 'app1/eliminar_asesor_interno.html'
+    
+    def get_success_url(self):
+      return reverse_lazy('proyeccionsocial:consulta_asesor_interno')
+
+
+#-----------------------------------------------------------------------------------------------
+#Horas Sociales
+
+class horasSocialesListView(LoginPEAMixin, ListView):
+    model = HorasSociales
+    template_name = 'app1/horas_sociales.html'
+    context_object_name = 'horas_sociales'
+
+
+    def get_queryset(self):
+        return HorasSociales.objects.filter(carnet_estudiante=self.kwargs.get("pk"))
+
+
+class agregarHorasSociales(LoginPAMixin, CreateView):
+    model = HorasSociales
+    form_class = HorasSocialesForm
+    template_name = 'app1/agregar_horas_sociales.html'
+
+    def get_initial(self):
+        return {"carnet_estudiante": self.kwargs.get("pk")}
+
+    def get_success_url(self):
+      username = str(self.object.carnet_estudiante)
+      return reverse_lazy('proyeccionsocial:listar_horas_sociales', kwargs={'pk': username})

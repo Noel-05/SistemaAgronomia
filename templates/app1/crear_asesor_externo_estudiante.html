@@ -1,0 +1,90 @@
+{% extends 'base/base.html' %}
+{%block title%}
+    Crear Asesor Externo
+{%endblock%}
+{% block content %}
+
+{% load static %}
+    <link rel = "stylesheet" href = "{% static 'css/stylePrueba.css' %}">
+    <link rel = "stylesheet" href = "{% static 'css/sweet-alert.css' %}">
+    <link rel = "stylesheet" href = "{% static 'css/bootstrap.min-PRUEBA.css' %}">
+    
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Registro de Asesor Externo</h2>
+        </br></br></br>
+    </div>
+  </header>
+
+<div class="container-fluid">
+    <div class="container-flat-form">
+        <div class="title-flat-form title-flat-green">Registrar Asesor Externo</div>
+            {% if object %}
+                <form role="form" method="POST" action="{% url  'proyeccionsocial:editar_asesor_externo' object.pk%}">
+            {% else %}
+                <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_asesor_externo_estudiante' user.username %}">
+            {% endif %}
+
+                <div class="row">
+                    <div class="col-xs-14 col-sm-8 col-sm-offset-2">
+                    {% csrf_token %}
+                        {{form.errors}}
+
+                        {% if object %}
+                            <div class="group-material" style="display:none;">
+                                {{form.dui_asesor_externo}}
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                {{form.dui_asesor_externo.label_tag}}
+                            </div>
+                        {% else %}
+                            <div class="group-material">
+                                {{form.dui_asesor_externo}}
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                {{form.dui_asesor_externo.label_tag}}
+                            </div>
+                        {% endif %}
+
+                        <div class="group-material">
+                            {{ form.nombre_asesor_externo }}
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            {{form.nombre_asesor_externo.label_tag}}
+                        </div>
+
+                        <div class="group-material">
+                            {{form.apellido_asesor_externo}}
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            {{form.apellido_asesor_externo.label_tag}}
+                        </div>
+
+                        <div class="group-material">
+                            {{form.cargo_asesor_externo}}
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            {{form.cargo_asesor_externo.label_tag}}
+                        </div>
+
+                        
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <div class="col-lg-5 text-center">
+                        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Guardar">
+                        
+                        <a href = "{% url 'proyeccionsocial:consulta_servicio_social' user.username %}"><input type="button" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
+                    </div>
+                </div>
+                
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -10,7 +10,7 @@ app_name='usuario'
 
 urlpatterns=[
     #URL para el menu de inicio
-    path('', index),
+    path('', Login.as_view()),
     path('usuario/index/',login_required(index), name='index'),
 
     path('accounts/login/',Login.as_view(), name='login'),
@@ -22,6 +22,5 @@ urlpatterns=[
     path('registrar_usuario/login', RegistrarUsuarioLogin.as_view(), name='registrar_usuario_login'),
     path('actualizar_usuario/<int:pk>/',EditarUsuario.as_view(), name = 'actualizar_usuario'),
     path('eliminar_usuario/<int:pk>/',EliminarUsuario.as_view(), name='eliminar_usuario'),
-
-
+    
 ]

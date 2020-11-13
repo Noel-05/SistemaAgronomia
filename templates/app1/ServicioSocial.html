@@ -1,0 +1,197 @@
+{% extends 'base/base.html' %}
+{%block title%}
+Control Servicio Social
+{%endblock%}
+{% block content %}
+
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Servicio Social</h2>
+        </br></br>
+
+        {% if request.user.usuario_administrador %}
+            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_servicio_social' user.username %}'" value="Agregar"></br></br>
+        {% endif %}
+
+        </br>
+
+    </div>
+  </header>
+
+<div class="container">
+
+    {% if request.user.usuario_administrador %}
+        <!-- Boton Buscar -->
+        <div align="center" class="busqueda">
+            <form method="POST" action="{% url 'proyeccionsocial:consulta_servicio_social_buscar' %}">
+                {% csrf_token %} 
+                <input type="text" name="carnet_estudiante"  id = "carnet_estudiante" class = "input-style" placeholder="Porfavor Ingrese su Carnet" required pattern="([a-zA-Z]{2}[0-9]{5})" maxlength="7">
+                <input class="btn-buscar btn-busqueda" type = "submit" value = "Buscar" id = "buscarEstudiante">
+            </form>
+        </div>
+    {% endif %}
+
+    </br>
+
+    <div>
+        <table>
+            <thead>
+        	   <tr>
+                    <th>Carnet Estudiante</th>
+            		<th>Docente</th>
+                    <th>Assesor Externo</th>
+            	    <th>Proyecto</th>
+                    <th>Horas Sociales</th>
+
+                {% ifnotequal request.user.rol 'DOC' %}
+                    <th>Editar</th>
+                {% endifnotequal %}
+                {% if request.user.usuario_administrador %}
+                    <th>Eliminar</th>
+                {% endif %}
+                    <th>Imprimir</th>
+                {% if request.user.usuario_administrador %}
+                    <th>Formularios</th>
+                {% endif %}
+                {% ifequal request.user.rol 'DOC' %}
+                    <th>Formularios</th>
+                {% endifequal %}
+        		</tr>
+            </thead>
+
+        {% ifequal request.user.rol 'DOC' %}
+            {% if servicio_social_list %}
+            {% for serv in servicio_social_list %}
+        		<tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.carnet_estudiante }} </br> {{ serv.carnet_estudiante.carnet_estudiante.nombre_estudiante }} {{ serv.carnet_estudiante.carnet_estudiante.apellido_estudiante }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.carnet_docente.carnet_docente }}  </br> {{ serv.carnet_docente}} </td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.dui_asesor_externo.dui_asesor_externo }} </br> {{ serv.dui_asesor_externo }} </td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.codigo_proyecto.codigo_proyecto }} </br> {{ serv.codigo_proyecto.descripcion_proyecto }}</td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:listar_horas_sociales' serv.pk%}" onclick="window.location.href= '{% url 'proyeccionsocial:listar_horas_sociales' serv.pk %}'" class="btn">Horas Sociales</a></td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;">
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F2' serv.pk %}" class = "btn">Imprimir F-2</a></br>
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F3' serv.pk %}" class = "btn">Imprimir F-3</a>
+                    </td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F4TI' serv.carnet_estudiante %}" class = "btn">Imprimir F-4 TI</a></br>
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F4TE' serv.carnet_estudiante %}" class = "btn">Imprimir F-4 TE</a>
+                    </td>
+        		</tr>
+            {% endfor %}
+            {% endif %}
+        {% endifequal %}
+
+        {% if request.user.usuario_administrador %}
+            {% if servicio_social_list %}
+            {% for serv in servicio_social_list %}
+
+        		<tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.carnet_estudiante }} </br> {{ serv.carnet_estudiante.carnet_estudiante.nombre_estudiante }} {{ serv.carnet_estudiante.carnet_estudiante.apellido_estudiante }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.carnet_docente.carnet_docente }}  </br> {{ serv.carnet_docente}} </td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.dui_asesor_externo.dui_asesor_externo }} </br> {{ serv.dui_asesor_externo }} </td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.codigo_proyecto.codigo_proyecto }} </br> {{ serv.codigo_proyecto.descripcion_proyecto }}</td>
+
+             
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:listar_horas_sociales' serv.pk%}" onclick="window.location.href= '{% url 'proyeccionsocial:listar_horas_sociales' serv.pk %}'" class="btn">Horas Sociales</a></td>
+
+                 
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_servicio_social' serv.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_servicio_social' serv.pk %}'" class = "btn">Editar</a></td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_servicio_social' serv.pk %}', 'Eliminar  {{ serv.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;">
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F2' serv.pk %}" class = "btn">Imprimir F-2</a></br>
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F3' serv.pk %}" class = "btn">Imprimir F-3</a>
+                    </td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;">
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F4TI' serv.carnet_estudiante %}" class = "btn">Imprimir F-4 TI</a></br>
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F4TE' serv.carnet_estudiante %}" class = "btn">Imprimir F-4 TE</a>
+                    </td>
+                    
+        		</tr>
+
+            {% endfor %}
+            {% endif %}
+
+        {% else %}
+
+            {% if queryset %}
+            {% for serv2 in queryset %}
+
+                <tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv2.carnet_estudiante }} </br> {{ serv2.carnet_estudiante.carnet_estudiante.nombre_estudiante }} {{ serv2.carnet_estudiante.carnet_estudiante.apellido_estudiante }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv2.carnet_docente.carnet_docente }}  </br> {{ serv2.carnet_docente}} </td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv2.dui_asesor_externo.dui_asesor_externo }} </br> {{ serv2.dui_asesor_externo }} </td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv2.codigo_proyecto.codigo_proyecto }} </br> {{ serv2.codigo_proyecto.descripcion_proyecto }}</td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:listar_horas_sociales' serv2.pk%}" onclick="window.location.href= '{% url 'proyeccionsocial:listar_horas_sociales' serv2.pk %}'" class="btn">Horas Sociales</a></td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_servicio_social' serv2.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_servicio_social' serv2.pk %}'" class = "btn">Editar</a></td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;">
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F2' serv2.pk %}" class = "btn">Imprimir F-2</a></br>
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F3' serv2.pk %}" class = "btn">Imprimir F-3</a>
+                    </td>
+                </tr>
+                
+            {% endfor %}
+            {% else %}
+
+                {% ifequal suma " " %}
+                    <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_servicio_social' user.username %}'" value="Agregar"></br></br>
+                {% endifequal %}
+
+            {% endif %}         
+
+        {% endif %}
+
+        {% if request.user.usuario_administrador %}
+            {% if estudiante_busc %}
+            {% for serv in estudiante_busc %}
+            
+                <tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.carnet_estudiante }} </br> {{ serv.carnet_estudiante.carnet_estudiante.nombre_estudiante }} {{ serv.carnet_estudiante.carnet_estudiante.apellido_estudiante }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.carnet_docente}}  </br> {{ serv.carnet_docente.nombre_docente }} {{ serv.carnet_docente.apellido_docente }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.dui_asesor_externo }} </br> {{ serv.dui_asesor_externo.nombre_asesor_externo }} {{ serv.dui_asesor_externo.apellido_asesor_externo }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.codigo_proyecto.codigo_proyecto }} </br> {{ serv.codigo_proyecto.descripcion_proyecto }}</td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_servicio_social' serv.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_servicio_social' serv.pk %}'" class = "btn">Editar</a></td>
+
+                {% if request.user.usuario_administrador %}
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_servicio_social' serv.pk %}', 'Eliminar {{ est.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+                {% endif %}  
+                </tr>
+
+            {% endfor %}
+            {% endif %}  
+        {% endif %}          
+
+    	</table>
+    </div>
+</div>
+
+    <div id = "popup"> 
+  
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        var modal;
+        function abrir_modal(url, titulo)
+        {
+            modal = $('#popup').dialog({
+                title :titulo,
+                modal :true,
+                width :500,
+                resizable :false
+            }).dialog('open').load(url)
+        }
+    </script>
+
+{% endblock %}
