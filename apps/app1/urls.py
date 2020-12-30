@@ -27,6 +27,10 @@ urlpatterns=[
 	path('proyeccionsocial/consultaEstudianteBuscar/',login_required(consultaEstudianteBuscar), name="consulta_estudiante_buscar"),
 
 
+	#URL para Crear Entidad Externa
+	path('proyeccionsocial/crearEntidadExterna/<username>/',login_required(crearEntidadExterna.as_view()), name="crear_entidad_externa"),
+
+
 	#URL para Estudio Universitario
 	path('proyeccionsocial/consultaEstudioUniversitario/<username>/',login_required(consultaEstudioUniversitario), name="consulta_estudio_universitario"),
 	path('proyeccionsocial/crearEstudioUniversitario/<username>/',login_required(crearEstudioUniversitario.as_view()), name="crear_estudio_universitario"),

@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {%block title%}
-    Crear Asesor Externo
+    Crear Entidad Externa
 {%endblock%}
 {% block content %}
 
@@ -11,64 +11,60 @@
     
   <header>
     <div class="container">
-        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Registro de Asesor Externo</h2>
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Registro de Entidad Externa</h2>
         </br></br></br>
     </div>
   </header>
 
 <div class="container-fluid">
     <div class="container-flat-form">
-        <div class="title-flat-form title-flat-green">Registrar Asesor Externo</div>
-            {% if object %}
-                <form role="form" method="POST" action="{% url  'proyeccionsocial:editar_asesor_externo' object.pk%}">
-            {% else %}
-                <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_asesor_externo_estudiante' user.username %}">
-            {% endif %}
+        <div class="title-flat-form title-flat-green">Registrar Entidad Externa</div>
+            {% comment %} {% if object %}
+                <form role="form" method="POST" action="{% url  'proyeccionsocial:editar_entidad_externa' object.pk  %}">
+            {% else %} {% endcomment %}
+                <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_entidad_externa' user.username  %}">
+            {% comment %} {% endif %} {% endcomment %}
 
                 <div class="row">
                     <div class="col-xs-14 col-sm-8 col-sm-offset-2">
                     {% csrf_token %}
                         {{form.errors}}
 
-                        {% if object %}
+                        {% comment %} {% if object %}
                             <div class="group-material" style="display:none;">
-                                {{form.dui_asesor_externo}}
+                                {{form.carnet_estudiante}}
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                {{form.dui_asesor_externo.label_tag}}
+                                {{form.carnet_estudiante.label_tag}}
                             </div>
-                        {% else %}
+                        {% else %} {% endcomment %}
                             <div class="group-material">
-                                {{form.dui_asesor_externo}}
+                                {{form.codigo_entidad}}
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                {{form.dui_asesor_externo.label_tag}}
+                                {{form.codigo_entidad.label_tag}}
                             </div>
-                        {% endif %}
+                        {% comment %} {% endif %} {% endcomment %}
 
                         <div class="group-material">
-                            {{ form.nombre_asesor_externo }}
+                            {{ form.nombre_entidad }}
                             <span class="highlight"></span>
                             <span class="bar"></span>
-                            {{form.nombre_asesor_externo.label_tag}}
+                            {{form.nombre_entidad.label_tag}}
                         </div>
 
                         <div class="group-material">
-                            {{form.apellido_asesor_externo}}
+                            {{form.direccion_entidad}}
                             <span class="highlight"></span>
                             <span class="bar"></span>
-                            {{form.apellido_asesor_externo.label_tag}}
+                            {{form.direccion_entidad.label_tag}}
                         </div>
 
                         <div class="group-material">
-                            {{form.cargo_asesor_externo}}
+                            {{form.telefono_entidad}}
                             <span class="highlight"></span>
                             <span class="bar"></span>
-                            {{form.cargo_asesor_externo.label_tag}}
-                        </div>
-
-                        
-                            </div>
+                            {{form.telefono_entidad.label_tag}}
                         </div>
 
                     </div>
@@ -77,8 +73,7 @@
                 <div class="modal-footer">
                     <div class="col-lg-5 text-center">
                         <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Guardar">
-                        
-                        <a href = "{% url 'proyeccionsocial:crear_servicio_social' user.username %}"><input type="button" href="{% url 'proyeccionsocial:crear_servicio_social' user.username %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
+                        <a href = "{% url 'proyeccionsocial:crear_solicitud_servicio_social' user.username %}"><input type="button" href="{% url 'proyeccionsocial:crear_solicitud_servicio_social' user.username %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
                     </div>
                 </div>
                 

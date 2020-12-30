@@ -79,6 +79,40 @@ class  EstudianteForm(forms.ModelForm):
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+class  EntidadExternForm(forms.ModelForm):
+    class Meta:
+        model = EntidadExterna
+        widgets = {
+            'codigo_entidad': forms.TextInput(attrs={'placeholder': 'Código Entidad', 'autofocus': '', 'required': '', 'maxlength':'10', 'title': 'Ingrese el Carnet, Ej. AA99999.'}),
+            'nombre_entidad': forms.TextInput(attrs={'placeholder': 'Nombre Entidad', 'autofocus': '', 'autocomplete': 'off', 'required': '', 'maxlength':'100'}),
+            'direccion_entidad': forms.TextInput(attrs={'placeholder': 'Dirección Entidad', 'autofocus': '', 'autocomplete': 'off', 'required': '', 'maxlength':'250'}),
+            'telefono_entidad': forms.TextInput(attrs={'placeholder': 'Nombre Entidad', 'autofocus': '', 'required': '', 'autocomplete': 'off', 'maxlength':'15', 'pattern': '[0-9]{8,15}', 'title': 'Ingrese el Telefono, Solo Numeros Enteros Sin Espacio.'}),
+        }
+        fields = {
+            'codigo_entidad': forms.CharField,
+            'nombre_entidad': forms.CharField,
+            'direccion_entidad': forms.CharField,
+            'telefono_entidad': forms.IntegerField,
+        }
+        labels = {
+            'codigo_entidad': 'Código',
+            'nombre_entidad': 'Nombre',
+            'direccion_entidad': 'Dirección',
+            'telefono_entidad': 'Telefono',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(EntidadExternForm, self).__init__(*args, **kwargs)
+
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'material-control tooltips-general'
+                })
+
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 class EstudioUniversitarioForm(forms.ModelForm):
     codigo_carrera = forms.ModelChoiceField(queryset=Carrera.objects.all().order_by('nombre_carrera'))
     codigo_ciclo = forms.ModelChoiceField(queryset=Ciclo.objects.all().order_by('codigo_ciclo'))
@@ -436,6 +470,7 @@ class AsesorExternoForm(forms.ModelForm):
  #Asesor Interno       
 
 class AsesorInternoForm(forms.ModelForm):
+    departamento = forms.ModelChoiceField(queryset=Departamento.objects.all().order_by('codigoDepartamento'))
     class Meta:
         model = Docente
         widgets = {
@@ -445,6 +480,7 @@ class AsesorInternoForm(forms.ModelForm):
             'carnet_docente': forms.CharField,
             'nombre_docente': forms.CharField,
             'apellido_docente': forms.CharField,
+            'departamento': forms.CharField,
             'nombre_rol': forms.CharField,
             
         }
@@ -452,6 +488,7 @@ class AsesorInternoForm(forms.ModelForm):
             'carnet_docente': 'Carnet del docente' ,
             'nombre_docente': 'Nombre del docente' ,
             'apellido_docente': 'Apellido de docente',
+            'departamento': 'Departamento',
             'nombre_rol': 'Nombre Rol',
             
         }

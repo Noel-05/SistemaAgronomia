@@ -18,10 +18,21 @@ class Ciclo(models.Model):
 
 
 
+class Departamento(models.Model):
+    codigoDepartamento = models.CharField(primary_key=True, max_length=10, null=False)
+    nombreDepartamento = models.CharField(max_length=100, null=False)
+    nombreJefeDepartamento = models.CharField(max_length=50, null=False)
+    apellidoJefeDepartamento = models.CharField(max_length=50, null=False)
+
+    def __str__(self):
+        return self.nombreDepartamento
+
+
+
 class Carrera(models.Model):
     codigo_carrera = models.CharField(primary_key=True, max_length=10, null=False)
     nombre_carrera = models.CharField(max_length=100, null=False)
-    departamento = models.CharField(max_length=100, null=False)
+    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre_carrera
@@ -111,12 +122,12 @@ class Rol(models.Model):
         return self.nombre_rol
 
 
-
 class Docente(models.Model):
     carnet_docente = models.CharField(primary_key=True, max_length=10, null=False)
     nombre_docente = models.CharField(max_length=50, null=False)
     apellido_docente = models.CharField(max_length=50, null=False)
     nombre_rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
+    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre_docente.__str__() +' '+ self.apellido_docente.__str__()
@@ -160,48 +171,3 @@ class ArchivosEstudiante(models.Model):
 @receiver(post_delete, sender=ArchivosEstudiante)
 def submission_delete(sender, instance, **kwargs):
     instance.documento.delete(False)
-
-# --------------------------------------------------------------------------
-
-# class CoordinadorUnidadProySoc(models.Model):
-#     carnet_coordinador_UPS = models.CharField(primary_key=True, max_length=10, null=False)
-#     nombre_coordinador_UPS = models.CharField(max_length=50, null=False)
-#     apellido_coordinador_UPS = models.CharField(max_length=50, null=False)
-
-#     def __str__(self):
-#         return carnet_coordinador_UPS
-
-# class JefeUnidadProySoc(models.Model):
-#     carnet_jefe_UPS = models.CharField(primary_key=True, max_length=10, null=False)
-#     nombre_jefe_UPS = models.CharField(max_length=50, null=False)
-#     apellido_jefe_UPS = models.CharField(max_length=50, null=False)
-
-#     def __str__(self):
-#         return carnet_jefe_UPS
-
-# class DirectorEscuela(models.Model):
-#     carnet_director_escuela = models.CharField(primary_key=True, max_length=10, null=False)
-#     nombre_director_escuela = models.CharField(max_length=50, null=False)
-#     apellido_director_escuela = models.CharField(max_length=50, null=False)
-
-#     def __str__(self):
-#         return carnet_director_escuela
-
-# class AsesorInterno(models.Model):
-#     dui_asesor_interno = models.CharField(primary_key=True, max_length=10, null=False)
-#     nombre_asesor_interno = models.CharField(max_length=50, null=False)
-#     apellido_asesor_interno = models.CharField(max_length=50, null=False)
-#     cargo_asesor_interno = models.CharField(max_length=100, null=False)
-
-#     def __str__(self):
-#         return self.dui_asesor_interno
-
-# class JefeDepartamento(models.Model):
-#     carnet_jefe_depto = models.CharField(primary_key=True, max_length=10, null=False)
-#     nombre_jefe_depto = models.CharField(max_length=50, null=False)
-#     apellido_jefe_depto = models.CharField(max_length=50, null=False)
-
-#     def __str__(self):
-#         return self.carnet_jefe_depto
-
-# -----------------------------------------------------------------------------------------

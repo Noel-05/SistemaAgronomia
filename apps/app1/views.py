@@ -166,6 +166,18 @@ class eliminarEstudiante(LoginAMixin, DeleteView):
 #-----------------------------------------------------------------------------------------------
 
 
+class crearEntidadExterna(CreateView):
+    template_name = 'app1/Crear_Entidad_Externa.html'
+    form_class = EntidadExternForm
+
+    def get_success_url(self):
+      username = self.kwargs['username']
+      return reverse_lazy('proyeccionsocial:crear_solicitud_servicio_social', kwargs={'username': username})
+
+
+#-----------------------------------------------------------------------------------------------
+
+
 # Busqueda de Estudiante
 def consultaEstudianteBuscar(request):
     carnet_estudiante = request.POST['carnet_estudiante']
@@ -652,7 +664,7 @@ class crearAsesorExternoEstudiante(LoginPEAMixin, CreateView):
 
     def get_success_url(self):
       username = self.kwargs['username']
-      return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
+      return reverse_lazy('proyeccionsocial:crear_servicio_social', kwargs={'username': username})
     
 
 class editarAsesorExterno(LoginAMixin, UpdateView):

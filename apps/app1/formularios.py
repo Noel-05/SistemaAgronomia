@@ -171,7 +171,7 @@ class generarF1(ListView):
         pdf.drawString(450, 595, texto)
 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(60, 575, u"Estado Academico:")
+        pdf.drawString(60, 575, u"Estado Académico:")
 
         texto = 'Porcentaje de la carrera aprobado: %s' % porc_carrera
         pdf.setFont("Helvetica", 10)
@@ -186,14 +186,14 @@ class generarF1(ListView):
         pdf.drawString(450, 560, texto)
 
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 545, u"Experiencia en algunas areas de conocimiento de su carrera: ")
+        pdf.drawString(60, 545, u"Experiencia en algunas áreas de conocimiento de su carrera: ")
 
         texto = '%s' % experiencia
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 530, texto)
 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(60, 495, u"Tiempo disponible para su desarrollo social: ")
+        pdf.drawString(60, 495, u"Tiempo disponible para desarrollar su servicio social: ")
 
         texto = 'Horas por Semana: %s' % horas_sem
         pdf.setFont("Helvetica", 10)
@@ -204,8 +204,8 @@ class generarF1(ListView):
         pdf.drawString(330, 480, texto)
 
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 465, u"Propuesta de la entidad donde realizara su servicio social segun el ambito mencionado en el Manual de ")
-        pdf.drawString(60, 450, u"procedimientos del Servicio Social: ")
+        pdf.drawString(60, 465, u"Propuesta de la entidad donde realizará su servicio social según el ambito mencionado en el Manual de ")
+        pdf.drawString(60, 450, u"Procedimientos del Servicio Social: ")
 
         texto = '%s' % entidad
         pdf.setFont("Helvetica", 10)
@@ -215,13 +215,13 @@ class generarF1(ListView):
         pdf.line(60, 420, 560, 420)
 
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 400, u"Propuesta de modalidad de servicio segun las mencionadas en el Manual de Procedimientos del Servicio ")
+        pdf.drawString(60, 400, u"Propuesta de modalidad de servicio según las mencionadas en el Manual de Procedimientos del Servicio ")
 
         texto = 'Social: %s' % modalidad
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 385, texto)
 
-        texto = 'Fecha de Inicio posible: %s' % fecha_inicio
+        texto = 'Fecha de inicio posible: %s' % fecha_inicio
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 370, texto)
 
@@ -290,7 +290,8 @@ class generarF1(ListView):
         #Indicamos el tipo de contenido a devolver, en este caso un pdf
         response = HttpResponse(content_type='application/pdf')
 
-        pdf_name = "Comprobante_F1_UPS.pdf"
+        carnet_estudiante = self.kwargs.get('carnet_estudiante')
+        pdf_name = carnet_estudiante+"_Comprobante_F1_UPS.pdf"
         # Esta linea es por si deseas descargar el pdf a tu computadora
         response['Content-Disposition'] = 'inline; filename=%s' % pdf_name
 
@@ -383,7 +384,7 @@ class generarF2(ListView):
 
         pdf.drawString(60, 675, u"hace constar que el (la)")
 
-        texto = 'Bachiller %s' % nombre
+        texto = 'Estudiante %s' % nombre +' '+ apellido
         pdf.drawString(60, 660, texto)
 
         texto = 'Carné No. %s       matriculado (a) en la carrera de:' % carnet
@@ -421,9 +422,9 @@ class generarF2(ListView):
         texto = 'Asesor por parte de la Facultad: %s' %AsesorInterno
         pdf.drawString(60, 370, texto)
 
-        pdf.drawString(60, 340, u"Y para los tramites de presentación en la institución o comunidad se extiende la presente")
+        pdf.drawString(60, 340, u"Y para los trámites de presentación en la institución o comunidad se extiende la presente")
 
-        pdf.drawString(60, 305, u"Ciudad Universitaria a los ")
+        pdf.drawString(60, 305, u"Ciudad Universitaria, a los ")
         pdf.line(175, 305, 210, 305)
 
         pdf.drawString(210, 305, u"días del mes de")
@@ -458,7 +459,8 @@ class generarF2(ListView):
         #Indicamos el tipo de contenido a devolver, en este caso un pdf
         response = HttpResponse(content_type='application/pdf')
 
-        pdf_name = "Comprobante_F2_UPS.pdf"
+        carnet_estudiante = self.kwargs.get('carnet_estudiante')
+        pdf_name = carnet_estudiante+"_Comprobante_F2_UPS.pdf"
         # Esta linea es por si deseas descargar el pdf a tu computadora
         response['Content-Disposition'] = 'inline; filename=%s' % pdf_name
 
@@ -598,21 +600,21 @@ class generarF3(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 429, texto)
 
-        texto = 'FECHA DE FINALIZACION:  %s' % fecha_final
+        texto = 'FECHA DE FINALIZACIÓN:  %s' % fecha_final
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 414, texto)
 
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 379, u"Me comprometo a realizar el Servicio Social acatando el Reglamento General de Proyección Social")
+        pdf.drawString(60, 379, u"Me  comprometo  a realizar el Servicio Social acatando el  Reglamento  General  de  Proyección Social")
 
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 364, u"de la Universidad de El Salvador y llevarlo  a cabo en lugar y periodos manifestados,así como, a ")
+        pdf.drawString(60, 364, u"de  la  Universidad  de  El  Salvador  y  llevarlo  a  cabo en lugar y períodos  manifestados, así  como, a ")
         
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 349, u"participar con mis conocimientos e iniciativa en las actividades que desempeñe, procurando dar")
+        pdf.drawString(60, 349, u"participar  con  mis  conocimientos  e  iniciativa  en  las  actividades  que  desempeñe,  procurando  dar")
         
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 334, u"una imagen positiva de la Institución de la entidad, de no serlo así, quedo enterado(a) de la")    
+        pdf.drawString(60, 334, u"una  imagen  positiva  de la  Institución  en  la  entidad,  de  no  hacerlo  así,  quedo  enterado(a)  de  la")    
 
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 319, u"cancelación respectiva, la cual procederá automáticamente")
@@ -650,7 +652,8 @@ class generarF3(ListView):
         #Indicamos el tipo de contenido a devolver, en este caso un pdf
         response = HttpResponse(content_type='application/pdf')
 
-        pdf_name = "Comprobante_F3_UPS.pdf"
+        carnet_estudiante = self.kwargs.get('carnet_estudiante')
+        pdf_name = carnet_estudiante+"_Comprobante_F3_UPS.pdf"
         # Esta linea es por si deseas descargar el pdf a tu computadora
         response['Content-Disposition'] = 'inline; filename=%s' % pdf_name
 
@@ -717,9 +720,8 @@ class generarF4TI(ListView):
             fecha = i.carnet_estudiante.fecha_inicio
             externo = i.dui_asesor_externo.nombre_asesor_externo +' '+ i.dui_asesor_externo.apellido_asesor_externo
             entidad = i.carnet_estudiante.codigo_entidad
-            
-        departamento="(nombre del DEPARTAMENTO)"
-        superior="(nombre del INGENIERO o LICENCIADO)"
+            departamento = i.carnet_docente.departamento.nombreDepartamento
+            superior = i.carnet_docente.departamento.nombreJefeDepartamento +' '+ i.carnet_docente.departamento.apellidoJefeDepartamento
 
         pdf.setFont("Helvetica-Bold", 26)
         pdf.drawString(100, 720, u"F4-TI")
@@ -735,7 +737,7 @@ class generarF4TI(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 660, texto)
 
-        texto = "como tutor interno en la ejecución del Servicio Social que desarrollará el (la) bachiller: "
+        texto = "como tutor interno en la ejecución del Servicio Social que desarrollará el (la) estudiante: "
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 645, texto)
 
@@ -791,11 +793,11 @@ class generarF4TI(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 430, texto)
         
-        texto = "Todo esto, de acuerdo a las cláusulas del Manual de Procedimientos para la ejecución del Servicio Social" 
+        texto = "Todo esto, de acuerdo a las cláusulas del Manual de Procedimientos para la Ejecución del Servicio Social" 
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 400, texto)
         
-        texto = "de la Facultad y al Reglamento respectivo, por lo que se solicita velar por el fiel cumplimiento del"
+        texto = "de la  Facultad  y al  Reglamento  respectivo,  por  lo  que  se  solicita  velar  por  el  fiel  cumplimiento  del"
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 385, texto)
 
@@ -818,6 +820,14 @@ class generarF4TI(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 230, texto)
 
+        texto = "______________________________________"
+        pdf.setFont("Helvetica", 10)
+        pdf.drawString(200, 95, texto)
+
+        texto = "Jefatura de la Unidad de Proyección Social"
+        pdf.setFont("Helvetica", 10)
+        pdf.drawString(210, 80, texto)
+
         return queryset
  
     def get_context_data(self, **kwargs):
@@ -830,7 +840,8 @@ class generarF4TI(ListView):
         #Indicamos el tipo de contenido a devolver, en este caso un pdf
         response = HttpResponse(content_type='application/pdf')
 
-        pdf_name = "Comprobante_F4-TI_UPS.pdf"
+        carnet_estudiante = self.kwargs.get('carnet_estudiante')
+        pdf_name = carnet_estudiante+"_Comprobante_F4-TI_UPS.pdf"
         # Esta linea es por si deseas descargar el pdf a tu computadora
         response['Content-Disposition'] = 'inline; filename=%s' % pdf_name
 
@@ -899,9 +910,6 @@ class generarF4TE(ListView):
             externo = i.dui_asesor_externo.nombre_asesor_externo +' '+ i.dui_asesor_externo.apellido_asesor_externo
             entidad = i.carnet_estudiante.codigo_entidad
 
-        dia = "(00)"
-        mes = "(mes)"
-        anio= "(0000)"
         y=720
 
         pdf.setFont("Helvetica-Bold", 26)
@@ -918,7 +926,7 @@ class generarF4TE(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 645, texto)
         
-        texto = "como tutor externo para la ejecución del Servicio Social que desarrollará el(la) bachiller: " 
+        texto = "como tutor externo para la ejecución del Servicio Social que desarrollará el(la) estudiante: " 
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 630, texto)
         
@@ -946,7 +954,7 @@ class generarF4TE(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 500, texto)
         
-        texto = "de la Facultad y al Reglamento respectivo, por lo que se solicita velar por el fiel cumplimiento del trabajo"
+        texto = "de la Facultad y al Reglamento respectivo,  por lo que se solicita velar por el  fiel cumplimiento del trabajo"
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 485, texto)
         
@@ -957,15 +965,19 @@ class generarF4TE(ListView):
         
         texto = "Firma y sello de la entidad: "
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 445, texto)
+        pdf.drawString(60, 375, texto)
         
         texto = "_______________________________________________________"
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 400, texto)
-        
-        texto = "Fecha: "+dia+" de "+mes+" de "+ anio
-        pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 350, texto)
+
+        texto = "Fecha:_________________ de _________________ de _________________"
+        pdf.setFont("Helvetica", 10)
+        pdf.drawString(60, 300, texto)
+        
+        # texto = "Fecha: "+dia+" de "+mes+" de "+ anio
+        # pdf.setFont("Helvetica", 10)
+        # pdf.drawString(60, 350, texto)
 
         return queryset
  
@@ -979,7 +991,8 @@ class generarF4TE(ListView):
         #Indicamos el tipo de contenido a devolver, en este caso un pdf
         response = HttpResponse(content_type='application/pdf')
 
-        pdf_name = "Comprobante_F4-TE_UPS.pdf"
+        carnet_estudiante = self.kwargs.get('carnet_estudiante')
+        pdf_name = carnet_estudiante+"_Comprobante_F4-TE_UPS.pdf"
         # Esta linea es por si deseas descargar el pdf a tu computadora
         response['Content-Disposition'] = 'inline; filename=%s' % pdf_name
 
@@ -1085,7 +1098,7 @@ class generarF6(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 670, u"Los suscritos, tutores del servicio social, hacen constar que el (la)")
 
-        texto = 'Bachiller %s' % nombre
+        texto = 'Estudiante %s' % nombre +' '+ apellido
         pdf.drawString(60, 655, texto)
 
         texto = 'Carné No. %s       matriculado (a) en la carrera:' % carnet
@@ -1150,7 +1163,9 @@ class generarF6(ListView):
         #Indicamos el tipo de contenido a devolver, en este caso un pdf
         response = HttpResponse(content_type='application/pdf')
 
-        pdf_name = "Comprobante_F6_UPS.pdf"
+        carnet_estudiante = self.kwargs.get('carnet_estudiante')
+        pdf_name = carnet_estudiante+"_Comprobante_F6_UPS.pdf"
+
         # Esta linea es por si deseas descargar el pdf a tu computadora
         response['Content-Disposition'] = 'inline; filename=%s' % pdf_name
 
@@ -1244,11 +1259,11 @@ class generarF7(ListView):
         pdf.drawString(100, 720, u"F-7")
 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(200, 710, u"FORMATO DEL INFORME DE SERVIVIO SOCIAL")
+        pdf.drawString(200, 710, u"FORMATO DEL INFORME DE SERVICIO SOCIAL")
 
         cx=55
         cy=685
-        ancho=500
+        ancho=508
         alto=20
         pdf.rect(cx, cy, ancho, alto)
 
@@ -1258,7 +1273,7 @@ class generarF7(ListView):
 
         cx=55
         cy=570
-        ancho=500
+        ancho=508
         alto=100
         pdf.rect(cx, cy, ancho, alto)            
 
@@ -1284,7 +1299,7 @@ class generarF7(ListView):
 
         cx=55
         cy=515
-        ancho=500
+        ancho=508
         alto=40
         pdf.rect(cx, cy, ancho, alto)            
 
@@ -1303,7 +1318,7 @@ class generarF7(ListView):
 
         cx=55
         cy=440
-        ancho=500
+        ancho=508
         alto=60
         pdf.rect(cx, cy, ancho, alto)                   
 
@@ -1322,30 +1337,34 @@ class generarF7(ListView):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 445, texto)                           
 
-        texto = 'Total de horas Acumuladas: %s' % horasTot
+        texto = 'Total de horas acumuladas: %s' % horasTot
         pdf.setFont("Helvetica", 10)
         pdf.drawString(250, 445, texto)  
 
         cx=55
-        cy=355
-        ancho=500
+        cy=353
+        ancho=508
         alto=70
         pdf.rect(cx, cy, ancho, alto)   
 
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 410, u'DESCRIPCIÓN DE ACTIVIDADES: Máximo 2 páginas en tamaño carta ')  
 
-        texto = 'Se describira tofo lo que se haya dearrollado en las 250 horas dentro del proyecto de servicio social y de '
+        texto = 'Se describira todo lo que se haya desarrollado en el 50% de las horas dentro del proyecto de servicio social y de '
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 390, texto)  
 
-        texto = 'acuerdo con lo programado en el cronograma de actividades. A si mismo, se indicara el cumplimiento o '
+        texto = 'acuerdo  con  lo  programado  en  el  cronograma  de  actividades.  Así mismo,  se  indicará  el  cumplimiento  o '
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 380, texto)  
 
-        texto = 'incumplimeinto de dichas actividades indicando las razones. Tambien podran ser añadidas observaciones '
+        texto = 'incumplimiento de dichas  actividades  indicando las razones. También podrán ser añadidas observaciones que'
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 370, texto)       
+        pdf.drawString(60, 370, texto)      
+
+        texto = 'a juicio del prestador y del responsable del proyecto crean pertinentes.'
+        pdf.setFont("Helvetica", 10)
+        pdf.drawString(60, 360, texto)     
 
         #########FIRMAS############
 
@@ -1392,17 +1411,17 @@ class generarF7(ListView):
         pdf.drawString(135, 150, texto) 
         ##############################
 
-        texto = 'NOTA: ESTE INFORME DEBERÁ SER PRESENTADO EN DIGITAL Y EN FISICO, CADA 250 HORAS,'
+        texto = 'NOTA:  ESTE INFORME DEBERÁ SER PRESENTADO EN DIGITAL Y EN FISICO, CADA 250 HORAS,'
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(80, 120, texto)  
+        pdf.drawString(70, 120, texto)  
 
-        texto = 'DENTRO DE LOS PRIMEROS 5 DÍAS HÁBILES DE LA FECHA DE TÉRMINO DEL MISMO, DE LO '
+        texto = 'DENTRO DE LOS PRIMEROS  5  DÍAS  HÁBILES  DE LA  FECHA DE TÉRMINO DEL MISMO,  DE LO '
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(80, 110, texto)  
+        pdf.drawString(70, 110, texto)  
 
-        texto = 'CONTRARIO PROCEDERÁ SANCIÓN DE ACUERDO AL REGLAMENTO VIGENTE'
+        texto = 'CONTRARIO PROCEDERÁ SANCIÓN DE ACUERDO AL REGLAMENTO VIGENTE.'
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(80, 100, texto) 
+        pdf.drawString(70, 100, texto) 
 
         return queryset
 
@@ -1416,7 +1435,9 @@ class generarF7(ListView):
         #Indicamos el tipo de contenido a devolver, en este caso un pdf
         response = HttpResponse(content_type='application/pdf')
 
-        pdf_name = "Comprobante_F7_UPS.pdf"
+        carnet_estudiante = self.kwargs.get('carnet_estudiante')
+        pdf_name = carnet_estudiante+"_Comprobante_F7_UPS.pdf"
+
         # Esta linea es por si deseas descargar el pdf a tu computadora
         response['Content-Disposition'] = 'inline; filename=%s' % pdf_name
 
@@ -1494,75 +1515,73 @@ class generarF8(ListView):
         pdf.drawString(100, 720, u"F-8")
 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(60, 690, u"HOJA DE REGISTRO DE LAS HORAS SOCIALES REALIZADAS EN LA ESTACIÓN EXPERIMENTAL Y DE")
-        pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(180, 675, u"PRÁCTICAS POR ESTUDIANTES DE LA UNIVERSIDAD")
+        pdf.drawString(150, 690, u"HOJA DE REGISTRO DE LAS HORAS SOCIALES REALIZADAS ")
 
         texto = 'Nombre Completo:   %s' % nombre +' '+ apellido
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 630, texto)
+        pdf.drawString(60, 660, texto)
 
         texto = 'Carnet No.:    %s' % carnet
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 610, texto)
+        pdf.drawString(60, 640, texto)
 
         texto = 'Carrera:   %s' % carrera
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 590, texto)
+        pdf.drawString(60, 620, texto)
 
         texto = 'Docente Tutor:   %s' % docenteTutor
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 570, texto)
+        pdf.drawString(60, 600, texto)
 
         cx=60
         cy=515
-        ancho=55
+        ancho=44
         alto=40
         pdf.rect(cx, cy, ancho, alto)
 
         texto = 'FECHA'
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(70, 530, texto)
+        pdf.drawString(65, 530, texto)
 
-        cx=115
+        cx=104
         cy=515
-        ancho=57
+        ancho=55
         alto=40
         pdf.rect(cx, cy, ancho, alto)
 
         texto = 'HORA DE'
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(121, 535, texto)
+        pdf.drawString(108, 535, texto)
 
         texto = 'ENTRADA'
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(120, 525, texto)
+        pdf.drawString(107, 525, texto)
 
-        cx=172
+        cx=159
         cy=515
-        ancho=250
+        ancho=180
         alto=40
         pdf.rect(cx, cy, ancho, alto)
 
         texto = 'ACTIVIDAD REALIZADA'
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(235, 530, texto)
+        pdf.drawString(190, 530, texto)
 
-        cx=422
+        cx=339
         cy=515
-        ancho=57
+        ancho=55
         alto=40
         pdf.rect(cx, cy, ancho, alto)
 
         texto = 'HORA DE'
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(428, 535, texto)
+        pdf.drawString(343, 535, texto)
 
         texto = 'SALIDA'
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(432, 525, texto)
+        pdf.drawString(347, 525, texto)
 
-        cx=479
+        cx=394
         cy=515
         ancho=70
         alto=40
@@ -1570,41 +1589,77 @@ class generarF8(ListView):
 
         texto = 'HORAS'
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(495, 535, texto)
+        pdf.drawString(410, 535, texto)
 
         texto = 'REALIZADAS'
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(483, 525, texto)
+        pdf.drawString(397, 525, texto)
+
+        cx=464
+        cy=515
+        ancho=48
+        alto=40
+        pdf.rect(cx, cy, ancho, alto)
+
+        texto = 'ACUMU-'
+        pdf.setFont("Helvetica-Bold", 10)
+        pdf.drawString(467, 535, texto)
+
+        texto = 'LADAS'
+        pdf.setFont("Helvetica-Bold", 10)
+        pdf.drawString(467, 525, texto)
+
+        cx=512
+        cy=515
+        ancho=53
+        alto=40
+        pdf.rect(cx, cy, ancho, alto)
+
+        texto = 'FIRMA'
+        pdf.setFont("Helvetica-Bold", 10)
+        pdf.drawString(522, 530, texto)
 
     #-------------- FILA 1 ------------------------------        
 
         cx=60
         cy=490
+        ancho=44
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=104
+        cy=490
+        ancho=55
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+        
+        cx=159
+        cy=490
+        ancho=180
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=339
+        cy=490
         ancho=55
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=115
-        cy=490
-        ancho=57
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=172
-        cy=490
-        ancho=250
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=422
-        cy=490
-        ancho=57
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=479
+        cx=394
         cy=490
         ancho=70
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=464
+        cy=490
+        ancho=48
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=512
+        cy=490
+        ancho=53
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
@@ -1612,31 +1667,43 @@ class generarF8(ListView):
 
         cx=60
         cy=465
+        ancho=44
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=104
+        cy=465
         ancho=55
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=115
+        cx=159
         cy=465
-        ancho=57
+        ancho=180
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=172
+        cx=339
         cy=465
-        ancho=250
+        ancho=55
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=422
-        cy=465
-        ancho=57
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=479
+        cx=394
         cy=465
         ancho=70
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=464
+        cy=465
+        ancho=48
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=512
+        cy=465
+        ancho=53
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
@@ -1644,31 +1711,43 @@ class generarF8(ListView):
 
         cx=60
         cy=440
+        ancho=44
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=104
+        cy=440
+        ancho=55
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+        
+        cx=159
+        cy=440
+        ancho=180
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=339
+        cy=440
         ancho=55
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=115
-        cy=440
-        ancho=57
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=172
-        cy=440
-        ancho=250
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=422
-        cy=440
-        ancho=57
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=479
+        cx=394
         cy=440
         ancho=70
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=464
+        cy=440
+        ancho=48
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=512
+        cy=440
+        ancho=53
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
@@ -1676,31 +1755,43 @@ class generarF8(ListView):
 
         cx=60
         cy=415
+        ancho=44
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+        
+        cx=104
+        cy=415
+        ancho=55
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+        
+        cx=159
+        cy=415
+        ancho=180
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=339
+        cy=415
         ancho=55
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=115
-        cy=415
-        ancho=57
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=172
-        cy=415
-        ancho=250
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=422
-        cy=415
-        ancho=57
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=479
+        cx=394
         cy=415
         ancho=70
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=464
+        cy=415
+        ancho=48
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=512
+        cy=415
+        ancho=53
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
@@ -1708,31 +1799,43 @@ class generarF8(ListView):
 
         cx=60
         cy=390
+        ancho=44
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+        
+        cx=104
+        cy=390
         ancho=55
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=115
+        cx=159
         cy=390
-        ancho=57
+        ancho=180
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=172
+        cx=339
         cy=390
-        ancho=250
+        ancho=55
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=422
-        cy=390
-        ancho=57
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=479
+        cx=394
         cy=390
         ancho=70
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=464
+        cy=390
+        ancho=48
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=512
+        cy=390
+        ancho=53
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
@@ -1740,31 +1843,43 @@ class generarF8(ListView):
 
         cx=60
         cy=365
+        ancho=44
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=104
+        cy=365
         ancho=55
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=115
+        cx=159
         cy=365
-        ancho=57
+        ancho=180
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=172
+        cx=339
         cy=365
-        ancho=250
+        ancho=55
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
-        cx=422
-        cy=365
-        ancho=57
-        alto=25
-        pdf.rect(cx, cy, ancho, alto)
-
-        cx=479
+        cx=394
         cy=365
         ancho=70
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=464
+        cy=365
+        ancho=48
+        alto=25
+        pdf.rect(cx, cy, ancho, alto)
+
+        cx=512
+        cy=365
+        ancho=53
         alto=25
         pdf.rect(cx, cy, ancho, alto)
 
@@ -1780,39 +1895,35 @@ class generarF8(ListView):
 
     # ----------- FIRMAS ----------------#
 
-        x1 = 100
-        y1 = 280
-        x2 = 500
-        y2 = 280
+        x1 = 200
+        y1 = 260
+        x2 = 400
+        y2 = 260
         pdf.line(x1, y1, x2, y2)
 
-        texto = 'NOMBRE Y FIRMA DEL COORDINADOR DE LA EXTENSION AGROPECUARIA DE LA EEP'
+        texto = 'SELLO Y FIRMA DEL COORDINADOR'
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(90, 260, texto)
+        pdf.drawString(210, 245, texto)
 
-        x1 = 100
-        y1 = 200
-        x2 = 500
-        y2 = 200
+        x1 = 200
+        y1 = 175
+        x2 = 400
+        y2 = 175
         pdf.line(x1, y1, x2, y2)
 
-        texto = 'Vo. Bo. DIRECTOR DE LA ESTACIÓN EXPERIMENTAL Y DE PRÁCTICAS'
+        texto = 'SELLO Y FIRMA DE LA JEFATURA'
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(130, 180, texto) 
+        pdf.drawString(215, 157, texto) 
 
-        texto = 'SELLO'
-        pdf.setFont("Helvetica", 10)
-        pdf.drawString(285, 130, texto) 
-
-        x1 = 180
+        x1 = 200
         y1 = 90
-        x2 = 430
+        x2 = 400
         y2 = 90
         pdf.line(x1, y1, x2, y2)
 
-        texto = 'NOMBRE Y FIRMA DEL DOCENTE TUTOR'
+        texto = 'SELLO Y FIRMA DEL DOCENTE TUTOR'
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(200, 70, texto)
+        pdf.drawString(205, 73, texto)
 
     # ----------------------------------------- #
 
@@ -1827,8 +1938,9 @@ class generarF8(ListView):
     def get(self, request, *args, **kwargs):
         #Indicamos el tipo de contenido a devolver, en este caso un pdf
         response = HttpResponse(content_type='application/pdf')
-
-        pdf_name = "Comprobante_F8_UPS.pdf"
+        
+        carnet_estudiante = self.kwargs.get('carnet_estudiante')
+        pdf_name = carnet_estudiante+"_Comprobante_F8_UPS.pdf"
         # Esta linea es por si deseas descargar el pdf a tu computadora
         response['Content-Disposition'] = 'inline; filename=%s' % pdf_name
 
@@ -1914,31 +2026,27 @@ class generarF9(ListView):
         pdf.drawString(100, 715, u"F-9")
 
         pdf.setFont("Helvetica-Bold", 10)
-        pdf.drawString(90, 660, u"CONSTANCIA HORAS SOCIALES EN LA ESTACIÓN EXPERIMENTAL Y DE PRÁCTICAS")
+        pdf.drawString(220, 660, u"CONSTANCIA DE HORAS SOCIALES")
 
-        texto = 'El suscrito, coordinador de Extensión Agropecuaria de la Estación Experimental y de Prácticas, ' 
+        texto = 'El suscrito, hace constar que el(la) ' 
         pdf.setFont("Helvetica", 10)
         pdf.drawString(60, 620, texto)
 
-        texto = 'hace constar que el(la)' 
-        pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 600, texto)
-
         texto = 'Bachiller:   %s' % nombre
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 580, texto)   
+        pdf.drawString(60, 600, texto)   
 
         texto = 'Carné No.: %s' % carnet
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 560, texto)    
+        pdf.drawString(60, 580, texto)    
 
         texto = 'matriculado(a) en la carrera:'
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(200, 560, texto)        
+        pdf.drawString(200, 580, texto)        
 
         texto = '%s' % carrera
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(180, 540, texto)  
+        pdf.drawString(180, 560, texto)  
 
         x1 = 60
         y1 = 525
@@ -1946,51 +2054,53 @@ class generarF9(ListView):
         y2 = 525
         pdf.line(x1, y1, x2, y2)    
 
-        texto = 'ha cumplido satisfactoriamnet las horas sociales correspondientes al 25% de su servicio social en'
+        texto = 'realizo satisfactoriamente                         horas sociales'
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 500, texto)   
-
-        texto = 'esta unidad, conforme al plan de trabajo diseñado para el perido:'
         pdf.drawString(60, 480, texto)   
+
+        texto = 'conforme al plan de trabajo diseñado para el período:'
+        pdf.drawString(60, 450, texto)   
 
         texto = 'Del día:  %s' % fecha_inicio
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(180, 460, texto)      
+        pdf.drawString(180, 420, texto)      
 
         texto = ';al día:  %s' % fecha_fin
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(265, 460, texto) 
+        pdf.drawString(265, 420, texto) 
 
-        x1 = 60
-        y1 = 150
-        x2 = 520
-        y2 = y1
-        pdf.line(x1, y1, x2, y2)
-
-        texto = 'NOMBRE Y FIRMA DEL DOCENTE TUTOR'
-        pdf.setFont("Helvetica", 10)
-        pdf.drawString(200, 140, texto) 
-
-        x1 = 60
-        y1 = 250
-        x2 = 520
-        y2 = y1
-        pdf.line(x1, y1, x2, y2)
-
-        texto = 'Vo. Bo. DIRECTOR DE LA ESTACIÓN EXPERIMENTAL Y DE PRÁCTICAS'
-        pdf.setFont("Helvetica", 10)
-        pdf.drawString(130, 240, texto)
-        pdf.drawString(270, 220, u'SELLO')         
-
-        x1 = 60
+        x1 = 200
         y1 = 350
-        x2 = 520
+        x2 = 400
         y2 = y1
         pdf.line(x1, y1, x2, y2)
 
-        texto = 'NOMBRE Y FIRMA DEL COORDINADOR DE EXTENSION AGROPECUARIA'
+        texto = 'SELLO Y FIRMA DEL COORDINADOR'
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(130, 330, texto)
+        pdf.drawString(210, 330, texto)
+
+        x1 = 190
+        y1 = 250
+        x2 = 400
+        y2 = y1
+        pdf.line(x1, y1, x2, y2)
+
+        texto = 'SELLO Y FIRMA DE LA JEFATURA'
+        pdf.setFont("Helvetica", 10)
+        pdf.drawString(215, 240, texto)     
+
+        x1 = 200
+        y1 = 150
+        x2 = 403
+        y2 = y1
+        pdf.line(x1, y1, x2, y2)
+
+        texto = 'SELLO Y FIRMA DEL DOCENTE TUTOR'
+        pdf.setFont("Helvetica", 10)
+        pdf.drawString(210, 140, texto) 
+
+       
+
 
         return queryset
  
@@ -2003,8 +2113,9 @@ class generarF9(ListView):
     def get(self, request, *args, **kwargs):
         #Indicamos el tipo de contenido a devolver, en este caso un pdf
         response = HttpResponse(content_type='application/pdf')
-
-        pdf_name = "Comprobante_F9_UPS.pdf"
+        
+        carnet_estudiante = self.kwargs.get('carnet_estudiante')
+        pdf_name = carnet_estudiante+"_Comprobante_F9_UPS.pdf"
         # Esta linea es por si deseas descargar el pdf a tu computadora
         response['Content-Disposition'] = 'inline; filename=%s' % pdf_name
 
@@ -2071,6 +2182,11 @@ class generarF11(ListView):
 
         for i in ServicioSocial.objects.filter(carnet_estudiante = carnet_estudiante):    
             nombre_proyecto = i.codigo_proyecto.descripcion_proyecto
+            tutorExterno = i.dui_asesor_externo
+            tutorInterno = i.carnet_docente
+
+        for i in Solicitud.objects.filter(carnet_estudiante = carnet_estudiante):
+            entidad = i.codigo_entidad 
         
         pdf.setFont("Helvetica-Bold", 10)
         pdf.drawString(90, 700, u"FICHA DE EVALUACIÓN DE DESEMPEÑO DEL ESTUDIANTE POR EL TUTOR EXTERNO")
@@ -2087,9 +2203,9 @@ class generarF11(ListView):
         pdf.drawString(60, 650, texto)
 
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(60, 620, u"Señala con un X en el cuadro correspondiente,la calificación a la que el estudiante se hizo acreedor durante")
-        pdf.drawString(60, 605, u"la realización del Servicio Social; su dictamen será tomado en cuenta para la evolucion del estudiante.Le")
-        pdf.drawString(60, 590,u"solicitamos nos haga llegar este documento en forma confidencial cuando el alumno haya terminado el período")
+        pdf.drawString(60, 620, u"Señala con un  X  en el cuadro  correspondiente,  la calificación a la que el estudiante se hizo acreedor durante")
+        pdf.drawString(60, 605, u"la realización  del  Servicio  Social;  su dictamen  será  tomado en  cuenta para la  evolución del estudiante.  Le")
+        pdf.drawString(60, 590, u"solicitamos nos haga llegar este documento en forma confidencial cuando el alumno haya terminado el período")
         pdf.drawString(60, 575, u"de actividades a las que se compremetió con su entidad.")
 
         pdf.drawString(60, 545, u"Categorías de evaluación: Deficiente: D, Regular: R, Bueno: B, Excelente: E")
@@ -2139,11 +2255,11 @@ class generarF11(ListView):
         pdf.drawString(95,377, u"7. Capacidad analítica")
         pdf.drawString(95,362, u"8. Creatividad")
         pdf.drawString(95,347, u"9. Integridad moral y ética")
-        pdf.drawString(95,332, u"10.Puntulidad")
+        pdf.drawString(95,332, u"10.Puntualidad")
         pdf.drawString(95,317, u"11.Disciplina")
         pdf.drawString(95,302, u"12.Integración social ")
         pdf.drawString(95,287, u"13.Integración en equipo")
-        pdf.drawString(95,272, u"14.Represntación personal")
+        pdf.drawString(95,272, u"14.Presentación personal")
         pdf.drawString(95,257, u"15.Respeto")
         pdf.drawString(95,242, u"16.Cooperación")
         pdf.drawString(298,493, u"Excelente")
@@ -2151,14 +2267,11 @@ class generarF11(ListView):
         pdf.drawString(430,493, u"Regular")
         pdf.drawString(487,493, u"Deficiente")
 
-        pdf.drawString(60,205, u"Nombre y firma del tutor externo:")
-        pdf.line(212, 205, 500, 205) #linea horizontal
+        pdf.drawString(60,205, u"Nombre y firma del tutor externo: %s" %tutorExterno)
 
-        pdf.drawString(60,180, u"Nombre y firma del presentante de la entidad:")
-        pdf.line(265, 180, 500, 180) #linea horizontal
+        pdf.drawString(60,180, u"Nombre y firma del presentante de la entidad: %s" %tutorInterno) 
 
-        pdf.drawString(60,155, u"Lugar y fecha:")
-        pdf.line(125, 155, 500, 155) #linea horizontal
+        pdf.drawString(60,155, u"Lugar y fecha: %s" %entidad)
 
         return queryset
  
@@ -2171,8 +2284,9 @@ class generarF11(ListView):
     def get(self, request, *args, **kwargs):
         #Indicamos el tipo de contenido a devolver, en este caso un pdf
         response = HttpResponse(content_type='application/pdf')
-
-        pdf_name = "Comprobante_F11_UPS.pdf"
+        
+        carnet_estudiante = self.kwargs.get('carnet_estudiante')
+        pdf_name = carnet_estudiante+"_Comprobante_F11_UPS.pdf"
         # Esta linea es por si deseas descargar el pdf a tu computadora
         response['Content-Disposition'] = 'inline; filename=%s' % pdf_name
 

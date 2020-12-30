@@ -31,19 +31,19 @@
                         {{form.errors}}
                         
                         {% if object %}
-                        <div class="group-material" >
-                            {{form.carnet_docente}}
-                            <span class="highlight"></span>
-                            <span class="bar"></span>
-                            {{form.carnet_docente.label_tag}}
-                        </div>
+                            <div class="group-material" >
+                                {{form.carnet_docente}}
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                {{form.carnet_docente.label_tag}}
+                            </div>
                         {% else %}
-                        <div class="group-material" >
-                            {{form.carnet_docente}}
-                            <span class="highlight"></span>
-                            <span class="bar"></span>
-                            {{form.carnet_docente.label_tag}}
-                        </div>
+                            <div class="group-material" >
+                                {{form.carnet_docente}}
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                {{form.carnet_docente.label_tag}}
+                            </div>
                         {% endif %}
                         
                         <div class="group-material">
@@ -53,16 +53,27 @@
                             {{form.nombre_docente.label_tag}}
                         </div>
                         
-                          <div class="group-material">
-                            
+                        <div class="group-material">
                             {{ form.apellido_docente }}
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             {{form.apellido_docente.label_tag}}
-                            
-                            
+                        </div>
+
+                        <div class="group-material">
+                            <div class="row-xx">
+                                <div class="col-8 col-sm-6">
+                                    {{form.departamento.label_tag}}
+                                </div>
+                                <div class="col-4 col-sm-6">
+                                    {{form.departamento}}
+                                    </br>
+                                </div>
+                            </div>
                         </div>
                         
+                        </br>
+
                         <div class="group-material">
                             <div class="row-xx">
                                 <div class="col-8 col-sm-6">
