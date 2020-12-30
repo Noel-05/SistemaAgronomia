@@ -499,3 +499,40 @@ class AsesorInternoForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'material-control tooltips-general'
                 })
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Agregar Horas Sociales
+
+class HorasSocialesForm(forms.ModelForm):
+    class Meta:
+        model = HorasSociales
+        widgets = {
+            'fecha_servicio': forms.TextInput(attrs={'placeholder': 'Fecha de Servicio', 'autocomplete': 'off', 'type':'date', 'min':'1940-01-01'}),
+            'actividad_realizada': forms.TextInput(attrs={'placeholder': 'Actividad Realizada', 'autofocus': '', 'autocomplete': 'off', 'required': '', 'maxlength':'50'}),
+
+        }
+        fields = {
+            'carnet_estudiante': forms.HiddenInput,        
+            'fecha_servicio': forms.DateField,
+            'hora_entrada': forms.CharField,
+            'actividad_realizada': forms.CharField,
+            'hora_salida': forms.CharField,
+        }
+        labels = {
+            'fecha_servicio': 'Fecha de Servicio' ,
+            'hora_entrada': 'Hora de Entrada' ,
+            'actividad_realizada': 'Actividad Realizada',
+            'hora_salida': 'Hora de Salida',
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super(HorasSocialesForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'material-control tooltips-general'
+                })
+        self.fields['carnet_estudiante'].widget.attrs.update({
+                'class': 'form-control',
+        })
+        self.fields['carnet_estudiante'].disabled = True

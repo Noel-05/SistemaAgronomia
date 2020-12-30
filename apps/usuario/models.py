@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from apps.usuario.models import *
 
 roles=[
     ('ADM', 'Administrador'),

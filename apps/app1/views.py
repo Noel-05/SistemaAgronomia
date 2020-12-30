@@ -722,3 +722,26 @@ class eliminarAsesorInterno(LoginAMixin, DeleteView):
 
 
 #-----------------------------------------------------------------------------------------------
+#Horas Sociales
+
+class horasSocialesListView(LoginPEAMixin, ListView):
+    model = HorasSociales
+    template_name = 'app1/horas_sociales.html'
+    context_object_name = 'horas_sociales'
+
+
+    def get_queryset(self):
+        return HorasSociales.objects.filter(carnet_estudiante=self.kwargs.get("pk"))
+
+
+class agregarHorasSociales(LoginPAMixin, CreateView):
+    model = HorasSociales
+    form_class = HorasSocialesForm
+    template_name = 'app1/agregar_horas_sociales.html'
+
+    def get_initial(self):
+        return {"carnet_estudiante": self.kwargs.get("pk")}
+
+    def get_success_url(self):
+      username = str(self.object.carnet_estudiante)
+      return reverse_lazy('proyeccionsocial:listar_horas_sociales', kwargs={'pk': username})
