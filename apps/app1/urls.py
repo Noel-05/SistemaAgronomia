@@ -95,6 +95,12 @@ urlpatterns=[
 	path('proyeccionsocial/agregarDocumentos/<pk>/', login_required(agregarDocumentos.as_view()), name="agregar_documentos"),
 	path('proyeccionsocial/eliminarDocumento/<pk>/', login_required(eliminarDocumento.as_view()), name="eliminar_documento"),
 	
+	#URL para Horas Sociales
+	path('proyeccionsocial/listarHorasSociales/<pk>/', login_required(horasSocialesListView.as_view()), name="listar_horas_sociales"),
+	path('proyeccionsocial/agregarHorasSociales/<pk>/', login_required(agregarHorasSociales.as_view()), name="agregar_horas_sociales"),
+	path('proyeccionsocial/eliminarDocumento/<pk>/', login_required(eliminarDocumento.as_view()), name="eliminar_documento"),
+	
+
 
 	#URL para los Formularios
 	path('proyeccionsocial/generarF1/<str:carnet_estudiante>/',login_required(generarF1.as_view()), name= "generar_F1"),

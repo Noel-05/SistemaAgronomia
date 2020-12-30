@@ -162,6 +162,20 @@ def submission_delete(sender, instance, **kwargs):
     instance.documento.delete(False)
 
 # --------------------------------------------------------------------------
+#HorasSociales
+class HorasSociales(models.Model):
+    carnet_estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
+    fecha_servicio = models.DateField(null=False)
+    hora_entrada = models.CharField(max_length=1, null=False)
+    actividad_realizada = models.CharField(max_length=50, null=False)
+    hora_salida = models.CharField(max_length=1, null=False)
+    horas_realizadas = models.CharField(max_length=1, null=False)
+
+    def __str__(self):
+        return self.carnet_estudiante.__str__()
+
+
+# --------------------------------------------------------------------------
 
 # class CoordinadorUnidadProySoc(models.Model):
 #     carnet_coordinador_UPS = models.CharField(primary_key=True, max_length=10, null=False)

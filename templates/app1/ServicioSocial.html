@@ -41,6 +41,8 @@ Control Servicio Social
             		<th>Docente</th>
                     <th>Assesor Externo</th>
             	    <th>Proyecto</th>
+                    <th>Horas Sociales</th>
+
                 {% ifnotequal request.user.rol 'DOC' %}
                     <th>Editar</th>
                 {% endifnotequal %}
@@ -65,6 +67,9 @@ Control Servicio Social
             		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.carnet_docente.carnet_docente }}  </br> {{ serv.carnet_docente}} </td>
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.dui_asesor_externo.dui_asesor_externo }} </br> {{ serv.dui_asesor_externo }} </td>
             		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.codigo_proyecto.codigo_proyecto }} </br> {{ serv.codigo_proyecto.descripcion_proyecto }}</td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:listar_horas_sociales' serv.pk%}" onclick="window.location.href= '{% url 'proyeccionsocial:listar_horas_sociales' serv.pk %}'" class="btn">Horas Sociales</a></td>
+                    
                     <td class="th-borde width-th-xx" style = "text-align:center;">
                         <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F2' serv.pk %}" class = "btn">Imprimir F-2</a></br>
                         <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F3' serv.pk %}" class = "btn">Imprimir F-3</a>
@@ -87,6 +92,10 @@ Control Servicio Social
             		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.carnet_docente.carnet_docente }}  </br> {{ serv.carnet_docente}} </td>
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.dui_asesor_externo.dui_asesor_externo }} </br> {{ serv.dui_asesor_externo }} </td>
             		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.codigo_proyecto.codigo_proyecto }} </br> {{ serv.codigo_proyecto.descripcion_proyecto }}</td>
+
+             
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:listar_horas_sociales' serv.pk%}" onclick="window.location.href= '{% url 'proyeccionsocial:listar_horas_sociales' serv.pk %}'" class="btn">Horas Sociales</a></td>
+
                  
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_servicio_social' serv.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_servicio_social' serv.pk %}'" class = "btn">Editar</a></td>
 
@@ -117,6 +126,8 @@ Control Servicio Social
             		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv2.carnet_docente.carnet_docente }}  </br> {{ serv2.carnet_docente}} </td>
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv2.dui_asesor_externo.dui_asesor_externo }} </br> {{ serv2.dui_asesor_externo }} </td>
             		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv2.codigo_proyecto.codigo_proyecto }} </br> {{ serv2.codigo_proyecto.descripcion_proyecto }}</td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:listar_horas_sociales' serv2.pk%}" onclick="window.location.href= '{% url 'proyeccionsocial:listar_horas_sociales' serv2.pk %}'" class="btn">Horas Sociales</a></td>
                     
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_servicio_social' serv2.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_servicio_social' serv2.pk %}'" class = "btn">Editar</a></td>
                     
