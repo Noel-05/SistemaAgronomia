@@ -122,6 +122,7 @@ class Rol(models.Model):
         return self.nombre_rol
 
 
+
 class Docente(models.Model):
     carnet_docente = models.CharField(primary_key=True, max_length=10, null=False)
     nombre_docente = models.CharField(max_length=50, null=False)
@@ -157,6 +158,7 @@ def crear_subcarpeta(instance, filename):
     return '/'.join([str(instance.carnet_estudiante), filename])
 
 
+
 class ArchivosEstudiante(models.Model):
     carnet_estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
     documento = models.FileField(upload_to=crear_subcarpeta, null=True, blank=True)
@@ -172,8 +174,11 @@ class ArchivosEstudiante(models.Model):
 def submission_delete(sender, instance, **kwargs):
     instance.documento.delete(False)
 
+
 # --------------------------------------------------------------------------
 #HorasSociales
+
+
 class HorasSociales(models.Model):
     carnet_estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
     fecha_servicio = models.DateField(null=False)
@@ -184,49 +189,3 @@ class HorasSociales(models.Model):
 
     def __str__(self):
         return self.carnet_estudiante.__str__()
-
-
-# --------------------------------------------------------------------------
-
-# class CoordinadorUnidadProySoc(models.Model):
-#     carnet_coordinador_UPS = models.CharField(primary_key=True, max_length=10, null=False)
-#     nombre_coordinador_UPS = models.CharField(max_length=50, null=False)
-#     apellido_coordinador_UPS = models.CharField(max_length=50, null=False)
-
-#     def __str__(self):
-#         return carnet_coordinador_UPS
-
-# class JefeUnidadProySoc(models.Model):
-#     carnet_jefe_UPS = models.CharField(primary_key=True, max_length=10, null=False)
-#     nombre_jefe_UPS = models.CharField(max_length=50, null=False)
-#     apellido_jefe_UPS = models.CharField(max_length=50, null=False)
-
-#     def __str__(self):
-#         return carnet_jefe_UPS
-
-# class DirectorEscuela(models.Model):
-#     carnet_director_escuela = models.CharField(primary_key=True, max_length=10, null=False)
-#     nombre_director_escuela = models.CharField(max_length=50, null=False)
-#     apellido_director_escuela = models.CharField(max_length=50, null=False)
-
-#     def __str__(self):
-#         return carnet_director_escuela
-
-# class AsesorInterno(models.Model):
-#     dui_asesor_interno = models.CharField(primary_key=True, max_length=10, null=False)
-#     nombre_asesor_interno = models.CharField(max_length=50, null=False)
-#     apellido_asesor_interno = models.CharField(max_length=50, null=False)
-#     cargo_asesor_interno = models.CharField(max_length=100, null=False)
-
-#     def __str__(self):
-#         return self.dui_asesor_interno
-
-# class JefeDepartamento(models.Model):
-#     carnet_jefe_depto = models.CharField(primary_key=True, max_length=10, null=False)
-#     nombre_jefe_depto = models.CharField(max_length=50, null=False)
-#     apellido_jefe_depto = models.CharField(max_length=50, null=False)
-
-#     def __str__(self):
-#         return self.carnet_jefe_depto
-
-# -----------------------------------------------------------------------------------------

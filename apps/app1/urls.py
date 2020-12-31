@@ -20,7 +20,8 @@ urlpatterns=[
 
 	#URL para Estudiante
 	path('proyeccionsocial/consultaEstudiante/<username>/',login_required(consultaEstudiante), name="consulta_estudiante"),
-	path('proyeccionsocial/crearEstudiante/<username>/',login_required(crearEstudiante.as_view()), name="crear_estudiante"),
+	#path('proyeccionsocial/crearEstudiante/<username>/',login_required(crearEstudiante.as_view()), name="crear_estudiante"),
+	path('proyeccionsocial/crearEstudiante/<username>/',login_required(crearEstudiante), name="crear_estudiante"),
 	path('proyeccionsocial/editarEstudiante/<pk>/',login_required(editarEstudiante.as_view()), name="editar_estudiante"),
 	path('proyeccionsocial/eliminarEstudiante/<pk>/',login_required(eliminarEstudiante.as_view()), name="eliminar_estudiante"),
 	#Buscar Estudiante

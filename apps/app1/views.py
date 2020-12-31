@@ -135,13 +135,39 @@ def consultaEstudiante(request, username):
         'app1/Estudiante.html', context
     )
 
-class crearEstudiante(CreateView):
-    template_name = 'app1/Crear_Estudiante.html'
-    form_class = EstudianteForm
 
-    def get_success_url(self):
-      username = self.kwargs['username']
-      return reverse_lazy('proyeccionsocial:consulta_estudiante', kwargs={'username': username})
+def crearEstudiante(request, username):
+    if request.method == 'POST':
+
+        carnet = request.POST['carnet']
+        nombres = request.POST['nombres']
+        apellidos = request.POST['apellidos']
+        correo = request.POST['correo']
+        direccion = request.POST['direccion']
+        telefono = request.POST['telefono']
+        sexo = request.POST['sexo']
+
+        estudiante = Estudiante(carnet_estudiante=carnet, nombre_estudiante=nombres, apellido_estudiante=apellidos, direccion_estudiante=direccion, correo_estudiante=correo, telefono_estudiante=telefono, sexo_estudiante=sexo)
+        estudiante.save()
+
+        return HttpResponseRedirect(reverse_lazy('proyeccionsocial:consulta_estudiante', kwargs={'username': username}))
+    
+    else:
+
+        return render(
+            request,
+            'app1/Crear_Estudiante.html'
+        )
+
+#class crearEstudiante(CreateView):
+#    template_name = 'app1/Crear_Estudiante.html'
+#    form_class = EstudianteForm
+#    def get_success_url(self):
+#      username = self.kwargs['username']
+#      return reverse_lazy('proyeccionsocial:consulta_estudiante', kwargs={'username': username})
+
+    #success_url = "/proyeccionsocial/consultaEstudioUniversitario/{username}/"
+    #success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
 
 
 class editarEstudiante(LoginPEAMixin, UpdateView):
@@ -620,21 +646,23 @@ class eliminarServicioSocial(LoginAMixin, DeleteView):
       username = self.kwargs['pk']
       return reverse_lazy('proyeccionsocial:consulta_servicio_social', kwargs={'username': username})
 
-# Busqueda de Estudiante
+
+# Busqueda de ServicioSocial
 def consultaServicioSocialBuscar(request):
     carnet_estudiante = request.POST['carnet_estudiante']
     if request.method == 'POST':
-       estudiante_busc = ServicioSocial.objects.filter(carnet_estudiante = carnet_estudiante)
+        estudiante_busc = ServicioSocial.objects.filter(carnet_estudiante = carnet_estudiante)
         
-    suma = " "
-    if len( estudiante_busc) == 0:
         suma = " "
-    
-    contexto = {'estudiante_busc ': estudiante_busc,
-    'suma': suma,
+        if len(estudiante_busc) == 0:
+            suma = " "
+
+        contexto = {'estudiante_busc': estudiante_busc,
+        'suma': suma,
         }
 
-    return render(request, 'app1/ServicioSocial.html', contexto)
+        return render(request, 'app1/ServicioSocial.html', contexto)
+
 
     
 #Asesor Externo ---------------------------------------------------------------------------

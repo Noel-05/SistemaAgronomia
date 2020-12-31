@@ -151,19 +151,32 @@ Control Servicio Social
         {% if request.user.usuario_administrador %}
             {% if estudiante_busc %}
             {% for serv in estudiante_busc %}
-            
+
                 <tr class="etiqueta-tr">
                     <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.carnet_estudiante }} </br> {{ serv.carnet_estudiante.carnet_estudiante.nombre_estudiante }} {{ serv.carnet_estudiante.carnet_estudiante.apellido_estudiante }}</td>
-            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.carnet_docente}}  </br> {{ serv.carnet_docente.nombre_docente }} {{ serv.carnet_docente.apellido_docente }}</td>
-                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.dui_asesor_externo }} </br> {{ serv.dui_asesor_externo.nombre_asesor_externo }} {{ serv.dui_asesor_externo.apellido_asesor_externo }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.carnet_docente.carnet_docente }}  </br> {{ serv.carnet_docente}} </td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.dui_asesor_externo.dui_asesor_externo }} </br> {{ serv.dui_asesor_externo }} </td>
             		<td class="th-borde width-th-xx" style = "text-align:center;">{{ serv.codigo_proyecto.codigo_proyecto }} </br> {{ serv.codigo_proyecto.descripcion_proyecto }}</td>
-                    
+
+             
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:listar_horas_sociales' serv.pk%}" onclick="window.location.href= '{% url 'proyeccionsocial:listar_horas_sociales' serv.pk %}'" class="btn">Horas Sociales</a></td>
+
+                 
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_servicio_social' serv.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_servicio_social' serv.pk %}'" class = "btn">Editar</a></td>
 
-                {% if request.user.usuario_administrador %}
-                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_servicio_social' serv.pk %}', 'Eliminar {{ est.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
-                {% endif %}  
-                </tr>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_servicio_social' serv.pk %}', 'Eliminar  {{ serv.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;">
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F2' serv.pk %}" class = "btn">Imprimir F-2</a></br>
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F3' serv.pk %}" class = "btn">Imprimir F-3</a>
+                    </td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;">
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F4TI' serv.carnet_estudiante %}" class = "btn">Imprimir F-4 TI</a></br>
+                        <a class="a-btn" href = "{%url 'proyeccionsocial:generar_F4TE' serv.carnet_estudiante %}" class = "btn">Imprimir F-4 TE</a>
+                    </td>
+                    
+        		</tr>
 
             {% endfor %}
             {% endif %}  

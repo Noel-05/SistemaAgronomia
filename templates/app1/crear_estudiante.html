@@ -31,67 +31,123 @@
                         {{form.errors}}
 
                         {% if object %}
+
                             <div class="group-material" style="display:none;">
                                 {{form.carnet_estudiante}}
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
                                 {{form.carnet_estudiante.label_tag}}
                             </div>
-                        {% else %}
+
                             <div class="group-material">
-                                {{form.carnet_estudiante}}
+                                {{ form.nombre_estudiante }}
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
-                                {{form.carnet_estudiante.label_tag}}
+                                {{form.nombre_estudiante.label_tag}}
                             </div>
+
+                            <div class="group-material">
+                                {{form.apellido_estudiante}}
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                {{form.apellido_estudiante.label_tag}}
+                            </div>
+
+                            <div class="group-material">
+                                {{form.telefono_estudiante}}
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                {{form.telefono_estudiante.label_tag}}
+                            </div>
+
+                            <div class="group-material">
+                                {{form.correo_estudiante}}
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                {{form.correo_estudiante.label_tag}}
+                            </div>
+
+                            <div class="group-material">
+                                {{form.direccion_estudiante}}
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                {{form.direccion_estudiante.label_tag}}
+                            </div>
+
+                            <div class="group-material">
+                                <div class="row-xx">
+                                    <div class="col-8 col-sm-6">
+                                        {{form.sexo_estudiante.label_tag}}
+                                    </div>
+                                    <div class="col-4 col-sm-6">
+                                        {{form.sexo_estudiante}}
+                                        </br>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        {% else %}
+
+                        
+                            <div class="group-material">
+                                <input type="text" class="material-control tooltips-general" required="" maxlength="7" data-toggle="tooltip" data-placement="top" title="Escribe el carnet del estudiante" value="{{ user.username }}" name="carnet">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Carnet:</label>
+                            </div>
+
+                            <div class="group-material">
+                                <input type="text" class="material-control tooltips-general" required="" maxlength="50" data-toggle="tooltip" data-placement="top" title="Escribe el nombre del estudiante" value="{{ user.nombres }}" name="nombres">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Nombre:</label>
+                            </div>
+
+                            <div class="group-material">
+                                <input type="text" class="material-control tooltips-general" required="" maxlength="50" data-toggle="tooltip" data-placement="top" title="Escribe el apellido del estudiante" value="{{ user.apellidos }}" name="apellidos">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Apellido:</label>
+                            </div>
+
+                            <div class="group-material">
+                                <input type="text" class="material-control tooltips-general" required="" data-toggle="tooltip" data-placement="top" title="Escribe el correo del estudiante" value="{{ user.email }}" name="correo">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Correo:</label>
+                            </div>
+
+                            <div class="group-material">
+                                <input type="number" class="material-control tooltips-general" required="" data-toggle="tooltip" data-placement="top" maxlength="15" pattern="[0-9]{8,15}" title="Ingrese el Telefono, Solo Numeros Enteros Sin Espacio." name="telefono">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Telefono:</label>
+                            </div>
+
+                            <div class="group-material">
+                                <input type="text" class="material-control tooltips-general" required="" data-toggle="tooltip" data-placement="top" title="Ingrese la dirección del estudiante." name="direccion">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Direcci&oacute;n:</label>
+                            </div>
+
+                            <div class="group-material">
+                                <div class="row-xx">
+                                    <div class="col-8 col-sm-6">
+                                        <label>Sexo</label>
+                                    </div>
+                                    <div class="col-4 col-sm-6">
+                                        <select class="form-control" name="sexo">
+                                            <option value="M">M</option>
+                                            <option value="F">F</option>
+                                        </select>
+                                        </br>
+                                    </div>
+                                </div>
+                            </div>
+
                         {% endif %}
-
-                        <div class="group-material">
-                            {{ form.nombre_estudiante }}
-                            <span class="highlight"></span>
-                            <span class="bar"></span>
-                            {{form.nombre_estudiante.label_tag}}
-                        </div>
-
-                        <div class="group-material">
-                            {{form.apellido_estudiante}}
-                            <span class="highlight"></span>
-                            <span class="bar"></span>
-                            {{form.apellido_estudiante.label_tag}}
-                        </div>
-
-                        <div class="group-material">
-                            {{form.telefono_estudiante}}
-                            <span class="highlight"></span>
-                            <span class="bar"></span>
-                            {{form.telefono_estudiante.label_tag}}
-                        </div>
-
-                        <div class="group-material">
-                            {{form.correo_estudiante}}
-                            <span class="highlight"></span>
-                            <span class="bar"></span>
-                            {{form.correo_estudiante.label_tag}}
-                        </div>
-
-                        <div class="group-material">
-                            {{form.direccion_estudiante}}
-                            <span class="highlight"></span>
-                            <span class="bar"></span>
-                            {{form.direccion_estudiante.label_tag}}
-                        </div>
-
-                         <div class="group-material">
-                            <div class="row-xx">
-                                <div class="col-8 col-sm-6">
-                                    {{form.sexo_estudiante.label_tag}}
-                                </div>
-                                <div class="col-4 col-sm-6">
-                                    {{form.sexo_estudiante}}
-                                    </br>
-                                </div>
-                            </div>
-                        </div>
 
                     </div>
                 </div>
