@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+{%block title%}
+    Control Proyecto
+{%endblock%}
+{% block content %}
+
+{% load static %}
+   
+        <link rel = "stylesheet" href = "{% static 'css/stylePrueba.css' %}">
+        <link rel = "stylesheet" href = "{% static 'css/sweet-alert.css' %}">
+        <link rel = "stylesheet" href = "{% static 'css/bootstrap.min-PRUEBA.css' %}">
+
+    
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Registro de Proyectos</h2>
+        </br></br></br>
+    </div>
+  </header>
+
+<div class="container-fluid">
+    <div class="container-flat-form">
+        <div class="title-flat-form title-flat-green">Registrar Proyectos</div>
+            {% if object %}
+                <form role="form" method="POST" action="{% url  'proyeccionsocial:editar_proyecto' object.pk  %}">
+            {% else %}
+                <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_proyecto'  %}">
+            {% endif %}
+
+                <div class="row">
+                    <div class="col-xs-14 col-sm-8 col-sm-offset-2">
+                    {% csrf_token %}
+                        {{form.errors}}
+
+                        {% if object %}
+                            <div class="group-material" style="display:none;">
+                                {{form.codigo_proyecto}}
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                {{form.codigo_proyecto.label_tag}}
+                            </div>
+                        {% else %}
+                            <div class="group-material">
+                                {{form.codigo_proyecto}}
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                {{form.codigo_proyecto.label_tag}}
+                            </div>
+                        {% endif %}
+
+                        <div class="group-material">
+                            {{ form.descripcion_proyecto }}
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            {{form.descripcion_proyecto.label_tag}}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <div class="col-lg-5 text-center">
+                        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Guardar">
+                        <a href = "{% url 'proyeccionsocial:consulta_proyecto' %}"><input type="button" href="{% url 'proyeccionsocial:consulta_proyecto'  %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
+                    </div>
+                </div>
+                
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

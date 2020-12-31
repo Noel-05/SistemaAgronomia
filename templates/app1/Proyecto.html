@@ -1,0 +1,71 @@
+{% extends 'base/base.html' %}
+{%block title%}
+Control Proyecto
+{%endblock%}
+{% block content %}
+
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Proyectos</h2>
+        </br></br>
+
+        
+
+        </br>
+
+    </div>
+  </header>
+
+  <div class="container">
+    <div>
+    <table>
+        <thead>
+            <tr>
+                <th>C&oacute;digo Proyecto</th>
+                <th>Descripci&oacute;n</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+
+          {% if proyecto_list %}
+          {% for proy in proyecto_list %}
+
+            </tr>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ proy.codigo_proyecto}}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ proy.descripcion_proyecto }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_proyecto' proy.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_proyecto' proy.pk %}'" class = "btn">Editar</a></td>
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_proyecto'  proy.pk %}', 'Eliminar proyecto {{ proy.codigo_proyecto }}')" class = "btn">Eliminar</a></td>
+            </tr>
+
+          {% endfor %}
+              {% endif %}  
+         
+
+            </table>
+    </div>
+    
+  </div>
+
+    <div id = "popup">
+  
+  </div>
+
+   {% endblock %}
+
+{% block js %}
+
+    <script>
+        var modal;
+        function abrir_modal(url, titulo)
+        {
+            modal = $('#popup').dialog({
+                title :titulo,
+                modal :true,
+                width :500,
+                resizable :false
+            }).dialog('open').load(url)
+        }
+    </script>
+
+{% endblock %}

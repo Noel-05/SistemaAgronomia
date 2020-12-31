@@ -773,3 +773,31 @@ class agregarHorasSociales(LoginPAMixin, CreateView):
     def get_success_url(self):
       username = str(self.object.carnet_estudiante)
       return reverse_lazy('proyeccionsocial:listar_horas_sociales', kwargs={'pk': username})
+#-----------------------------------------------------------------------------------------------
+
+def consultaProyecto(request):
+        proyecto_list=Proyecto.objects.order_by('codigo_proyecto')
+        context = {
+        'proyecto_list': proyecto_list,
+    }
+        return render(
+        request,
+        'app1/Proyecto.html', context
+    )
+
+class crearProyecto(LoginAMixin, CreateView):
+    template_name = 'app1/crear_proyecto.html'
+    form_class = ProyectoForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_proyecto')
+
+class editarProyecto(LoginAMixin, UpdateView):
+    model = Proyecto
+    template_name = 'app1/crear_proyecto.html'
+    form_class = ProyectoForm
+    success_url = reverse_lazy('proyeccionsocial:consulta_proyecto')
+
+class eliminarProyecto(LoginAMixin, DeleteView):
+    model = Proyecto
+    template_name = 'app1/eliminar_proyecto.html'
+    success_url = reverse_lazy('proyeccionsocial:consulta_proyecto')
+#-----------------------------------------------------------------------------------------------

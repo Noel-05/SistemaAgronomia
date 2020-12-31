@@ -105,6 +105,14 @@ urlpatterns=[
 	path('proyeccionsocial/agregarHorasSociales/<pk>/', login_required(agregarHorasSociales.as_view()), name="agregar_horas_sociales"),
 	path('proyeccionsocial/eliminarDocumento/<pk>/', login_required(eliminarDocumento.as_view()), name="eliminar_documento"),
 	
+	#URL para Proyecto
+	path('proyeccionsocial/consultaProyecto/',login_required(consultaProyecto), name="consulta_proyecto"),
+	path('proyeccionsocial/crearProyecto/',login_required(crearProyecto.as_view()), name="crear_proyecto"),
+	path('proyeccionsocial/editarProyecto/<pk>/',login_required(editarProyecto.as_view()), name="editar_proyecto"),
+	path('proyeccionsocial/eliminarProyecto/<pk>/',login_required(eliminarProyecto.as_view()), name="eliminar_proyecto"),
+	#Buscar Proyecto
+	path('proyeccionsocial/consultaProyectoBuscar/',login_required(consultaEstudianteBuscar), name="consulta_proyecto_buscar"),
+
 
 
 	#URL para los Formularios

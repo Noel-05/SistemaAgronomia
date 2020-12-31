@@ -536,3 +536,38 @@ class HorasSocialesForm(forms.ModelForm):
                 'class': 'form-control',
         })
         self.fields['carnet_estudiante'].disabled = True
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class ProyectoForm(forms.ModelForm):
+    class Meta:
+        model = Proyecto
+        widgets = {
+            'codigo_proyecto': forms.TextInput(attrs={'placeholder': 'Código Proyecto', 'autofocus': '', 'required': '', 'maxlength':'6'}),
+            'descripcion_proyecto': forms.TextInput(attrs={'placeholder': 'Descripción Proyecto', 'autofocus': '', 'required': ''}),
+            
+        }
+        fields = {
+           'codigo_proyecto': forms.IntegerField,
+           'descripcion_proyecto': forms.CharField,
+        }   
+        labels = {
+            'codigo_proyecto': 'Codigo Proyecto',
+            'descripcion_proyecto': 'Descripción Proyecto',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ProyectoForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'material-control tooltips-general'
+                })
+
+            self.fields['codigo_proyecto'].widget.attrs.update({
+                'pattern': '([A-Z]{3}[0-9]{3})', 
+                'title': 'Ingrese el Codigo, Ej. PAS1001.'
+                })
+
+            self.fields['descripcion_proyecto'].widget.attrs.update({
+                'pattern': '[A-Za-záéíóú ]{1,100}', 
+                'title': 'Ingrese el Codigo, Ej. Ayudante de Catedra para la materia Sistemas Contables.'
+                })
