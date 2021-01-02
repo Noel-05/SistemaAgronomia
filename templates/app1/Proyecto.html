@@ -4,17 +4,21 @@ Control Proyecto
 {%endblock%}
 {% block content %}
 
-  <header>
-    <div class="container">
-        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Proyectos</h2>
-        </br></br>
+<header>
+  <div class="container">
+      <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Proyecto</h2>
+      </br></br>
 
-        
+      {% if request.user.usuario_administrador %}
+          {% comment %} <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_proyecto' %}', 'Registrar Proyecto')" value="Agregar"></br></br> {% endcomment %}
+          <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_proyecto' %}'" value="Agregar"></br></br>
+      {% endif %}
 
-        </br>
+      </br>
 
-    </div>
-  </header>
+  </div>
+</header>
+
 
   <div class="container">
     <div>
