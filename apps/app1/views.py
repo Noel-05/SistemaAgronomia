@@ -771,8 +771,29 @@ class agregarHorasSociales(LoginPAMixin, CreateView):
         return {"carnet_estudiante": self.kwargs.get("pk")}
 
     def get_success_url(self):
-      username = str(self.object.carnet_estudiante)
-      return reverse_lazy('proyeccionsocial:listar_horas_sociales', kwargs={'pk': username})
+        username = str(self.object.carnet_estudiante)
+        return reverse_lazy('proyeccionsocial:listar_horas_sociales', kwargs={'pk': username})
+
+
+class editarHorasSociales(UpdateView):
+    model = HorasSociales
+    form_class = HorasSocialesForm
+    template_name = 'app1/agregar_horas_sociales.html'
+
+    def get_success_url(self):
+        username = str(self.object.carnet_estudiante)
+        return reverse_lazy('proyeccionsocial:listar_horas_sociales', kwargs={'pk': username})
+
+class eliminarHorasSociales(DeleteView):
+    model = HorasSociales
+    template_name = 'app1/eliminar_horas_sociales.html'
+
+    def get_success_url(self):
+        username = str(self.object.carnet_estudiante)
+        return reverse_lazy('proyeccionsocial:listar_horas_sociales', kwargs={'pk': username})
+
+
+
 #-----------------------------------------------------------------------------------------------
 
 def consultaProyecto(request):

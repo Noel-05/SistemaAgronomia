@@ -25,6 +25,11 @@ Documentos de estudiante
                 <th>Hora de Entrada</th>
                 <th>Actividad Realizada</th>
                 <th>Hora de Salida</th>
+            {% if request.user.usuario_administrador or request.user.rol == 'DOC' %}
+                <th>Editar</th>
+                <th>Eliminar</th>  
+            {% endif %}
+              
             </tr>
         </thead>
 
@@ -37,16 +42,29 @@ Documentos de estudiante
                 <td class="th-borde width-th-xx" style = "text-align:center;">{{ hs.actividad_realizada }}</td>
                 <td class="th-borde width-th-xx" style = "text-align:center;">{{ hs.hora_salida }}</td>
 
+            {% if request.user.usuario_administrador or request.user.rol == 'DOC' %}
 
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_horas_sociales' hs.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_horas_sociales' hs.pk %}'" class = "btn">Editar</a></td>
+
+                <td class="th-borde width-th-xx" style = "text-align:center;">
+                    <form method="post">
+                        {% csrf_token %}
+                        <a class="a-btn" href=# onclick="return abrir_modal('{% url 'proyeccionsocial:eliminar_horas_sociales' hs.pk %}', 'Eliminar Horas Sociales con Actividad {{ hs.actividad_realizada }}' )" >Eliminar</a>
+                    </form>
+                </td>
+            {% endif %}                           
             </tr>
-
           {% endfor %}
               {% endif %}  
          
 
             </table>
     </div>
-    
+        </br>
+
+                <a href = "{% url 'proyeccionsocial:consulta_servicio_social' user.username %}"><input type="button" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
+
+        </br>    
   </div>
 
 </div>

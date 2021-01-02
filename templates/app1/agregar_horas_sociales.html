@@ -88,10 +88,14 @@
                 <div class="modal-footer">
                     <div class="col-lg-5 text-center">
                          <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Guardar">
+
+                    {% if request.user.usuario_administrador or request.user.rol == 'DOC' %}
+                        <a href = "{% url 'proyeccionsocial:consulta_servicio_social' user.username %}"><input type="button" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
+                    {% else %}
+                        <a href = "{% url 'proyeccionsocial:listar_horas_sociales' user.username %}"><input type="button" href="{% url 'proyeccionsocial:listar_horas_sociales' user.username %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
+                    {% endif %}
                     </div>
                 </div>
-
-                
             </form>
 
         </div>
