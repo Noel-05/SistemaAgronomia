@@ -563,7 +563,7 @@ class ProyectoForm(forms.ModelForm):
                 })
 
             self.fields['codigo_proyecto'].widget.attrs.update({
-                'pattern': '([A-Z]{3}[0-9]{3})', 
+                'pattern': '([A-Z]{5}[0-9]{3})', 
                 'title': 'Ingrese el Codigo, Ej. PAS1001.'
                 })
 
