@@ -21,6 +21,16 @@ Control Proyecto
 
 
   <div class="container">
+     <!-- Boton Buscar -->
+     <div align="center" class="busqueda">
+      <form method="POST" action="{% url 'proyeccionsocial:consulta_proyecto_buscar' %}">
+          {% csrf_token %} 
+          <input type="text" name="codigo_proyecto"  id = "codigo_proyecto" class = "input-style" placeholder="Porfavor ingrese el código del proyecto" required pattern="([A-Z]{3}[0-9]{3})" maxlength="6">
+          <input class="btn-buscar btn-busqueda" type = "submit" value = "Buscar" id = "buscarProyecto">
+      </form>
+    </br>
+
+  </div>
     <div>
     <table>
         <thead>
@@ -43,7 +53,25 @@ Control Proyecto
             </tr>
 
           {% endfor %}
-              {% endif %}  
+          {% endif %}  
+    
+
+      {% if proyecto_busc %}
+      {% for proy in proyecto_busc %}
+
+            </tr>
+            <td class="th-borde width-th-xx" style = "text-align:center;">{{ proy.codigo_proyecto}}</td>
+            <td class="th-borde width-th-xx" style = "text-align:center;">{{ proy.descripcion_proyecto }}</td>
+            <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_proyecto' proy.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_proyecto' proy.pk %}'" class = "btn">Editar</a></td>
+            <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_proyecto'  proy.pk %}', 'Eliminar proyecto {{ proy.codigo_proyecto }}')" class = "btn">Eliminar</a></td>
+            </tr>
+
+          {% endfor %}
+          {% endif %} 
+    
+
+             
+
          
 
             </table>

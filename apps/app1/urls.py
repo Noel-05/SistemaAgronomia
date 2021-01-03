@@ -112,7 +112,7 @@ urlpatterns=[
 	path('proyeccionsocial/editarProyecto/<pk>/',login_required(editarProyecto.as_view()), name="editar_proyecto"),
 	path('proyeccionsocial/eliminarProyecto/<pk>/',login_required(eliminarProyecto.as_view()), name="eliminar_proyecto"),
 	#Buscar Proyecto
-	path('proyeccionsocial/consultaProyectoBuscar/',login_required(consultaEstudianteBuscar), name="consulta_proyecto_buscar"),
+	path('proyeccionsocial/consultaProyectoBuscar/',login_required(consultaProyectoBuscar), name="consulta_proyecto_buscar"),
 
 
 

@@ -210,7 +210,7 @@ def consultaEstudianteBuscar(request):
     if request.method == 'POST':
         estudiante_busc = Estudiante.objects.filter(carnet_estudiante = carnet_estudiante)
         
-        suma = " "
+        suma = " " 
         if len(estudiante_busc) == 0:
             suma = " "
 
@@ -822,3 +822,17 @@ class eliminarProyecto(LoginAMixin, DeleteView):
     template_name = 'app1/eliminar_proyecto.html'
     success_url = reverse_lazy('proyeccionsocial:consulta_proyecto')
 #-----------------------------------------------------------------------------------------------
+def consultaProyectoBuscar(request):
+    codigo_proyecto = request.POST['codigo_proyecto']
+    if request.method == 'POST':
+        proyecto_busc = Proyecto.objects.filter(codigo_proyecto = codigo_proyecto)
+        
+        suma = " " 
+        if len(proyecto_busc) == 0:
+            suma = " "
+
+        contexto = {'proyecto_busc': proyecto_busc,
+        'suma': suma,
+        }
+
+        return render(request, 'app1/Proyecto.html', contexto)
