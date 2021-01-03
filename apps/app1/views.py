@@ -259,14 +259,47 @@ def consultaEstudioUniversitario(request, username):
     )
 
 
+def crearEstudioUniversitario(request, username):
+    if request.method == 'POST':
 
-class crearEstudioUniversitario(LoginEAMixin, CreateView):
-    template_name = 'app1/Crear_Estudio_Universitario.html'
-    form_class = EstudioUniversitarioForm
+        carnet = request.POST['carnet']
+        carrera = request.POST['carrera']
+        ciclo = request.POST['ciclo']
+        porcentaje = request.POST['porcentaje']
+        unidades = request.POST['unidades']
+        experiencia = request.POST['experiencia']
 
-    def get_success_url(self):
-      username = self.kwargs['username']
-      return reverse_lazy('proyeccionsocial:consulta_estudio_universitario', kwargs={'username': username})
+        estudio = EstudioUniversitario(carnet_estudiante=Estudiante.objects.get(carnet_estudiante=carnet), codigo_carrera=Carrera.objects.get(codigo_carrera=carrera), codigo_ciclo=Ciclo.objects.get(codigo_ciclo=ciclo), porc_carrerar_aprob=porcentaje, unidades_valorativas=unidades, experiencia_areas_conoc=experiencia)
+        estudio.save()
+
+        return HttpResponseRedirect(reverse_lazy('proyeccionsocial:consulta_estudio_universitario', kwargs={'username': username}))
+    
+    else:
+
+        estudiantes = Estudiante.objects.order_by('carnet_estudiante')
+        carreras = Carrera.objects.order_by('codigo_carrera')
+        ciclos = Ciclo.objects.order_by('codigo_ciclo')
+
+        context = {
+            'ciclos': ciclos,
+            'carreras': carreras,
+            'estudiantes': estudiantes,
+        }
+
+        return render(
+            request,
+            'app1/Crear_Estudio_Universitario.html',
+            context
+        )
+
+
+#class crearEstudioUniversitario(LoginEAMixin, CreateView):
+#    template_name = 'app1/Crear_Estudio_Universitario.html'
+#    form_class = EstudioUniversitarioForm
+
+#    def get_success_url(self):
+#      username = self.kwargs['username']
+#      return reverse_lazy('proyeccionsocial:consulta_estudio_universitario', kwargs={'username': username})
     #success_url = "/proyeccionsocial/consultaEstudioUniversitario/{username}/"
     #success_url = reverse_lazy('proyeccionsocial:consulta_estudio_universitario')
 
@@ -350,13 +383,46 @@ def consultaSolicitudServicioSocial(request, username):
         'app1/Solicitud.html', context
     )
 
-class crearSolicitudServicioSocial(LoginEAMixin, CreateView):
-    template_name = 'app1/Crear_Solicitud_Servicio_Social.html'
-    form_class = SolicitudForm
 
-    def get_success_url(self):
-      username = self.kwargs['username']
-      return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
+def crearSolicitudServicioSocial(request, username):
+    if request.method == 'POST':
+
+        carnet = request.POST['carnet']
+        entidad = request.POST['entidad']
+        horas = request.POST['horas']
+        dias = request.POST['dias']
+        modalidad = request.POST['modalidad']
+        inicio = request.POST['inicio']
+        fin = request.POST['fin']
+
+        solicitud = Solicitud(carnet_estudiante=Estudiante.objects.get(carnet_estudiante=carnet), codigo_entidad=EntidadExterna.objects.get(codigo_entidad=entidad), horas_semana=horas, dias_semana=dias, modalidad=modalidad, fecha_inicio=inicio, fecha_fin=fin)
+        solicitud.save()
+
+        return HttpResponseRedirect(reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username}))
+    
+    else:
+
+        estudiantes = Estudiante.objects.order_by('carnet_estudiante')
+        entidades = EntidadExterna.objects.order_by('codigo_entidad')
+
+        context = {
+            'estudiantes': estudiantes,
+            'entidades': entidades,
+        }
+
+        return render(
+            request,
+            'app1/Crear_Solicitud_Servicio_Social.html',
+            context
+        )
+
+#class crearSolicitudServicioSocial(LoginEAMixin, CreateView):
+#    template_name = 'app1/Crear_Solicitud_Servicio_Social.html'
+#    form_class = SolicitudForm
+
+#    def get_success_url(self):
+#      username = self.kwargs['username']
+#      return reverse_lazy('proyeccionsocial:consulta_solicitud_servicio_social', kwargs={'username': username})
 
 
 class editarSolicitudServicioSocial(LoginEAMixin, UpdateView):

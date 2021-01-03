@@ -55,14 +55,27 @@
                             {{form.nombre_carrera.label_tag}}
                         </div>
 
-                        <div class="group-material">
+                        {% comment %} <div class="group-material">
                             {{form.departamento}}
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             {{form.departamento.label_tag}}
+                        </div> {% endcomment %}
+
+                        <div class="row-xx">
+                            <div class="col-8 col-sm-6">
+                                {{form.departamento.label_tag}}
+                            </div>
+                            <div  class="col-8 col-sm-6">
+                                {{form.departamento}}
+                            </div>
                         </div>
+                        </br>
+
                     </div>
+                    </br>
                 </div>
+                </br>
                 
                 <div class="modal-footer">
                     <div class="col-lg-5 text-center">

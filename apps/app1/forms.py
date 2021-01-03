@@ -330,6 +330,8 @@ class ArchivosEstudianteForm(forms.ModelForm):
 
 
 class CarreraForm(forms.ModelForm):
+    departamento = forms.ModelChoiceField(queryset=Departamento.objects.all().order_by('codigoDepartamento'))
+
     class Meta:
         model = Carrera
         widgets = {
@@ -368,6 +370,14 @@ class CarreraForm(forms.ModelForm):
             self.fields['departamento'].widget.attrs.update({
                 'pattern': '[A-Za-záéíóú ]{1,100}', 
                 'title': 'Ingrese el Codigo, Ej. Escuela Sistemas.'
+                })
+
+        self.fields['departamento'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Selecciona el departamento al que pertenece esta carrrera.'
                 })
 
 
@@ -537,12 +547,15 @@ class HorasSocialesForm(forms.ModelForm):
         })
         self.fields['carnet_estudiante'].disabled = True
 
+
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 class ProyectoForm(forms.ModelForm):
     class Meta:
         model = Proyecto
         widgets = {
-            'codigo_proyecto': forms.TextInput(attrs={'placeholder': 'Código Proyecto', 'autofocus': '', 'required': '', 'maxlength':'6'}),
+            'codigo_proyecto': forms.TextInput(attrs={'placeholder': 'Código Proyecto', 'autofocus': '', 'required': '', 'maxlength':'10'}),
             'descripcion_proyecto': forms.TextInput(attrs={'placeholder': 'Descripción Proyecto', 'autofocus': '', 'required': ''}),
             
         }
@@ -563,11 +576,11 @@ class ProyectoForm(forms.ModelForm):
                 })
 
             self.fields['codigo_proyecto'].widget.attrs.update({
-                'pattern': '([A-Z]{5}[0-9]{3})', 
-                'title': 'Ingrese el Codigo, Ej. PAS1001.'
+                'pattern': '([A-Z0-9]{6,10})', 
+                'title': 'Ingrese el Codigo, deben ser 10 digitos maximo Ej. PAS1001.'
                 })
 
             self.fields['descripcion_proyecto'].widget.attrs.update({
-                'pattern': '[A-Za-záéíóú ]{1,100}', 
+                'pattern': '[A-Za-záéíóú0-9 ]{1,100}', 
                 'title': 'Ingrese el Codigo, Ej. Ayudante de Catedra para la materia Sistemas Contables.'
                 })

@@ -34,7 +34,8 @@ urlpatterns=[
 
 	#URL para Estudio Universitario
 	path('proyeccionsocial/consultaEstudioUniversitario/<username>/',login_required(consultaEstudioUniversitario), name="consulta_estudio_universitario"),
-	path('proyeccionsocial/crearEstudioUniversitario/<username>/',login_required(crearEstudioUniversitario.as_view()), name="crear_estudio_universitario"),
+	#path('proyeccionsocial/crearEstudioUniversitario/<username>/',login_required(crearEstudioUniversitario.as_view()), name="crear_estudio_universitario"),
+	path('proyeccionsocial/crearEstudioUniversitario/<username>/',login_required(crearEstudioUniversitario), name="crear_estudio_universitario"),
 	path('proyeccionsocial/editarEstudioUniversitario/<pk>/',login_required(editarEstudioUniversitario.as_view()), name="editar_estudio_universitario"),
 	path('proyeccionsocial/eliminarEstudioUniversitario/<pk>/',login_required(eliminarEstudioUniversitario.as_view()), name="eliminar_estudio_universitario"),
 	#Buscar Estudio Universitario
@@ -43,7 +44,8 @@ urlpatterns=[
 
 	#URL para la Solicitud de Servicio Social
 	path('proyeccionsocial/consultaSolicitudServicioSocial/<username>/',login_required(consultaSolicitudServicioSocial), name="consulta_solicitud_servicio_social"),
-	path('proyeccionsocial/crearSolicitudServicioSocial/<username>/',login_required(crearSolicitudServicioSocial.as_view()), name="crear_solicitud_servicio_social"),
+	#path('proyeccionsocial/crearSolicitudServicioSocial/<username>/',login_required(crearSolicitudServicioSocial.as_view()), name="crear_solicitud_servicio_social"),
+	path('proyeccionsocial/crearSolicitudServicioSocial/<username>/',login_required(crearSolicitudServicioSocial), name="crear_solicitud_servicio_social"),
 	path('proyeccionsocial/editarSolicitudServicioSocial/<pk>/',login_required(editarSolicitudServicioSocial.as_view()), name="editar_solicitud_servicio_social"),
 	path('proyeccionsocial/eliminarSolicitudServicioSocial/<pk>/',login_required(eliminarSolicitudServicioSocial.as_view()), name="eliminar_solicitud_servicio_social"),
 	#Buscar Solicitud Servicio Social

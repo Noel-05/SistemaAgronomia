@@ -25,7 +25,7 @@ Control Proyecto
      <div align="center" class="busqueda">
       <form method="POST" action="{% url 'proyeccionsocial:consulta_proyecto_buscar' %}">
           {% csrf_token %} 
-          <input type="text" name="codigo_proyecto"  id = "codigo_proyecto" class = "input-style" placeholder="Porfavor ingrese el código del proyecto" required pattern="([A-Z]{5}[0-9]{3})" maxlength="9">
+          <input type="text" name="codigo_proyecto"  id = "codigo_proyecto" class = "input-style" placeholder="Porfavor ingrese el código del proyecto" required pattern="([A-Z0-9]{6,10})" maxlength="10">
           <input class="btn-buscar btn-busqueda" type = "submit" value = "Buscar" id = "buscarProyecto">
       </form>
     </br>
