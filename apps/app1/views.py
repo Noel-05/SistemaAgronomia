@@ -902,3 +902,39 @@ def consultaProyectoBuscar(request):
         }
 
         return render(request, 'app1/Proyecto.html', contexto)
+#-----------------------------------------------------------------------------------------------
+def consultaActividad(request, username):
+    
+    actividades=Actividad.objects.filter(carnet_estudiante=username)
+    
+    if actividades:
+        existenRegistros=True
+        diccionario={"actividades": actividades, "existenRegistros":existenRegistros}
+    else:
+        existenRegistros=False
+        diccionario={"existenRegistros": existenRegistros}
+    
+    return render(request, 'app1/Actividad.html', diccionario)
+
+class crearActividad(LoginAMixin, CreateView):
+    template_name = 'app1/crear_actividad.html'
+    form_class = ActividadForm
+    
+    def get_success_url(self):
+      username= str(self.object.carnet_estudiante)
+      return reverse_lazy('proyeccionsocial:consulta_actividad', kwargs={'username': username})
+
+class editarActividad(LoginAMixin, UpdateView):
+    model = Actividad
+    template_name = 'app1/crear_actividad.html'
+    form_class = ActividadForm
+    def get_success_url(self):
+        username= str(self.object.carnet_estudiante)
+        return reverse_lazy('proyeccionsocial:consulta_actividad', kwargs={'username': username})
+
+class eliminarActividad(LoginAMixin, DeleteView):
+    model = Actividad
+    template_name = 'app1/eliminar_actividad.html'
+    def get_success_url(self):
+        username= str(self.object.carnet_estudiante)
+        return reverse_lazy('proyeccionsocial:consulta_actividad', kwargs={'username': username})

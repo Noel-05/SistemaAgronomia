@@ -1,0 +1,78 @@
+{% extends 'base/base.html' %}
+{%block title%}
+  Control Actividad
+{%endblock%}
+{% block content %}
+
+    <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Actividad</h2>
+        
+
+        
+            
+            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_actividad'  %}'" value="Agregar Actividad">
+        </br></br></br>
+    </div>
+  </header>
+
+  <div class="container">
+    <div>
+        {% if existenRegistros %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Correlativo</th>
+                    <th>Actividad</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            
+            {% for actividad in actividades %}
+            
+            <tr class="etiqueta-tr">
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.correlativo }}</td>
+                <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.nombre_actividad }}</td>
+                
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_actividad' actividad.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_actividad' actividad.pk %}'" class = "btn">Editar</a></td>
+                
+                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_actividad' actividad.pk %}', 'Eliminar Actividad con Correlativo: {{actividad.correlativo}}' )" class = "btn">Eliminar</a></td>
+            </tr>
+       
+
+             {% endfor %}
+             </table>
+        {% else %}
+        
+        <p><strong>No hay registros de Actividades</strong></p>
+        
+        {% endif %}
+      
+      </div>
+    
+  </div>
+
+    <div id = "popup">
+  
+  </div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        var modal;
+        function abrir_modal(url, titulo)
+        {
+            modal = $('#popup').dialog({
+                title :titulo,
+                modal :true,
+                width :500,
+                resizable :false
+            }).dialog('open').load(url)
+        }
+    </script>
+
+{% endblock %}

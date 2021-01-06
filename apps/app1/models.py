@@ -189,3 +189,10 @@ class HorasSociales(models.Model):
 
     def __str__(self):
         return self.carnet_estudiante.__str__()
+
+# --------------------------------------------------------------------------
+#Actividad
+class Actividad(models.Model):
+    correlativo= models.AutoField(primary_key=True)
+    carnet_estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
+    nombre_actividad= models.CharField(max_length=50, null=False, blank=False)
