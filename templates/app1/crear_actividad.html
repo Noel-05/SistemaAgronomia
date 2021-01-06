@@ -1,0 +1,124 @@
+{% extends 'base/base.html' %}
+{%block title%}
+    Crear Actividad
+{%endblock%}
+{% block content %}
+
+{% load static %}
+    <link rel = "stylesheet" href = "{% static 'css/stylePrueba.css' %}">
+    <link rel = "stylesheet" href = "{% static 'css/sweet-alert.css' %}">
+    <link rel = "stylesheet" href = "{% static 'css/bootstrap.min-PRUEBA.css' %}">
+    
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Registro de Actividad</h2>
+        </br></br></br>
+    </div>
+  </header>
+
+<div class="container-fluid">
+    <div class="container-flat-form">
+        <div class="title-flat-form title-flat-green">Registrar Actividad</div>
+            {% if object %}
+                <form role="form" method="POST" action="{% url  'proyeccionsocial:editar_actividad' object.pk%}">
+            {% else %}
+                <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_actividad' %}">
+            {% endif %}
+
+                <div class="row">
+                    <div class="col-xs-14 col-sm-8 col-sm-offset-2">
+                    {% csrf_token %}
+                        {{form.errors}}
+
+                        {% if object %}
+                            <div class="group-material">
+                                <div class="row-xx">
+                                    <div class="col-8 col-sm-6">
+                                        {{form.correlativo.label_tag}}
+                                    </div>
+                                   <div class="col-4 col-sm-6">
+                                       {{form.correlativo}}
+                                    </br>
+                                   </div>
+                                </div>
+                           </div>
+                            
+                            <div class="group-material">
+                                <div class="row-xx">
+                                    <div class="col-8 col-sm-6">
+                                        {{form.carnet_estudiante.label_tag}}
+                                    </div>
+                                   <div class="col-4 col-sm-6">
+                                       {{form.carnet_estudiante}}
+                                    </br>
+                                   </div>
+                                </div>
+                           </div></br></br></br>
+                    
+                           <div class="group-material">
+                               {{ form.nombre_actividad }}
+                               <span class="highlight"></span>
+                               <span class="bar"></span>
+                               {{form.nombre_actividad.label_tag}}
+                           </div>
+                        
+                        
+                        {% else %}
+                            <div class="group-material">
+                                <div class="row-xx">
+                                    <div class="col-8 col-sm-6">
+                                        {{form.correlativo.label_tag}}
+                                    </div>
+                                   <div class="col-4 col-sm-6">
+                                       {{form.correlativo}}
+                                    </br>
+                                   </div>
+                                </div>
+                           </div>
+                            
+                            <div class="group-material">
+                                <div class="row-xx">
+                                    <div class="col-8 col-sm-6">
+                                        {{form.carnet_estudiante.label_tag}}
+                                    </div>
+                                   <div class="col-4 col-sm-6">
+                                       {{form.carnet_estudiante}}
+                                    </br>
+                                   </div>
+                                </div>
+                           </div></br></br></br>
+                    
+                           <div class="group-material">
+                               {{ form.nombre_actividad }}
+                               <span class="highlight"></span>
+                               <span class="bar"></span>
+                               {{form.nombre_actividad.label_tag}}
+                           </div>
+                 
+                        {% endif %}
+
+                        
+
+                        
+
+                        
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <div class="col-lg-5 text-center">
+                        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Guardar">
+                        
+                        <a href = "{% url 'proyeccionsocial:consulta_asesor_externo'  %}"><input type="button" href="{% url 'proyeccionsocial:consulta_asesor_externo' %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
+                    </div>
+                </div>
+                
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

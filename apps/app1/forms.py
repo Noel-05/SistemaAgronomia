@@ -584,3 +584,46 @@ class ProyectoForm(forms.ModelForm):
                 'pattern': '[A-Za-záéíóú0-9 ]{1,100}', 
                 'title': 'Ingrese el Codigo, Ej. Ayudante de Catedra para la materia Sistemas Contables.'
                 })
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class  ActividadForm(forms.ModelForm):
+    class Meta:
+        model = Actividad
+        widgets = {
+            """'carnet_estudiante': forms.TextInput(attrs={'placeholder': 'Carnet Estudiante', 'autofocus': '', 'required': '', 'maxlength':'7', 'pattern': '([a-zA-Z]{2}[0-9]{5})', 'title': 'Ingrese el Carnet, Ej. AA99999.'}),
+            'telefono_estudiante': forms.TextInput(attrs={'placeholder': 'Telefono Estudiante', 'autofocus': '', 'required': '', 'autocomplete': 'off', 'maxlength':'15', 'pattern': '[0-9]{8,15}', 'title': 'Ingrese el Telefono, Solo Numeros Enteros Sin Espacio.'}),
+            'correo_estudiante': forms.TextInput(attrs={'placeholder': 'Correo Estudiante', 'autofocus': '', 'required': '', 'autocomplete': 'off', 'pattern': '^[a-z0-9!#$%&*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$'}),
+            'nombre_estudiante': forms.TextInput(attrs={'placeholder': 'Nombres Estudiante', 'autofocus': '', 'autocomplete': 'off', 'required': '', 'maxlength':'50'}),
+            'apellido_estudiante': forms.TextInput(attrs={'placeholder': 'Apellidos Estudiante', 'autofocus': '', 'autocomplete': 'off', 'required': '', 'maxlength':'50'}),
+            'direccion_estudiante': forms.TextInput(attrs={'placeholder': 'Direccion Estudiante', 'autofocus': '', 'required': ''}),
+            'sexo_estudiante': forms.Select(choices=sexo),"""
+        }
+        fields = {
+            'correlativo': forms.IntegerField,
+            'carnet_estudiante': forms.CharField,
+            'nombre_actividad': forms.CharField,
+        }
+        labels = {
+            'correlativo': 'Correlativo',
+            'carnet_estudiante': 'Carnet del estudiante',
+            'nombre_actividad': 'Actividad'
+
+        }
+
+    """def init(self, *args, **kwargs):
+         super(ActividadForm, self).init(*args, **kwargs)
+
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'material-control tooltips-general'
+                })
+
+       self.fields['carnet_estudiante'].widget.attrs.update({
+                'class': 'form-control'
+                })"""
+    def init(self, *args, **kwargs):
+        super(ActividadForm, self).init(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'material-control tooltips-general'
+            })

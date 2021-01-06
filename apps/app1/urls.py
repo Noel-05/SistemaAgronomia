@@ -116,6 +116,12 @@ urlpatterns=[
 	#Buscar Proyecto
 	path('proyeccionsocial/consultaProyectoBuscar/',login_required(consultaProyectoBuscar), name="consulta_proyecto_buscar"),
 
+	# URL para Actividad
+
+	path('proyeccionsocial/consultaActividad/<username>/',login_required(consultaActividad), name="consulta_actividad"),
+	path('proyeccionsocial/crearActividad/',login_required(crearActividad.as_view()), name="crear_actividad"),
+	path('proyeccionsocial/editarActividad/<pk>/',login_required(editarActividad.as_view()), name="editar_actividad"),
+	path('proyeccionsocial/eliminarActividad/<pk>/',login_required(eliminarActividad.as_view()), name="eliminar_actividad"),
 
 
 	#URL para los Formularios
