@@ -24,7 +24,11 @@
             {% if object %}
                 <form role="form" method="POST" action="{% url  'proyeccionsocial:editar_servicio_social' object.pk  %}">
             {% else %}
-                <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_servicio_social' user.username %}">
+                {% if request.user.usuario_administrador %}
+                    <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_servicio_social_admin' user.username %}">
+                {% else %}
+                    <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_servicio_social' user.username %}">
+                {% endif %}
             {% endif %}
 
                 <div class="row">

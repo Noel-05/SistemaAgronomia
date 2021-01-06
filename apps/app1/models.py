@@ -175,9 +175,6 @@ def submission_delete(sender, instance, **kwargs):
     instance.documento.delete(False)
 
 
-# --------------------------------------------------------------------------
-#HorasSociales
-
 
 class HorasSociales(models.Model):
     carnet_estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
@@ -190,8 +187,8 @@ class HorasSociales(models.Model):
     def __str__(self):
         return self.carnet_estudiante.__str__()
 
-# --------------------------------------------------------------------------
-#Actividad
+
+
 class Actividad(models.Model):
     correlativo= models.AutoField(primary_key=True)
     carnet_estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)

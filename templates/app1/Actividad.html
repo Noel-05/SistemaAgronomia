@@ -7,11 +7,12 @@
     <header>
     <div class="container">
         <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Actividad</h2>
-        
-
-        
-            
-            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_actividad'  %}'" value="Agregar Actividad">
+        </br></br>
+        {% if request.user.usuario_administrador %}
+            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_actividad_admin' user.username %}'" value="Agregar Actividad">
+        {% else %}
+            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_actividad' user.username %}'" value="Agregar Actividad">
+        {% endif %}
         </br></br></br>
     </div>
   </header>
@@ -20,33 +21,88 @@
     <div>
         {% if existenRegistros %}
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Correlativo</th>
-                    <th>Actividad</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
-                </tr>
-            </thead>
-            
-            {% for actividad in actividades %}
-            
-            <tr class="etiqueta-tr">
-                <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.correlativo }}</td>
-                <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.nombre_actividad }}</td>
-                
-                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_actividad' actividad.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_actividad' actividad.pk %}'" class = "btn">Editar</a></td>
-                
-                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_actividad' actividad.pk %}', 'Eliminar Actividad con Correlativo: {{actividad.correlativo}}' )" class = "btn">Eliminar</a></td>
-            </tr>
-       
+            <table>
+                <thead>
+                    <tr>
+                    {% comment %} {% if request.user.usuario_administrador %}
+                        <th>Correlativo</th>
+                    {% endif %} {% endcomment %}
+                        <th>Carnet</th>
+                        <th>Actividad</th>
+                        <th>Editar</th>
+                    {% if request.user.usuario_administrador %}
+                        <th>Eliminar</th>
+                    {% endif %}
+                    </tr>
+                </thead>
 
-             {% endfor %}
-             </table>
-        {% else %}
+            {% if request.user.usuario_administrador %}
+
+                {% for actividad in actividadesAdmin %}
+                    <tr class="etiqueta-tr">
+                        {% comment %} <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.correlativo }}</td> {% endcomment %}
+                        <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.carnet_estudiante }}</td>
+                        <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.nombre_actividad }}</td>
+                        <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_actividad' actividad.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_actividad' actividad.pk %}'" class = "btn">Editar</a></td>
+                        {% if request.user.usuario_administrador %}
+                            <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_actividad' actividad.pk %}', 'Eliminar Actividad con Correlativo: {{actividad.correlativo}}' )" class = "btn">Eliminar</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+
+            {% else %}
         
-        <p><strong>No hay registros de Actividades</strong></p>
+                {% for actividad in actividades %}
+                    <tr class="etiqueta-tr">
+                        <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.carnet_estudiante }}</td>
+                        <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.nombre_actividad }}</td>
+                        <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_actividad' actividad.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_actividad' actividad.pk %}'" class = "btn">Editar</a></td>
+                        {% if request.user.usuario_administrador %}
+                            <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_actividad' actividad.pk %}', 'Eliminar Actividad con Correlativo: {{actividad.correlativo}}' )" class = "btn">Eliminar</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+
+            {% endif %}
+
+            </table>
+
+        {% else %}
+
+            {% if request.user.usuario_administrador %}
+                <table>
+
+                    <thead>
+                        <tr>
+                            {% comment %} <th>Correlativo</th> {% endcomment %}
+                            <th>Carnet</th>
+                            <th>Actividad</th>
+                            <th>Editar</th>
+                            {% if request.user.usuario_administrador %}
+                                <th>Eliminar</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+
+                    {% for actividad in actividadesAdmin %}
+                        <tr class="etiqueta-tr">
+                            {% comment %} <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.correlativo }}</td> {% endcomment %}
+                            <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.carnet_estudiante }}</td>
+                            <td class="th-borde width-th-xx" style = "text-align:center;">{{ actividad.nombre_actividad }}</td>
+                            <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_actividad' actividad.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_actividad' actividad.pk %}'" class = "btn">Editar</a></td>
+                            {% if request.user.usuario_administrador %}
+                                <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_actividad' actividad.pk %}', 'Eliminar Actividad con Correlativo: {{actividad.correlativo}}' )" class = "btn">Eliminar</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+
+                </table>
+
+            {% else %}
+        
+                <p><strong>No hay registros de Actividades</strong></p>
+
+            {% endif %}
         
         {% endif %}
       

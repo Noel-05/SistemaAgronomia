@@ -109,7 +109,13 @@
         <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_servicio_social' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}">Servicio Social</a></li>
       {% endifequal %}
 
-      <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_actividad' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_actividad' user.username %}">ACTIVIDADES</a></li>
+      {% ifequal resp 'Si' %}
+        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_actividad' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_actividad' user.username %}">ACTIVIDADES</a></li>
+      {% endifequal %}
+
+      {% if request.user.usuario_administrador %}
+        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_actividad' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_actividad' user.username %}">ACTIVIDADES</a></li>
+      {% endif %}
 
   <!-- Fin de la Restriccion de Acceso -->
 

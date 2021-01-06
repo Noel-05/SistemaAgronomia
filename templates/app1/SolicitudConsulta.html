@@ -67,7 +67,7 @@ Solicitud Servicio Social
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:editar_solicitud_servicio_social' sol.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:editar_solicitud_servicio_social' sol.pk %}'" class = "btn">Editar</a></td>
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_solicitud_servicio_social' sol.pk %}', 'Eliminar registro con {{ sol.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{%url 'proyeccionsocial:generar_F1' sol.pk %}" class = "btn">Imprimir F-1</a></td>
-                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username %}" onclick="window.location.href='{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username %}'" class = "btn">Agregar Estado</a></td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username sol.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username sol.pk %}'" class = "btn">Agregar Estado</a></td>
         		</tr>
             {% endfor %}
             {% endif %}
@@ -94,7 +94,7 @@ Solicitud Servicio Social
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{%url 'proyeccionsocial:generar_F1' sol.pk %}" class = "btn">Imprimir F-1</a></td>
 
                 {% if request.user.usuario_administrador %}
-                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username %}" onclick="window.location.href='{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username %}'" class = "btn">Agregar Estado</a></td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username sol.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username sol.pk %}'" class = "btn">Agregar Estado</a></td>
                 {% endif %}
 
         		</tr>
@@ -122,7 +122,7 @@ Solicitud Servicio Social
 
                     <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{%url 'proyeccionsocial:generar_F1' sol2.pk %}" class = "btn">Imprimir F-1</a></td>
 
-                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username %}" onclick="window.location.href='{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username %}'" class = "btn">Agregar Estado</a></td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username sol2.pk %}" onclick="window.location.href='{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username sol2.pk %}'" class = "btn">Agregar Estado</a></td>
                 </tr>
 
             {% endfor %}

@@ -57,12 +57,12 @@ urlpatterns=[
 
 	#URL para el Estado de la Solicitud de Servicio Social
 	path('proyeccionsocial/consultaEstadoSolicitudServicioSocial/<username>/',login_required(consultaEstadoSolicitudServicioSocial), name="consulta_estado_solicitud_servicio_social"),
-	path('proyeccionsocial/crearEstadoSolicitudServicioSocial/<username>/',login_required(crearEstadoSolicitudServicioSocial.as_view()), name="crear_estado_solicitud_servicio_social"),
+	path('proyeccionsocial/crearEstadoSolicitudServicioSocial/<username>/<pk>',login_required(crearEstadoSolicitudServicioSocial.as_view()), name="crear_estado_solicitud_servicio_social"),
 	path('proyeccionsocial/editarEstadoSolicitudServicioSocial/<pk>/',login_required(editarEstadoSolicitudServicioSocial.as_view()), name="editar_estado_solicitud_servicio_social_consulta"),
 	path('proyeccionsocial/eliminarEstadoSolicitudServicioSocial/<pk>/',login_required(eliminarEstadoSolicitudServicioSocial.as_view()), name="eliminar_estado_solicitud_servicio_social"),
 	# Para el boton Solicitudes del Base para Administrador
 	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialConsulta/<username>/',login_required(consultaEstadoSolicitudServicioSocialConsulta), name="consulta_estado_solicitud_servicio_social_consulta"),
-	path('proyeccionsocial/crearEstadoSolicitudServicioSocial2/<username>/',login_required(crearEstadoSolicitudServicioSocial2.as_view()), name="crear_estado_solicitud_servicio_social2"),
+	path('proyeccionsocial/crearEstadoSolicitudServicioSocial2/<username>/<pk>',login_required(crearEstadoSolicitudServicioSocial2.as_view()), name="crear_estado_solicitud_servicio_social2"),
 	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialBuscar/',login_required(consultaEstadoSolicitudServicioSocialBuscar), name="consulta_estado_solicitud_servicio_social_buscar"),
 	path('proyeccionsocial/consultaEstadoSolicitudServicioSocialBuscar2/',login_required(consultaEstadoSolicitudServicioSocialBuscar2), name="consulta_estado_solicitud_servicio_social_buscar2"),
 	
@@ -77,6 +77,7 @@ urlpatterns=[
 	#URL para ServicioSocial
 	path('proyeccionsocial/consultaServicioSocial/<username>/',login_required(consultaServicioSocial), name="consulta_servicio_social"),
 	path('proyeccionsocial/crearServicioSocial/<username>/',login_required(crearServicioSocial.as_view()), name="crear_servicio_social"),
+	path('proyeccionsocial/crearServicioSocialAdmin/<username>/',login_required(crearServicioSocialAdmin.as_view()), name="crear_servicio_social_admin"),
 	path('proyeccionsocial/editarServicioSocial/<pk>/',login_required(editarServicioSocial.as_view()), name="editar_servicio_social"),
 	path('proyeccionsocial/eliminarServicioSocial/<pk>/',login_required(eliminarServicioSocial.as_view()), name="eliminar_servicio_social"),
 	path('proyeccionsocial/consultaServicioSocialBuscar/',login_required(consultaServicioSocialBuscar), name="consulta_servicio_social_buscar"),
@@ -102,12 +103,14 @@ urlpatterns=[
 	path('proyeccionsocial/agregarDocumentos/<pk>/', login_required(agregarDocumentos.as_view()), name="agregar_documentos"),
 	path('proyeccionsocial/eliminarDocumento/<pk>/', login_required(eliminarDocumento.as_view()), name="eliminar_documento"),
 	
+
 	#URL para Horas Sociales
 	path('proyeccionsocial/listarHorasSociales/<pk>/', login_required(horasSocialesListView.as_view()), name="listar_horas_sociales"),
 	path('proyeccionsocial/agregarHorasSociales/<pk>/', login_required(agregarHorasSociales.as_view()), name="agregar_horas_sociales"),
 	path('proyeccionsocial/editarHorasSociales/<pk>/', login_required(editarHorasSociales.as_view()), name="editar_horas_sociales"),	
 	path('proyeccionsocial/eliminarHorasSociales/<pk>/', login_required(eliminarHorasSociales.as_view()), name="eliminar_horas_sociales"),
 	
+
 	#URL para Proyecto
 	path('proyeccionsocial/consultaProyecto/',login_required(consultaProyecto), name="consulta_proyecto"),
 	path('proyeccionsocial/crearProyecto/',login_required(crearProyecto.as_view()), name="crear_proyecto"),
@@ -116,10 +119,11 @@ urlpatterns=[
 	#Buscar Proyecto
 	path('proyeccionsocial/consultaProyectoBuscar/',login_required(consultaProyectoBuscar), name="consulta_proyecto_buscar"),
 
-	# URL para Actividad
 
+	# URL para Actividad
 	path('proyeccionsocial/consultaActividad/<username>/',login_required(consultaActividad), name="consulta_actividad"),
-	path('proyeccionsocial/crearActividad/',login_required(crearActividad.as_view()), name="crear_actividad"),
+	path('proyeccionsocial/crearActividad/<username>',login_required(crearActividad.as_view()), name="crear_actividad"),
+	path('proyeccionsocial/crearActividadAdmin/<username>',login_required(crearActividadAdmin.as_view()), name="crear_actividad_admin"),
 	path('proyeccionsocial/editarActividad/<pk>/',login_required(editarActividad.as_view()), name="editar_actividad"),
 	path('proyeccionsocial/eliminarActividad/<pk>/',login_required(eliminarActividad.as_view()), name="eliminar_actividad"),
 

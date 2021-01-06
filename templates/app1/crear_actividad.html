@@ -22,7 +22,11 @@
             {% if object %}
                 <form role="form" method="POST" action="{% url  'proyeccionsocial:editar_actividad' object.pk%}">
             {% else %}
-                <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_actividad' %}">
+                {% if request.user.usuario_administrador %}
+                    <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_actividad_admin' user.username %}">
+                {% else %}
+                    <form role="form" method="POST" action="{% url  'proyeccionsocial:crear_actividad' user.username %}">
+                {% endif %}
             {% endif %}
 
                 <div class="row">
@@ -96,11 +100,6 @@
                            </div>
                  
                         {% endif %}
-
-                        
-
-                        
-
                         
                             </div>
                         </div>
@@ -112,7 +111,7 @@
                     <div class="col-lg-5 text-center">
                         <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Guardar">
                         
-                        <a href = "{% url 'proyeccionsocial:consulta_asesor_externo'  %}"><input type="button" href="{% url 'proyeccionsocial:consulta_asesor_externo' %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
+                        <a href = "{% url 'proyeccionsocial:consulta_actividad' user.username  %}"><input type="button" href="{% url 'proyeccionsocial:consulta_actividad' user.username %}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-buscar" name="submit" value="Cancelar"></a>
                     </div>
                 </div>
                 

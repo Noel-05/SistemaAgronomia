@@ -10,7 +10,7 @@ Control Servicio Social
         </br></br>
 
         {% if request.user.usuario_administrador %}
-            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_servicio_social' user.username %}'" value="Agregar"></br></br>
+            <input type="button" class = "btn-buscar btn-busqueda" onclick="window.location.href='{% url 'proyeccionsocial:crear_servicio_social_admin' user.username %}'" value="Agregar"></br></br>
         {% endif %}
 
         </br>

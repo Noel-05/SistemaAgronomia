@@ -19,12 +19,13 @@
 <div class="container-fluid">
     <div class="container-flat-form">
         <div class="title-flat-form title-flat-green">Registrar Estado de Solicitud de Servicio Social</div>
-            {% if object %}
+            {% comment %} {% if object %}
                 <form role = "form" action="{% url 'proyeccionsocial:editar_estado_solicitud_servicio_social_consulta' object.pk %}" method="POST">
             {% else %}
-                <form role = "form" action="{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username %}" method="POST">
-            {% endif %}
-
+                <form role = "form" action="{% url 'proyeccionsocial:crear_estado_solicitud_servicio_social2' user.username  object.pk %}" method="POST">
+            {% endif %} {% endcomment %}
+            <form method="post" enctype="multipart/form-data">
+            
                 <div class="row">
                     <div class="col-xs-14 col-sm-8 col-sm-offset-2">
                     {% csrf_token %}

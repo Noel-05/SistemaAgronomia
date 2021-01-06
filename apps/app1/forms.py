@@ -253,7 +253,7 @@ class EstadoSolicitudForm(forms.ModelForm):
             'observaciones': forms.TextInput(attrs={'placeholder': 'Observaciones', 'autofocus': '', 'required': False}),
         }
         fields = {
-            'carnet_estudiante': forms.CharField,
+            'carnet_estudiante': forms.HiddenInput,
             'aceptado': forms.CharField,
             'motivo': forms.CharField,
             'observaciones': forms.CharField,
@@ -399,7 +399,7 @@ class ServicioSocialForm(forms.ModelForm):
 
         }
         fields = {
-            'carnet_estudiante': forms.CharField,
+            'carnet_estudiante': forms.HiddenInput,
             'carnet_docente': forms.CharField,
             'dui_asesor_externo': forms.CharField,
             'codigo_proyecto': forms.CharField,
@@ -446,7 +446,64 @@ class ServicioSocialForm(forms.ModelForm):
                 'data-placement': 'right',
                 'title': 'Selecciona el proyecto a realizar para el servicio social.'
                 })
-            
+        self.fields['carnet_estudiante'].disabled = True
+
+
+class ServicioSocialAdminForm(forms.ModelForm):
+    carnet_estudiante = forms.ModelChoiceField(queryset=Solicitud.objects.all().order_by('carnet_estudiante'))
+    carnet_docente = forms.ModelChoiceField(queryset=Docente.objects.all().order_by('carnet_docente'))
+    dui_asesor_externo = forms.ModelChoiceField(queryset=AsesorExterno.objects.all().order_by('dui_asesor_externo'))
+    codigo_proyecto = forms.ModelChoiceField(queryset=Proyecto.objects.all().order_by('codigo_proyecto'))
+    class Meta:
+        model = ServicioSocial
+        fields = {
+            'carnet_estudiante': forms.HiddenInput,
+            'carnet_docente': forms.CharField,
+            'dui_asesor_externo': forms.CharField,
+            'codigo_proyecto': forms.CharField,
+        }
+        labels = {
+            'carnet_estudiante':'Carnet Estudiante',
+            'carnet_docente':'Carnet Docente',
+            'dui_asesor_externo':'Dui asesor externo',
+            'codigo_proyecto':'Código proyecto',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ServicioSocialAdminForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'material-control tooltips-general'
+                })
+
+            self.fields['carnet_estudiante'].widget.attrs.update({     
+                'class': 'form-control', 
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Busca tu carnet en la siguiente lista, estos están ordenados en forma ascendente para una búsqueda más rápida. Por favor verifica que hayas seleccionado tu carnet correctamente.'
+                })
+            self.fields['carnet_docente'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Selecciona el docente para tutor del servicio social.'
+                })
+            self.fields['dui_asesor_externo'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Selecciona el Asesor Externo para el Servicio Social, si NO esta registrado porfavor registralo en el boton de al lado.'
+                })
+            self.fields['codigo_proyecto'].widget.attrs.update({
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'data-html': 'true',
+                'data-placement': 'right',
+                'title': 'Selecciona el proyecto a realizar para el servicio social.'
+                })
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Asesor Externo
@@ -478,6 +535,7 @@ class AsesorExternoForm(forms.ModelForm):
                 })
 
  #Asesor Interno       
+
 
 class AsesorInternoForm(forms.ModelForm):
     departamento = forms.ModelChoiceField(queryset=Departamento.objects.all().order_by('codigoDepartamento'))
@@ -600,7 +658,7 @@ class  ActividadForm(forms.ModelForm):
         }
         fields = {
             'correlativo': forms.IntegerField,
-            'carnet_estudiante': forms.CharField,
+            'carnet_estudiante': forms.HiddenInput,
             'nombre_actividad': forms.CharField,
         }
         labels = {
@@ -621,9 +679,43 @@ class  ActividadForm(forms.ModelForm):
        self.fields['carnet_estudiante'].widget.attrs.update({
                 'class': 'form-control'
                 })"""
-    def init(self, *args, **kwargs):
-        super(ActividadForm, self).init(*args, **kwargs)
+
+    def __init__(self, *args, **kwargs):
+        super(ActividadForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'material-control tooltips-general'
             })
+
+        self.fields['carnet_estudiante'].widget.attrs.update({
+                'class': 'form-control',
+        })
+        self.fields['carnet_estudiante'].disabled = True
+
+
+class  ActividadAdminForm(forms.ModelForm):
+    class Meta:
+        model = Actividad
+        
+        fields = {
+            'correlativo': forms.IntegerField,
+            'carnet_estudiante': forms.CharField,
+            'nombre_actividad': forms.CharField,
+        }
+        labels = {
+            'correlativo': 'Correlativo',
+            'carnet_estudiante': 'Carnet del estudiante',
+            'nombre_actividad': 'Actividad'
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ActividadAdminForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'material-control tooltips-general'
+            })
+
+        self.fields['carnet_estudiante'].widget.attrs.update({
+                'class': 'form-control',
+        })
