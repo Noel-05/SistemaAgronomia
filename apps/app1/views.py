@@ -937,29 +937,45 @@ def consultaProyectoBuscar(request):
 
 
 def consultaActividad(request, username):
-    
+    prb_btn = EstadoSolicitud.objects.filter(carnet_estudiante = username)
     actividades=Actividad.objects.filter(carnet_estudiante=username)
     actividadesAdmin=Actividad.objects.order_by('carnet_estudiante')
+
+    buscar = []
+    i=0
+    while(i < len(prb_btn)):
+        buscar.append((prb_btn[i].aceptado))
+        i+=1
+    
+    resp = "No"
+    for b in buscar:
+        if (b == "Aceptado"):
+            resp = "Si"
+        else:
+            resp = "No"
     
     if actividades:
         existenRegistros=True
-        diccionario={
-            "actividades": actividades, 
-            "existenRegistros": existenRegistros, 
-            "actividadesAdmin": actividadesAdmin,
+        context={
+            'actividades': actividades, 
+            'existenRegistros': existenRegistros, 
+            'actividadesAdmin': actividadesAdmin,
+            'resp': resp,
         }
     else:
         existenRegistros=False
-        diccionario={
-            "existenRegistros": existenRegistros,
-            "actividadesAdmin": actividadesAdmin,
+        context={
+            'existenRegistros': existenRegistros,
+            'actividadesAdmin': actividadesAdmin,
+            'resp': resp,
         }
 
-    diccionario2={
-        "actividadesAdmin": actividadesAdmin,
+    context2={
+        'actividadesAdmin': actividadesAdmin,
+        'resp': resp,
     }
     
-    return render(request, 'app1/Actividad.html', diccionario, diccionario2)
+    return render(request, 'app1/Actividad.html', context, context2)
 
 
 class crearActividad(LoginEAMixin, CreateView):

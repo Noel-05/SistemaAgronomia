@@ -99,6 +99,7 @@
   <!-- Restriccion de Acceso -->
       {% ifequal resp 'Si' %}
         <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_servicio_social' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}">Servicio Social</a></li>
+        <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_actividad' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_actividad' user.username %}">ACTIVIDADES</a></li>
       {% endifequal %}
 
       {% if request.user.usuario_administrador %}
@@ -109,9 +110,9 @@
         <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_servicio_social' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_servicio_social' user.username %}">Servicio Social</a></li>
       {% endifequal %}
 
-      {% ifequal resp 'Si' %}
+      {% comment %} {% ifequal resp 'Si' %}
         <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_actividad' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_actividad' user.username %}">ACTIVIDADES</a></li>
-      {% endifequal %}
+      {% endifequal %} {% endcomment %}
 
       {% if request.user.usuario_administrador %}
         <li class="list-group-item" onclick="window.location.href='{% url 'proyeccionsocial:consulta_actividad' user.username %}'"><a style="text-decoration:none" href="{% url 'proyeccionsocial:consulta_actividad' user.username %}">ACTIVIDADES</a></li>
